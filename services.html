@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pocket Agency | Services</title>
+    <meta name="theme-color" content="#00b80d" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="fx.css?v=4" />
+  </head>
+  <body class="services-page">
+    <header class="site-nav">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="Pocket Agency" />
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="work.html">Work</a>
+        <a class="active" href="services.html">Services</a>
+        <a href="us.html">Us</a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open menu">
+        <span></span>
+        <span></span>
+      </button>
+      <button class="btn nav-cta magnetic">Start a Project</button>
+    </header>
+
+    <div class="mobile-menu" aria-hidden="true">
+      <div class="mobile-menu-overlay"></div>
+      <div class="mobile-menu-panel">
+        <div class="mobile-menu-header">
+          <a class="logo" href="index.html">
+            <img src="assets/logo.png" alt="Pocket Agency" />
+          </a>
+          <button class="menu-close" type="button" aria-label="Close menu">
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav class="mobile-menu-links">
+          <a href="index.html">Home</a>
+          <a href="work.html">Work</a>
+          <a class="active" href="services.html">Services</a>
+          <a href="us.html">About Us</a>
+          <a href="#" data-contact>Contact Us</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="site">
+      <section class="pocket-hero services-hero">
+        <div class="pocket-hero-content">
+          <p class="pocket-label reveal">Services</p>
+          <h1 class="pocket-display fx-hero-display">
+            <span>Two ways to</span>
+            <span data-fx-serif>work with us.</span>
+          </h1>
+          <p class="pocket-hero-note reveal">
+            A monthly SMM partnership or a one-off freelance sprint - pick a format,
+            we bring the ideas.
+          </p>
+        </div>
+      </section>
+
+      <section class="pocket-section pocket-section--white services-offers services-showcase">
+        <div class="svc-grid">
+          <article class="smm-card svc-card svc-card--smm reveal" role="button" tabindex="0" aria-label="SMM Manager — start a project">
+            <span class="svc-badge">From 2 months</span>
+            <h2 class="svc-title">SMM<br />Manager</h2>
+            <p class="svc-sub">(Agreed amount of platforms)</p>
+            <ul class="svc-list">
+              <li>Systematic work on your social medias</li>
+              <li>Content strategy with specific goals</li>
+              <li>Creation of viral videos ;)</li>
+              <li>Agreed amount of [x] content per [x] time</li>
+            </ul>
+            <span class="svc-cta">Start a project <i aria-hidden="true">&#8599;</i></span>
+          </article>
+
+          <article class="smm-card freelance-card svc-card svc-card--freelance reveal" role="button" tabindex="0" aria-label="Freelance project — see an example">
+            <span class="svc-badge">From 2 weeks</span>
+            <h2 class="svc-title">Freelance<br />Project</h2>
+            <p class="svc-sub">1 time payment / specific goal / quick execution</p>
+            <div class="svc-blur" aria-hidden="true">
+              <div><strong>Logo &amp; design</strong><span>full identity sprint for a launch</span></div>
+              <div><strong>Marketing campaign</strong><span>one idea, phased and measured</span></div>
+              <div><strong>Your specific need</strong><span>tell us what keeps you up at night</span></div>
+              <div><strong>Videos &amp; reels</strong><span>shot, edited and posted for you</span></div>
+            </div>
+            <span class="svc-cta"><em>it's a secret</em> - tap to peek <i aria-hidden="true">&#8599;</i></span>
+          </article>
+
+          <a class="svc-case reveal" href="sb.html" aria-label="Sweet Baking Mama case">
+            <video autoplay muted loop playsinline src="assets/sweetbaking/banner.mp4"></video>
+            <span class="svc-case-tag">Live case - Sweet Baking Mama</span>
+          </a>
+
+          <a class="svc-case reveal" href="g4.html" aria-label="G4 Chess case">
+            <img src="assets/g4gif.gif" alt="G4 Chess preview" loading="lazy" decoding="async" />
+            <span class="svc-case-tag">Live case - G4 Chess</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section services-projects">
+        <div class="services-footer-note">
+          <p>hello, how are you?</p>
+          <p>you can tap the cards above,</p>
+          <p>just in case..</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="contact-modal" aria-hidden="true">
+      <div class="contact-modal-overlay"></div>
+      <div class="contact-modal-card" role="dialog" aria-modal="true" aria-label="Contact">
+        <button class="contact-modal-close" type="button" aria-label="Close">&times;</button>
+        <h3>Let's create <em>together:</em></h3>
+        <div class="contact-modal-links">
+          <a href="mailto:pocketagency@outlook.com">pocketagency@outlook.com</a>
+          <a href="tel:+353894930434">+353 89 493 0434</a>
+        </div>
+        <p class="contact-modal-note">We usually reply within a day.</p>
+      </div>
+    </div>
+
+    <div class="project-modal" aria-hidden="true">
+      <div class="project-modal-overlay"></div>
+      <div class="project-modal-card" role="dialog" aria-modal="true">
+        <button class="project-modal-image-link" type="button">
+          <img
+            src="assets/freelanceproject2.png"
+            alt="Freelance project preview"
+          />
+        </button>
+        <h3>Let's Create Together:</h3>
+        <p>pocketagency@outlook.com</p>
+        <p>+353 89 493 0434</p>
+        <button class="project-modal-close" type="button">Close</button>
+      </div>
+    </div>
+
+    <div class="image-viewer" aria-hidden="true">
+      <div class="image-viewer-overlay"></div>
+      <div class="image-viewer-card" role="dialog" aria-modal="true">
+        <button class="image-viewer-back" type="button">Go back</button>
+        <div class="image-viewer-controls">
+          <button class="image-viewer-zoom-in" type="button">+</button>
+          <button class="image-viewer-zoom-out" type="button">-</button>
+          <button class="image-viewer-zoom-reset" type="button">Reset</button>
+        </div>
+        <img
+          src="assets/freelanceproject2.png"
+          alt="Freelance project preview full"
+        />
+      </div>
+    </div>
+
+    <script src="script.js?v=4"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="fx.js?v=4"></script>
+  </body>
+</html>
+

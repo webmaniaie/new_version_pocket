@@ -1,0 +1,543 @@
+/* ============================================================
+   POCKET FX — additive animation layer on top of styles.css.
+   Loads after styles.css. Never moves buttons/media; only adds
+   motion, the serif accent, and the Us-page roster cleanup.
+   ============================================================ */
+
+/* ---------- scroll progress ---------- */
+.fx-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 6px; z-index: 1200; pointer-events: none;
+  background: rgba(11, 11, 11, 0.08);
+}
+.fx-progress span {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--green, #00b80d), #35e047);
+  border-radius: 0 999px 999px 0;
+  box-shadow: 0 1px 10px rgba(0, 184, 13, 0.55);
+  transform: scaleX(0); transform-origin: left;
+  will-change: transform;
+}
+
+/* ---------- rolling letters (nav pills + CTAs) ---------- */
+.fx-flip { display: inline-flex; }
+.fx-flip .fl { position: relative; display: inline-block; overflow: hidden; }
+.fx-flip .fl i {
+  display: block; font-style: normal;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 18ms);
+}
+.fx-flip .fl i + i { position: absolute; left: 0; top: 100%; }
+a:hover > .fx-flip .fl i,
+button:hover > .fx-flip .fl i { transform: translateY(-100%); }
+
+/* ---------- AI-version cursor ---------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--green, #00b80d);
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(11, 11, 11, 0.5);
+  transition:
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s,
+    border-color 0.35s;
+}
+
+.cursor-ring .cursor-label {
+  color: var(--black, #0b0b0b);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  border-color: var(--green, #00b80d);
+}
+
+.cursor-ring.is-label {
+  width: 88px;
+  height: 88px;
+  background: var(--green, #00b80d);
+  border-color: var(--green, #00b80d);
+}
+
+.cursor-ring.is-label .cursor-label {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---------- home banner text ---------- */
+.home-video-banner .home-banner-text .fx-line,
+.home-who-copy .fx-line {
+  display: block; overflow: hidden;
+  font-style: normal; text-transform: uppercase;
+}
+.home-video-banner .home-banner-text .fx-line-in,
+.home-who-copy .fx-line-in {
+  display: inline-block; font-style: normal; text-transform: inherit;
+  will-change: transform;
+}
+/* "in your pocket" gets the serif italic accent */
+.home-video-banner .home-banner-text .fx-serif,
+.home-who-copy .fx-serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-weight: 400; text-transform: none;
+}
+/* letter hover flips */
+.home-banner-text .fx-ch,
+.home-who-copy .fx-ch { display: inline-block; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.home-banner-text .fx-ch.is-flip,
+.home-who-copy .fx-ch.is-flip {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; text-transform: none;
+  color: var(--green, #00b80d);
+  transform: translateY(-4%) rotate(-5deg);
+}
+.home-banner-text .fx-serif .fx-ch.is-flip,
+.home-who-copy .fx-serif .fx-ch.is-flip {
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-style: normal; font-weight: 700; text-transform: uppercase;
+  transform: translateY(-4%) rotate(4deg);
+}
+.home-banner-text .fx-serif .fx-ch.is-flip { color: #ffffff; }
+.home-who-copy .fx-serif .fx-ch.is-flip { color: var(--green, #00b80d); }
+
+/* ---------- LET'S WORK button (same spot, new motion) ---------- */
+.home-banner-cta {
+  overflow: hidden; z-index: 0;
+  transition: color 0.3s ease, transform 0.25s ease;
+  animation: fx-pulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes fx-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 184, 13, 0.5); }
+  60% { box-shadow: 0 0 0 16px rgba(0, 184, 13, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 184, 13, 0); }
+}
+.home-banner-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background: var(--green, #00b80d);
+  transform: translateY(101%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+.home-banner-cta:hover::before { transform: translateY(0); }
+.home-banner-cta:hover {
+  color: #0b0b0b;
+  transform: translateY(-50%);
+  box-shadow: none; filter: none;
+  animation: none;
+}
+.home-banner-cta > .fx-flip { position: relative; z-index: 1; }
+
+/* ---------- hero word reveal + particles stacking ---------- */
+.fx-w { display: inline-block; }
+.hero-content { position: relative; z-index: 2; }
+.fx-webgl { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.fx-webgl canvas { width: 100%; height: 100%; display: block; }
+/* keep banner text + CTA above the particle canvas */
+.home-video-banner .home-banner-text { z-index: 2; }
+.home-video-banner .home-banner-cta { z-index: 2; }
+.pocket-hero .fx-webgl {
+  opacity: 0.9;
+}
+.pocket-hero-content {
+  position: relative;
+  z-index: 2;
+}
+.pocket-display.fx-hero-display {
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+.us-roster-kicker.fx-hero-display {
+  line-height: 0.94;
+}
+.us-refresh-hero {
+  align-items: center;
+  min-height: 100svh;
+  padding-top: 128px;
+  padding-bottom: 80px;
+}
+.us-refresh-hero .pocket-display.fx-hero-display {
+  max-width: 1280px;
+  font-size: clamp(52px, 9vw, 132px);
+}
+.us-refresh-hero .us-roster-kicker.fx-hero-display {
+  max-width: 940px;
+  margin-top: clamp(12px, 2vw, 24px);
+  font-size: clamp(34px, 5vw, 72px);
+}
+.us-refresh-hero .pocket-hero-note {
+  margin-top: clamp(16px, 2vw, 28px);
+}
+.pocket-display .fx-line,
+.us-roster-kicker .fx-line {
+  display: block;
+  overflow: hidden;
+}
+.pocket-display .fx-line-in,
+.us-roster-kicker .fx-line-in {
+  display: inline-block;
+  will-change: transform;
+}
+.pocket-display .fx-serif,
+.us-roster-kicker .fx-serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+}
+.pocket-display .fx-ch,
+.us-roster-kicker .fx-ch {
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pocket-display .fx-ch.is-flip,
+.us-roster-kicker .fx-ch.is-flip {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--white, #ffffff);
+  text-transform: none;
+  transform: translateY(-4%) rotate(-5deg);
+}
+.pocket-display .fx-serif .fx-ch.is-flip,
+.us-roster-kicker .fx-serif .fx-ch.is-flip {
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--black, #0b0b0b);
+  text-transform: uppercase;
+  transform: translateY(-4%) rotate(4deg);
+}
+
+/* ---------- team number chips ---------- */
+.us-video-card, .us-profile-card { position: relative; }
+.fx-num {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  color: #ffffff; background: rgba(11, 11, 11, 0.75);
+  border-radius: 999px; padding: 5px 10px;
+  pointer-events: none;
+}
+
+/* ---------- team hover lift ---------- */
+.us-video-card, .us-profile-card {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s;
+}
+.us-video-card:hover, .us-profile-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.24);
+}
+
+/* ---------- Us page: tidy the roster (desktop collage fix) ---------- */
+@media (min-width: 901px) {
+  body.us-page .us-hero-video {
+    display: flex; justify-content: center; align-items: flex-start;
+    gap: clamp(36px, 4vw, 80px);
+    padding: 150px 8vw 20px;
+    min-height: auto;
+    order: 0; /* keep videos above the managers (styles.css reorders with order:1) */
+  }
+  body.us-page .us-hero-video .us-video-wrap,
+  body.us-page .us-video-anastasia,
+  body.us-page .us-video-dasha {
+    transform: none !important;
+    --us-shift: 0px; --us-shift-y: 0px;
+    margin: 0 !important;
+    width: clamp(280px, 26vw, 380px);
+    animation: none;
+  }
+  body.us-page .us-video-dasha .us-video-media { width: 100%; transform: none; }
+  body.us-page .us-video-card { width: 100% !important; }
+  body.us-page .section.us-manager {
+    min-height: auto;
+    padding: 40px 8vw 60px;
+    margin: 0 !important;
+  }
+  body.us-page .us-manager:last-of-type { margin-bottom: 120px !important; }
+  body.us-page .us-profile-card--platon,
+  body.us-page .us-profile-card--serhii { transform: none !important; }
+  body.us-page .section.us-manager-duo {
+    display: flex; justify-content: center; align-items: flex-start;
+    gap: clamp(36px, 4vw, 80px);
+  }
+}
+@media (max-width: 900px) {
+  .section.us-manager-duo { flex-direction: column; align-items: center; gap: 24px; }
+  body.us-page.us-mobile-roster .us-profile-card--serhii { margin-top: 0 !important; }
+  .pocket-display.fx-hero-display {
+    max-width: 100%;
+    font-size: clamp(40px, 11vw, 52px);
+    letter-spacing: -0.03em;
+  }
+  .work-refresh-hero .pocket-display.fx-hero-display {
+    font-size: clamp(40px, 10.6vw, 48px);
+  }
+  .us-refresh-hero {
+    min-height: 76svh;
+    padding-top: 132px;
+    padding-bottom: 58px;
+  }
+  .us-refresh-hero .pocket-display.fx-hero-display {
+    font-size: clamp(34px, 9.5vw, 38px);
+  }
+  .us-refresh-hero .us-roster-kicker.fx-hero-display {
+    font-size: clamp(28px, 8vw, 34px);
+  }
+  .pocket-hero-note {
+    max-width: min(32ch, calc(100vw - 40px));
+    overflow-wrap: break-word;
+  }
+}
+
+/* ============================================================
+   MOBILE POLISH PASS — services rebuild, roster overlap,
+   square case media, footer mark fix
+   ============================================================ */
+
+/* ---------- Us page: roster hugs the spirit hero ---------- */
+.us-roster-section { padding-top: 0; }
+.us-roster-section .pocket-team {
+  position: relative; z-index: 3;
+  margin-top: clamp(-130px, -10vw, -74px);
+}
+.us-about-section { padding-top: clamp(40px, 6vw, 80px); }
+
+/* ---------- services page ---------- */
+.services-hero {
+  align-items: center;
+  min-height: auto;
+  padding: 170px clamp(22px, 7vw, 92px) clamp(40px, 6vw, 70px);
+}
+.services-hero .pocket-display { font-size: clamp(46px, 8.4vw, 124px); }
+body.services-page .services-showcase { min-height: auto; display: block; }
+.services-offers { padding-top: clamp(28px, 4vw, 56px); }
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 34px);
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+/* neutralize the legacy .smm-card collage rules */
+.services-showcase .smm-card.svc-card,
+.services-showcase .smm-card.svc-card.freelance-card {
+  position: relative !important;
+  left: auto !important; top: auto !important;
+  margin: 0 !important;
+  width: auto !important; max-width: none !important;
+  transform: none !important;
+  padding: clamp(26px, 3.6vw, 48px);
+  cursor: pointer;
+  touch-action: auto;
+}
+
+.svc-card {
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: clamp(12px, 1.6vw, 20px);
+  aspect-ratio: 1 / 1;
+  padding: clamp(26px, 3.6vw, 48px);
+  border-radius: 22px;
+  background: var(--green, #00b80d);
+  color: var(--white, #ffffff);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.16);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.services-showcase .smm-card.svc-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.22);
+}
+
+.svc-badge {
+  position: absolute; top: 20px; right: 20px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--white, #ffffff);
+  color: var(--black, #0b0b0b);
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+.svc-title {
+  margin: clamp(6px, 1vw, 14px) 0 0;
+  font-family: "Montserrat", "Montserrat Alternates", "Segoe UI", sans-serif;
+  font-size: clamp(34px, 4.6vw, 62px);
+  line-height: 0.9; font-weight: 800;
+  letter-spacing: -0.03em; text-transform: uppercase;
+}
+
+.svc-sub {
+  margin: 0;
+  font-size: clamp(13px, 1.3vw, 17px);
+  font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.svc-list {
+  margin: clamp(6px, 1vw, 12px) 0 0; padding: 0;
+  list-style: none;
+  display: flex; flex-direction: column; gap: clamp(8px, 1vw, 14px);
+}
+.svc-list li {
+  display: flex; gap: 10px; align-items: baseline;
+  font-size: clamp(15px, 1.5vw, 20px);
+  line-height: 1.35;
+}
+.svc-list li::before {
+  content: "#";
+  flex: none;
+  color: #0b2c4f;
+  font-weight: 800;
+}
+
+.svc-cta {
+  margin-top: auto;
+  display: inline-flex; align-items: baseline; gap: 8px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.55);
+  font-size: clamp(13px, 1.3vw, 16px);
+  font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+.svc-cta em {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic; font-weight: 400; text-transform: none;
+  font-size: 1.25em; letter-spacing: 0;
+}
+.svc-cta i { font-style: normal; transition: transform 0.35s ease; }
+.services-showcase .svc-card:hover .svc-cta { border-color: #0b2c4f; color: #ffffff; }
+.services-showcase .svc-card:hover .svc-cta i { transform: translate(4px, -4px); }
+
+.svc-blur {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 22px);
+  margin-top: clamp(8px, 1.2vw, 16px);
+  filter: blur(7px);
+  pointer-events: none; user-select: none;
+}
+.svc-blur strong {
+  display: block;
+  font-size: clamp(13px, 1.3vw, 17px);
+  font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.svc-blur span {
+  display: block; margin-top: 4px;
+  font-size: clamp(11px, 1.1vw, 14px);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.35;
+}
+
+.svc-case {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.16);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.svc-case:hover { transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.22); }
+.svc-case video, .svc-case img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.7s ease;
+}
+.svc-case:hover video, .svc-case:hover img { transform: scale(1.07); }
+.svc-case-tag {
+  position: absolute; left: 16px; bottom: 16px; z-index: 1;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--black, #0b0b0b);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* ---------- mobile polish ---------- */
+@media (max-width: 900px) {
+  /* work page: pull the hero copy and cases up */
+  .work-refresh-hero {
+    min-height: auto;
+    padding-top: 116px;
+    padding-bottom: 34px;
+  }
+  .work-cases-section { padding-top: 18px; }
+  .pocket-case { padding: 26px 0; }
+
+  /* case videos are square sources — show them square */
+  .pocket-case-media { aspect-ratio: 1 / 1; }
+
+  /* footer "pocket©" mark: keep it fully on screen */
+  .pocket-footer { padding-bottom: calc(21vw + 30px); }
+  .pocket-footer-mark {
+    left: 50%; bottom: 10px;
+    transform: translateX(-50%);
+    font-size: 21vw;
+    line-height: 0.9;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* services on phones: one column of big squares */
+  .services-hero { padding: 108px 20px 30px; }
+  .svc-grid { grid-template-columns: 1fr; gap: 16px; }
+  .svc-card { aspect-ratio: auto; min-height: 92vw; }
+  .services-showcase .smm-card.svc-card,
+  .services-showcase .smm-card.svc-card.freelance-card {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 24px 22px !important;
+    transform: none !important;
+  }
+  .svc-title { font-size: clamp(34px, 10vw, 44px); }
+  .svc-list li { font-size: 16px; }
+  .svc-blur { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .home-banner-cta { animation: none; }
+  .fx-flip .fl i { transition: none; }
+  .home-banner-text .fx-ch { transition: none; }
+}
