@@ -604,23 +604,65 @@ if (servicesClose) {
     imageViewerBack.addEventListener("click", closeImageViewer);
   }
 
+  const imageViewerStage = document.querySelector(".image-viewer-stage");
+
   function setZoom(next) {
-    zoomLevel = Math.min(3, Math.max(1, next));
+    zoomLevel = Math.min(4, Math.max(1, next));
     if (imageViewerImg) {
       imageViewerImg.style.setProperty("--zoom", zoomLevel);
     }
   }
 
   if (zoomIn) {
-    zoomIn.addEventListener("click", () => setZoom(zoomLevel + 0.2));
+    zoomIn.addEventListener("click", () => setZoom(zoomLevel + 0.3));
   }
 
   if (zoomOut) {
-    zoomOut.addEventListener("click", () => setZoom(zoomLevel - 0.2));
+    zoomOut.addEventListener("click", () => setZoom(zoomLevel - 0.3));
   }
 
   if (zoomReset) {
     zoomReset.addEventListener("click", () => setZoom(1));
+  }
+
+  // wheel to zoom (desktop)
+  if (imageViewerStage) {
+    imageViewerStage.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+        setZoom(zoomLevel + (event.deltaY < 0 ? 0.2 : -0.2));
+      },
+      { passive: false }
+    );
+
+    // drag to pan when zoomed in
+    let panning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+    let scrollStartX = 0;
+    let scrollStartY = 0;
+    imageViewerStage.addEventListener("pointerdown", (event) => {
+      if (zoomLevel <= 1) return;
+      panning = true;
+      imageViewerStage.classList.add("is-grabbing");
+      imageViewerStage.setPointerCapture(event.pointerId);
+      panStartX = event.clientX;
+      panStartY = event.clientY;
+      scrollStartX = imageViewerStage.scrollLeft;
+      scrollStartY = imageViewerStage.scrollTop;
+    });
+    imageViewerStage.addEventListener("pointermove", (event) => {
+      if (!panning) return;
+      imageViewerStage.scrollLeft = scrollStartX - (event.clientX - panStartX);
+      imageViewerStage.scrollTop = scrollStartY - (event.clientY - panStartY);
+    });
+    const endPan = () => {
+      panning = false;
+      imageViewerStage.classList.remove("is-grabbing");
+    };
+    imageViewerStage.addEventListener("pointerup", endPan);
+    imageViewerStage.addEventListener("pointercancel", endPan);
   }
 
 // Resizing removed
