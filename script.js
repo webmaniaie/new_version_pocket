@@ -968,12 +968,38 @@ if (pocketYear) {
 }
 
 if (document.body.classList.contains("sb-page")) {
-  const updateSbFoxScrollState = () => {
-    document.body.classList.toggle("sb-fox-shrunk", window.scrollY > 0);
+  // The fox stays full-size until the fox itself has been properly on screen
+  // for a moment, then tucks into the pill. (The old scrollY > 0 toggle
+  // collapsed it before anyone ever reached it — it looked like it never
+  // appeared.) Timer cancels if the fox leaves the viewport before firing.
+  const foxImages = document.querySelectorAll(
+    ".sb-foxfront, .sb-mobile-foxfront"
+  );
+  let foxTimer = null;
+  let foxDone = false;
+  const shrinkFox = () => {
+    foxDone = true;
+    document.body.classList.add("sb-fox-shrunk");
   };
-
-  window.addEventListener("scroll", updateSbFoxScrollState, { passive: true });
-  updateSbFoxScrollState();
+  if (foxImages.length && "IntersectionObserver" in window) {
+    const foxObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (foxDone) return;
+          // skip the hidden (display:none) twin — it reports zero size
+          if (entry.boundingClientRect.width === 0) return;
+          if (entry.isIntersecting) {
+            if (!foxTimer) foxTimer = window.setTimeout(shrinkFox, 2600);
+          } else if (foxTimer) {
+            window.clearTimeout(foxTimer);
+            foxTimer = null;
+          }
+        });
+      },
+      { threshold: 0.65 }
+    );
+    foxImages.forEach((img) => foxObserver.observe(img));
+  }
 }
 
 const workCanvas = document.querySelector(".work-canvas");

@@ -1388,9 +1388,11 @@ a {
     position: absolute;
     left: 50%;
     bottom: 100%;
-    width: 82px;
+    /* natural render size — the old width:82px + scale(2) made Safari
+       rasterize at 82px and upscale, which looked blurry */
+    width: 164px;
     height: auto;
-    transform: translate(calc(-50% + 40px), -136px) scale(2);
+    transform: translate(calc(-50% + 40px), -85px);
     transition: transform 0.35s ease;
     pointer-events: none;
     z-index: 2;
@@ -1429,7 +1431,7 @@ a {
   }
 
   body.sb-page.sb-fox-shrunk .sb-mobile-branding-group .sb-mobile-foxfront {
-    transform: translate(calc(-50% + 40px), 44px) scale(0.25);
+    transform: translate(calc(-50% + 40px), 82px) scale(0.25);
   }
 
   .sb-mobile-smm-pill {
@@ -3725,9 +3727,11 @@ body.us-page .advantages-pills .pill {
 }
 
 .intro-inner {
+  /* no transform scale here — upscaling the logo bitmap made it look glitchy */
+  position: relative;
+  z-index: 1;
   text-align: center;
-  transform: scale(1.5);
-  transform-origin: center;
+  padding: 0 24px;
 }
 
 .intro-logo {
@@ -3739,17 +3743,18 @@ body.us-page .advantages-pills .pill {
   justify-content: center;
 }
 
-.intro-logo img {
-  height: clamp(94px, 15.6vw, 208px);
+.intro-logo img,
+.intro-logo picture {
+  height: clamp(150px, 24vw, 300px);
   width: auto;
   display: block;
   pointer-events: none;
 }
 
 .intro-line {
-  width: 180px;
+  width: 150px;
   height: 2px;
-  margin: 20px auto;
+  margin: 22px auto;
   background: #ffffff;
   animation: linePulse 1.4s ease-in-out infinite;
 }
@@ -3757,7 +3762,16 @@ body.us-page .advantages-pills .pill {
 .intro-hint {
   text-transform: uppercase;
   font-size: 12px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  opacity: 0.92;
+}
+
+.intro .intro-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .intro.exit {

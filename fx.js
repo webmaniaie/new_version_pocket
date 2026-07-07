@@ -83,7 +83,25 @@
   /* ---------- nav entrance (opacity only — nav is centered via transform) ---------- */
   var nav = document.querySelector(".site-nav");
   if (nav && hasGSAP) {
-    gsap.fromTo(nav, { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power2.out", delay: 0.15 });
+    var navIn = function () {
+      gsap.fromTo(nav, { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power2.out", delay: 0.35, overwrite: true });
+    };
+    if (document.body.classList.contains("intro-locked")) {
+      // wait for the intro to be dismissed — an early inline opacity would
+      // defeat the .intro-locked nav hide and float the nav over the intro
+      var introEl = document.getElementById("intro");
+      var armed = false;
+      var onDismiss = function () {
+        if (armed) return;
+        armed = true;
+        navIn();
+      };
+      if (introEl) introEl.addEventListener("click", onDismiss, { once: true });
+      window.addEventListener("keydown", onDismiss, { once: true });
+      window.addEventListener("touchend", onDismiss, { once: true });
+    } else {
+      navIn();
+    }
   }
 
   /* ---------- rolling letters on the existing buttons ---------- */
@@ -461,11 +479,13 @@
     camera.position.z = 9;
 
     var COUNT = opts.count || (window.innerWidth < 900 ? 900 : 2200);
+    var spreadX = opts.spreadX || 24;
+    var spreadY = opts.spreadY || 14;
     var geo = new THREE.BufferGeometry();
     var pos = new Float32Array(COUNT * 3);
     for (var i = 0; i < COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 24;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      pos[i * 3] = (Math.random() - 0.5) * spreadX;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * spreadY;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
     }
     geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
@@ -488,7 +508,8 @@
           opacity: opts.wireOpacity == null ? 0.12 : opts.wireOpacity
         })
       );
-      wire.position.set(4.5, 0.6, -2);
+      var wp = opts.wirePos || [4.5, 0.6, -2];
+      wire.position.set(wp[0], wp[1], wp[2]);
       scene.add(wire);
     }
 
@@ -536,7 +557,11 @@
 
   var hasWideCanvas = window.matchMedia("(min-width: 901px)").matches;
   if (hasWideCanvas) {
-    particles(document.querySelector(".home-page .home-video-banner"), { color: 0x00b80d, opacity: 0.55, size: 0.06, wire: true, count: 1600 });
+    // spread matches the banner's wide aspect so the field fills the whole strip
+    particles(document.querySelector(".home-page .home-video-banner"), {
+      color: 0x00b80d, opacity: 0.6, size: 0.07, wire: true, count: 2600,
+      spreadX: 64, spreadY: 12, wirePos: [9, 0.2, -2]
+    });
   }
   particles(document.querySelector(".work-refresh-hero"), {
     color: 0x0b0b0b,
@@ -562,6 +587,90 @@
     wireOpacity: 0.18,
     additive: false
   });
+
+  /* ---------- intro: sparkles falling top -> bottom (desktop + mobile) ---------- */
+  (function introSparkles() {
+    var intro = document.getElementById("intro");
+    if (!intro || !hasThree) return;
+    if (intro.classList.contains("exit")) return;
+
+    var holder = document.createElement("div");
+    holder.className = "fx-webgl intro-webgl";
+    holder.setAttribute("aria-hidden", "true");
+    intro.insertBefore(holder, intro.firstChild);
+
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "low-power" });
+    } catch (e) { return; }
+    var W = window.innerWidth, H = window.innerHeight;
+    renderer.setSize(W, H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    holder.appendChild(renderer.domElement);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
+    camera.position.z = 9;
+
+    var visH = 2 * 9 * Math.tan(Math.PI / 6); // visible world height at z=0
+    var visW = visH * (W / H);
+    var COUNT = W < 900 ? 300 : 560;
+    var geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(COUNT * 3);
+    var vel = new Float32Array(COUNT);
+    var sway = new Float32Array(COUNT);
+    var phase = new Float32Array(COUNT);
+    for (var i = 0; i < COUNT; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * visW * 1.15;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * visH * 1.2;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 4;
+      vel[i] = 0.014 + Math.random() * 0.034;
+      sway[i] = 0.2 + Math.random() * 0.6;
+      phase[i] = Math.random() * Math.PI * 2;
+    }
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    var mat = new THREE.PointsMaterial({
+      color: 0xffffff, size: 0.08, transparent: true, opacity: 0.85,
+      depthWrite: false, blending: THREE.AdditiveBlending
+    });
+    scene.add(new THREE.Points(geo, mat));
+
+    var clock = new THREE.Clock();
+    var alive = true;
+    function tick() {
+      if (!alive) return;
+      requestAnimationFrame(tick);
+      var t = clock.getElapsedTime();
+      var arr = geo.attributes.position.array;
+      var top = visH * 0.62;
+      for (var i = 0; i < COUNT; i++) {
+        arr[i * 3 + 1] -= vel[i];
+        arr[i * 3] += Math.sin(t * sway[i] + phase[i]) * 0.004;
+        if (arr[i * 3 + 1] < -top) {
+          arr[i * 3 + 1] = top;
+          arr[i * 3] = (Math.random() - 0.5) * visW * 1.15;
+        }
+      }
+      geo.attributes.position.needsUpdate = true;
+      mat.opacity = 0.72 + Math.sin(t * 2.1) * 0.16;
+      renderer.render(scene, camera);
+    }
+    tick();
+
+    // let the exit transition finish, then free the GPU
+    function stop() { setTimeout(function () { alive = false; }, 1400); }
+    intro.addEventListener("click", stop, { once: true });
+    window.addEventListener("keydown", stop, { once: true });
+    window.addEventListener("touchend", stop, { once: true });
+
+    window.addEventListener("resize", function () {
+      W = window.innerWidth; H = window.innerHeight;
+      visW = visH * (W / H);
+      camera.aspect = W / H;
+      camera.updateProjectionMatrix();
+      renderer.setSize(W, H);
+    });
+  })();
 
   /* keyboard access for the services cards (script.js listens for pointerup) */
   document.querySelectorAll(".svc-card[role='button']").forEach(function (card) {

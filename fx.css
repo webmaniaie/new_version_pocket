@@ -183,11 +183,17 @@ button:hover > .fx-flip .fl i { transform: translateY(-100%); }
 .us-roster-kicker.fx-hero-display {
   line-height: 0.94;
 }
+:root {
+  /* how far cards get pulled up onto the green heroes */
+  --roster-pull: clamp(96px, 11vw, 168px);
+  --case-pull: clamp(64px, 8vw, 120px);
+}
 .us-refresh-hero {
   align-items: center;
   min-height: 100svh;
   padding-top: 128px;
-  padding-bottom: 80px;
+  /* green extends down; the pulled-up roster lands here, clear of the text */
+  padding-bottom: calc(var(--roster-pull) + clamp(56px, 7vw, 96px));
 }
 .us-refresh-hero .pocket-display.fx-hero-display {
   max-width: 1280px;
@@ -309,7 +315,7 @@ button:hover > .fx-flip .fl i { transform: translateY(-100%); }
   .us-refresh-hero {
     min-height: 76svh;
     padding-top: 132px;
-    padding-bottom: 58px;
+    padding-bottom: calc(var(--roster-pull) + 48px);
   }
   .us-refresh-hero .pocket-display.fx-hero-display {
     font-size: clamp(34px, 9.5vw, 38px);
@@ -332,7 +338,7 @@ button:hover > .fx-flip .fl i { transform: translateY(-100%); }
 .us-roster-section { padding-top: 0; }
 .us-roster-section .pocket-team {
   position: relative; z-index: 3;
-  margin-top: clamp(-130px, -10vw, -74px);
+  margin-top: calc(-1 * var(--roster-pull));
 }
 .us-about-section { padding-top: clamp(40px, 6vw, 80px); }
 
@@ -500,9 +506,9 @@ body.services-page .services-showcase { min-height: auto; display: block; }
   .work-refresh-hero {
     min-height: auto;
     padding-top: 116px;
-    padding-bottom: 34px;
+    padding-bottom: calc(var(--case-pull) + 36px);
   }
-  .work-cases-section { padding-top: 18px; }
+  .work-cases-section { padding-top: 0; }
   .pocket-case { padding: 26px 0; }
 
   /* case videos are square sources — show them square */
@@ -533,6 +539,172 @@ body.services-page .services-showcase { min-height: auto; display: block; }
   .svc-title { font-size: clamp(34px, 10vw, 44px); }
   .svc-list li { font-size: 16px; }
   .svc-blur { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ============================================================
+   REFINEMENT PASS — intro sparkles, green overlaps, footer mark,
+   services card upgrade, case-page popup, SB polish
+   ============================================================ */
+
+/* ---------- intro sits above everything (mobile nav is z-index 999) ---------- */
+.intro { z-index: 2500; }
+
+/* ---------- work page: first case starts on the green ---------- */
+.work-refresh-hero {
+  padding-bottom: calc(var(--case-pull) + clamp(40px, 5vw, 72px));
+}
+.work-cases-section { padding-top: 0; }
+.work-cases-section .pocket-cases {
+  position: relative; z-index: 2;
+  margin-top: calc(-1 * var(--case-pull));
+}
+.work-cases-section .pocket-case:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* ---------- footer pocket© mark: centered + fully visible (desktop) ---------- */
+@media (min-width: 901px) {
+  .pocket-footer { padding-bottom: calc(13vw + 34px); }
+  .pocket-footer-mark {
+    left: 50%; right: auto; bottom: 10px;
+    transform: translateX(-50%);
+    font-size: 13vw;
+    line-height: 0.9;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- services offer cards: upgraded look ---------- */
+.svc-card {
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background-image: radial-gradient(120% 90% at 85% -10%, rgba(255, 255, 255, 0.18), transparent 55%);
+}
+.svc-card::after {
+  content: attr(data-num);
+  position: absolute;
+  right: 16px; bottom: 2px;
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-size: clamp(72px, 8vw, 128px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+/* freelance card goes brand navy so the two offers read differently */
+.services-showcase .smm-card.svc-card.freelance-card {
+  background-color: #0b2c4f;
+}
+.svc-card--freelance .svc-badge { background: var(--green, #00b80d); color: #ffffff; }
+.svc-card--freelance .svc-blur strong { color: #ffffff; }
+.svc-card--freelance .svc-cta { border-color: rgba(255, 255, 255, 0.45); }
+.services-showcase .svc-card--freelance:hover .svc-cta { border-color: var(--green, #00b80d); }
+.svc-case-tag {
+  white-space: normal;
+  line-height: 1.3;
+  max-width: calc(100% - 32px);
+}
+
+/* ---------- case pages: mobile "not optimized" popup ---------- */
+.mobile-project-modal .contact-modal-overlay {
+  background: rgba(11, 11, 11, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.mobile-project-modal .contact-modal-card {
+  width: min(340px, calc(100vw - 40px));
+  padding: 26px 24px 22px;
+  border-radius: 22px;
+  background: var(--white, #ffffff);
+  color: var(--black, #0b0b0b);
+  text-align: left;
+  transform: none;
+  font-family: "Space Grotesk", sans-serif;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.28);
+}
+.mobile-project-modal .contact-modal-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(11, 11, 11, 0.72);
+}
+.mobile-project-modal .contact-modal-card p strong {
+  display: block;
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-size: 21px;
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--black, #0b0b0b);
+}
+.mobile-project-modal .contact-modal-card p:nth-of-type(2) { margin-bottom: 12px; }
+.mobile-project-modal .contact-modal-close {
+  margin-top: 16px;
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--green, #00b80d);
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- SB case page polish (SB palette: green/white + #1977f3 / #ff4fa3) ---------- */
+body.sb-page .sb-carousel-btn {
+  width: 44px; height: 44px;
+  border: 1.5px solid rgba(11, 11, 11, 0.25);
+  border-radius: 50%;
+  background: #ffffff;
+  color: #0b0b0b;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+body.sb-page .sb-carousel-btn:hover {
+  background: var(--green, #00b80d);
+  border-color: var(--green, #00b80d);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+body.sb-page .sb-carousel-item img {
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+body.sb-page .sb-desktop-media-item,
+body.sb-page .sb-mobile-media-item {
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+body.sb-page .sb-desktop-home-vid,
+body.sb-page .sb-mobile-home-vid {
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+}
+body.sb-page .sb-stat-block,
+body.sb-page .sb-mobile-stat-block {
+  border-top: 2px solid rgba(11, 11, 11, 0.85);
+  padding-top: 14px;
+}
+body.sb-page .sb-desktop-continued span,
+body.sb-page .sb-mobile-continued span {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+@media (max-width: 900px) {
+  body.sb-page .sb-mobile-copy,
+  body.sb-page .sb-mobile-branding-copy,
+  body.sb-page .sb-mobile-home-copy {
+    line-height: 1.62;
+  }
+  body.sb-page .sb-mobile-media-grid { gap: 12px; }
 }
 
 /* ---------- reduced motion ---------- */
