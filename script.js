@@ -480,9 +480,10 @@ const isMobileViewport =
     }
   }
 
-  function openServicesModal() {
+  function openServicesModal(showSmmCase = false) {
     ensureServicesModal();
     if (!servicesModal) return;
+    servicesModal.classList.toggle("has-service-case", showSmmCase);
     servicesModal.classList.add("is-open");
     servicesModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
@@ -491,6 +492,7 @@ const isMobileViewport =
   function closeServicesModal() {
     if (!servicesModal) return;
     servicesModal.classList.remove("is-open");
+    servicesModal.classList.remove("has-service-case");
     servicesModal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
     document.documentElement.classList.remove("modal-open");
@@ -532,7 +534,7 @@ const isMobileViewport =
     servicesSmm.addEventListener("pointerup", (event) => {
       if (servicesSmm.dataset.dragMoved === "1") return;
       if (event.pointerType === "mouse" && event.button !== 0) return;
-      openServicesModal();
+      openServicesModal(true);
     });
   }
 
@@ -694,28 +696,149 @@ if (workTrack) {
 }
 
 const sbCarousels = document.querySelectorAll(".sb-carousel");
-sbCarousels.forEach((carousel) => {
+sbCarousels.forEach((carousel, carouselIndex) => {
   const track = carousel.querySelector(".sb-carousel-track");
   const prev = carousel.querySelector("[data-carousel=\"prev\"]");
   const next = carousel.querySelector("[data-carousel=\"next\"]");
-  if (!track) return;
+  const currentLabel = carousel.querySelector("[data-carousel-current]");
+  const totalLabel = carousel.querySelector("[data-carousel-total]");
+  const progress = carousel.querySelector("[data-carousel-progress]");
+  const items = track ? Array.from(track.querySelectorAll(".sb-carousel-item")) : [];
+  if (!track || !items.length) return;
 
-  const getStep = () => {
-    const width = track.getBoundingClientRect().width;
-    return width || 280;
+  const trackId = `sb-carousel-track-${carouselIndex + 1}`;
+  carousel.setAttribute("role", "region");
+  carousel.setAttribute("aria-roledescription", "carousel");
+  track.id = trackId;
+  track.setAttribute("role", "list");
+  prev?.setAttribute("aria-controls", trackId);
+  next?.setAttribute("aria-controls", trackId);
+  items.forEach((item, itemIndex) => {
+    item.setAttribute("role", "listitem");
+    item.setAttribute("aria-roledescription", "slide");
+    item.setAttribute("aria-label", `${itemIndex + 1} of ${items.length}`);
+    item.querySelector("img")?.setAttribute("draggable", "false");
+  });
+
+  let currentIndex = 0;
+  let scrollTimer = null;
+  let programmaticTarget = null;
+  let dragPointerId = null;
+  let dragStartX = 0;
+  let dragStartScrollLeft = 0;
+
+  const formatIndex = (value) => String(value).padStart(2, "0");
+  const getTrackPadding = () =>
+    Number.parseFloat(window.getComputedStyle(track).paddingLeft) || 0;
+
+  const getClosestIndex = () => {
+    const anchor = track.getBoundingClientRect().left + getTrackPadding();
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+    items.forEach((item, itemIndex) => {
+      const distance = Math.abs(item.getBoundingClientRect().left - anchor);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = itemIndex;
+      }
+    });
+    return closestIndex;
   };
 
-  if (prev) {
-    prev.addEventListener("click", () => {
-      track.scrollBy({ left: -getStep(), behavior: "smooth" });
-    });
-  }
+  const updateCarousel = (itemIndex = getClosestIndex()) => {
+    currentIndex = Math.max(0, Math.min(itemIndex, items.length - 1));
+    if (currentLabel) currentLabel.textContent = formatIndex(currentIndex + 1);
+    if (totalLabel) totalLabel.textContent = formatIndex(items.length);
+    if (progress) {
+      progress.style.transform = `scaleX(${(currentIndex + 1) / items.length})`;
+    }
+    if (prev) {
+      prev.disabled = currentIndex === 0;
+      prev.setAttribute("aria-disabled", String(prev.disabled));
+    }
+    if (next) {
+      next.disabled = currentIndex === items.length - 1;
+      next.setAttribute("aria-disabled", String(next.disabled));
+    }
+  };
 
-  if (next) {
-    next.addEventListener("click", () => {
-      track.scrollBy({ left: getStep(), behavior: "smooth" });
-    });
-  }
+  const goToSlide = (itemIndex, behavior = "smooth") => {
+    const safeIndex = Math.max(0, Math.min(itemIndex, items.length - 1));
+    const trackRect = track.getBoundingClientRect();
+    const itemRect = items[safeIndex].getBoundingClientRect();
+    const targetLeft =
+      track.scrollLeft + itemRect.left - trackRect.left - getTrackPadding();
+    window.clearTimeout(scrollTimer);
+    if (Math.abs(targetLeft - track.scrollLeft) < 1) {
+      programmaticTarget = null;
+      updateCarousel(safeIndex);
+      return;
+    }
+    programmaticTarget = safeIndex;
+    track.scrollTo({ left: targetLeft, behavior });
+    updateCarousel(safeIndex);
+  };
+
+  prev?.addEventListener("click", () => goToSlide(currentIndex - 1));
+  next?.addEventListener("click", () => goToSlide(currentIndex + 1));
+
+  track.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goToSlide(currentIndex - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goToSlide(currentIndex + 1);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      goToSlide(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      goToSlide(items.length - 1);
+    }
+  });
+
+  track.addEventListener("scroll", () => {
+    if (programmaticTarget === null) {
+      window.requestAnimationFrame(() => updateCarousel());
+    }
+    window.clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(() => {
+      const settledIndex = programmaticTarget ?? getClosestIndex();
+      programmaticTarget = null;
+      updateCarousel(settledIndex);
+    }, 220);
+  }, { passive: true });
+
+  track.addEventListener("pointerdown", (event) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    dragPointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragStartScrollLeft = track.scrollLeft;
+    track.setPointerCapture(event.pointerId);
+    track.classList.add("is-dragging");
+  });
+
+  track.addEventListener("pointermove", (event) => {
+    if (event.pointerId !== dragPointerId) return;
+    event.preventDefault();
+    track.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX);
+  });
+
+  const finishDrag = (event) => {
+    if (event.pointerId !== dragPointerId) return;
+    if (track.hasPointerCapture(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+    dragPointerId = null;
+    track.classList.remove("is-dragging");
+    goToSlide(getClosestIndex());
+  };
+  track.addEventListener("pointerup", finishDrag);
+  track.addEventListener("pointercancel", finishDrag);
+
+  window.addEventListener("resize", () => goToSlide(currentIndex, "auto"));
+  updateCarousel(0);
 });
 
 if (
@@ -1010,37 +1133,21 @@ if (pocketYear) {
 }
 
 if (document.body.classList.contains("sb-page")) {
-  // The fox stays full-size until the fox itself has been properly on screen
-  // for a moment, then tucks into the pill. (The old scrollY > 0 toggle
-  // collapsed it before anyone ever reached it — it looked like it never
-  // appeared.) Timer cancels if the fox leaves the viewport before firing.
   const foxImages = document.querySelectorAll(
     ".sb-foxfront, .sb-mobile-foxfront"
   );
-  let foxTimer = null;
-  let foxDone = false;
-  const shrinkFox = () => {
-    foxDone = true;
-    document.body.classList.add("sb-fox-shrunk");
-  };
-  if (foxImages.length && "IntersectionObserver" in window) {
-    const foxObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (foxDone) return;
-          // skip the hidden (display:none) twin — it reports zero size
-          if (entry.boundingClientRect.width === 0) return;
-          if (entry.isIntersecting) {
-            if (!foxTimer) foxTimer = window.setTimeout(shrinkFox, 2600);
-          } else if (foxTimer) {
-            window.clearTimeout(foxTimer);
-            foxTimer = null;
-          }
-        });
-      },
-      { threshold: 0.65 }
-    );
-    foxImages.forEach((img) => foxObserver.observe(img));
+  if (foxImages.length) {
+    let lastScrollY = window.scrollY;
+    const shrinkFoxOnScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        document.body.classList.add("sb-fox-shrunk");
+        window.removeEventListener("scroll", shrinkFoxOnScroll);
+        return;
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener("scroll", shrinkFoxOnScroll, { passive: true });
   }
 }
 

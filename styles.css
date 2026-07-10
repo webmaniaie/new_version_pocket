@@ -1382,6 +1382,7 @@ a {
     margin: -40px 0 32px;
     transform: scale(1.82);
     transform-origin: left top;
+    transition: margin-top 0.35s ease;
   }
 
   .sb-mobile-foxfront {
@@ -1432,6 +1433,10 @@ a {
 
   body.sb-page.sb-fox-shrunk .sb-mobile-branding-group .sb-mobile-foxfront {
     transform: translate(calc(-50% + 40px), 82px) scale(0.25);
+  }
+
+  body.sb-page.sb-fox-shrunk .sb-mobile-branding-group {
+    margin-top: 60px;
   }
 
   .sb-mobile-smm-pill {
@@ -1686,25 +1691,29 @@ a {
     display: inline-block;
     margin-top: 48px;
     margin-left: calc(-1 * (50vw - 50%));
-    transform: translateX(-150px) scale(4);
+    transform: translateX(-150px);
     transform-origin: left top;
     z-index: 2;
   }
 
   .sb-foxfront {
     position: absolute;
-    left: 50%;
-    bottom: 100%;
-    width: 190px;
+    /* Render at the final displayed size. Scaling the 190px image via the
+       parent made Safari enlarge a low-resolution intermediate layer. */
+    left: 200%;
+    bottom: calc(100% - 96px);
+    width: 760px;
     height: auto;
-    transform: translate(-50%, 24px);
-    transition: transform 0.25s ease;
+    transform: translateX(-50%);
+    transform-origin: center bottom;
+    transition: bottom 0.25s ease, transform 0.25s ease;
     z-index: 2;
     pointer-events: none;
   }
 
   body.sb-page.sb-fox-shrunk .sb-desktop-branding-group .sb-foxfront {
-    transform: translate(-50%, 94px) scale(0.25);
+    bottom: calc(100% - 20px);
+    transform: translateX(-50%) scale(0.25);
   }
 
   .sb-desktop-extra {
@@ -1828,23 +1837,24 @@ a {
     font-weight: 600;
     text-transform: lowercase;
     letter-spacing: 0.2px;
-    transform: none;
-    transform-origin: center;
+    transform: scale(4);
+    transform-origin: left top;
   }
 
   .sb-desktop-smm-pill {
     display: inline-block;
     margin-top: 148px;
     margin-left: calc(-1 * (50vw - 50%));
-    padding: 10px 22px;
+    padding: 52px 114.4px;
     border-radius: 999px;
     background: #00b80d;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 93.6px;
+    line-height: 114.4px;
     font-weight: 600;
     text-transform: lowercase;
-    letter-spacing: 0.2px;
-    transform: translateX(-150px) scale(5.2);
+    letter-spacing: 1.04px;
+    transform: translateX(-150px);
     transform-origin: left top;
     animation: sbSmmSlide 5.6s ease-in-out infinite;
   }
@@ -1852,10 +1862,10 @@ a {
   @keyframes sbSmmSlide {
     0%,
     100% {
-      transform: translateX(-150px) scale(5.2);
+      transform: translateX(-150px);
     }
     50% {
-      transform: translateX(450px) scale(5.2);
+      transform: translateX(450px);
     }
   }
 
@@ -1880,7 +1890,7 @@ a {
     align-items: start;
     gap: 0;
     width: 100vw;
-    margin-top: 250px;
+    margin-top: 73.6px;
     margin-left: calc(-1 * (50vw - 50%));
     transform: translateX(-200px);
     opacity: 0;
@@ -5378,5 +5388,3 @@ body.us-page {
     border-radius: 22px;
   }
 }
-
-

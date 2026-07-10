@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=9" />
-    <link rel="stylesheet" href="fx.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=12" />
+    <link rel="stylesheet" href="fx.css?v=12" />
   </head>
   <body class="sb-page">
     <header class="site-nav">
@@ -76,7 +76,7 @@
         <div class="sb-desktop-text">
           <div class="sb-desktop-left">
             <p class="sb-desktop-eyebrow">Carlow, Ireland</p>
-            <p class="sb-desktop-location">2025 - Ongoing..</p>
+            <p class="sb-desktop-location">Duration: 3 months &middot; 2025</p>
             <div class="sb-desktop-tags">
               <span>smm managment</span>
               <span>branding</span>
@@ -133,28 +133,39 @@
                 support clear and cohesive communication on social platforms.
               </p>
             </div>
-            <div class="sb-carousel" aria-label="Sweet Baking gallery">
+            <div class="sb-carousel" aria-label="Sweet Baking project gallery">
               <div class="sb-carousel-header">
-                <div class="sb-carousel-actions">
-                  <button
-                    class="sb-carousel-btn"
-                    type="button"
-                    data-carousel="prev"
-                    aria-label="Previous"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    class="sb-carousel-btn"
-                    type="button"
-                    data-carousel="next"
-                    aria-label="Next"
-                  >
-                    ›
-                  </button>
+                <div class="sb-carousel-heading">
+                  <p class="sb-carousel-title">Project gallery</p>
+                  <p class="sb-carousel-hint">Drag, swipe, or use the arrows</p>
+                </div>
+                <div class="sb-carousel-controls">
+                  <span class="sb-carousel-status" aria-live="polite">
+                    <strong data-carousel-current>01</strong>
+                    <span aria-hidden="true">/</span>
+                    <span data-carousel-total>06</span>
+                  </span>
+                  <div class="sb-carousel-actions">
+                    <button
+                      class="sb-carousel-btn"
+                      type="button"
+                      data-carousel="prev"
+                      aria-label="Previous slide"
+                    >
+                      ←
+                    </button>
+                    <button
+                      class="sb-carousel-btn"
+                      type="button"
+                      data-carousel="next"
+                      aria-label="Next slide"
+                    >
+                      →
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="sb-carousel-track" data-track>
+              <div class="sb-carousel-track" data-track tabindex="0" aria-label="Project gallery slides">
                 <figure class="sb-carousel-item">
                   <img src="assets/sweetbaking/1.jpg" alt="Sweet Baking photo 1" />
                 </figure>
@@ -173,6 +184,9 @@
                 <figure class="sb-carousel-item">
                   <img src="assets/sweetbaking/7.jpg" alt="Sweet Baking photo 7" />
                 </figure>
+              </div>
+              <div class="sb-carousel-progress" aria-hidden="true">
+                <span data-carousel-progress></span>
               </div>
             </div>
             <span class="sb-desktop-smm-pill">smm</span>
@@ -259,7 +273,7 @@
         </div>
         <div class="sb-mobile-meta">
           <p>Carlow, Ireland</p>
-          <p>2025 - Ongoing..</p>
+          <p>Duration: 3 months &middot; 2025</p>
         </div>
         <div class="sb-mobile-copy">
           <p>
@@ -316,26 +330,37 @@
           </div>
           <div class="sb-carousel sb-mobile-brandbook-carousel" aria-label="Brandbook gallery">
             <div class="sb-carousel-header">
-              <div class="sb-carousel-actions">
-                <button
-                  class="sb-carousel-btn"
-                  type="button"
-                  data-carousel="prev"
-                  aria-label="Previous"
-                >
-                  ‹
-                </button>
-                <button
-                  class="sb-carousel-btn"
-                  type="button"
-                  data-carousel="next"
-                  aria-label="Next"
-                >
-                  ›
-                </button>
+              <div class="sb-carousel-heading">
+                <p class="sb-carousel-title">Brandbook gallery</p>
+                <p class="sb-carousel-hint">Swipe or use the arrows</p>
+              </div>
+              <div class="sb-carousel-controls">
+                <span class="sb-carousel-status" aria-live="polite">
+                  <strong data-carousel-current>01</strong>
+                  <span aria-hidden="true">/</span>
+                  <span data-carousel-total>03</span>
+                </span>
+                <div class="sb-carousel-actions">
+                  <button
+                    class="sb-carousel-btn"
+                    type="button"
+                    data-carousel="prev"
+                    aria-label="Previous slide"
+                  >
+                    ←
+                  </button>
+                  <button
+                    class="sb-carousel-btn"
+                    type="button"
+                    data-carousel="next"
+                    aria-label="Next slide"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="sb-carousel-track" data-track>
+            <div class="sb-carousel-track" data-track tabindex="0" aria-label="Brandbook gallery slides">
               <figure class="sb-carousel-item">
                 <img src="assets/sweetbaking/brandbook/1.png" alt="Brandbook page 1" />
               </figure>
@@ -345,6 +370,9 @@
               <figure class="sb-carousel-item">
                 <img src="assets/sweetbaking/brandbook/3.png" alt="Brandbook page 3" />
               </figure>
+            </div>
+            <div class="sb-carousel-progress" aria-hidden="true">
+              <span data-carousel-progress></span>
             </div>
           </div>
           <img
@@ -441,9 +469,9 @@
       </div>
     </div>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=12"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script defer src="fx.js?v=9"></script>
+    <script defer src="fx.js?v=10"></script>
   </body>
 </html>
