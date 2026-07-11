@@ -1,6 +1,47 @@
+# Active only on Apache/LiteSpeed hosting (e.g. Hostinger) — GitHub Pages ignores this file.
+
+Options -Indexes
+ServerSignature Off
+
 RewriteEngine On
+
+# Block hidden files and folders (.git, .env, .DS_Store, ...) except .well-known
+RewriteRule (^|/)\.(?!well-known(/|$)) - [F]
+
+# Drop www (redirects straight to https apex)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# Force HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Remove .html extension from URL
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+<IfModule mod_headers.c>
+  # Same policy as the meta tags in the pages, plus frame-ancestors (meta can't carry it)
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  # HSTS: only honored once the site is served over working HTTPS (Let's Encrypt via hPanel).
+  # Any future subdomain of the apex domain must also be HTTPS.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # css/js use ?v=N cache-busting, media files never change in place
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+</IfModule>
