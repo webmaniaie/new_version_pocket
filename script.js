@@ -7,6 +7,34 @@ if (window.self !== window.top) {
   }
 }
 
+// Autoplay rescue: iOS blocks muted autoplay in Low Power Mode / Data Saver and
+// shows a play overlay instead. A play() call inside a real user gesture is always
+// allowed, so retry every background loop on load, tab return, and first tap.
+(() => {
+  const autoVideos = document.querySelectorAll("video[autoplay]");
+  if (!autoVideos.length) return;
+  const playAll = () => {
+    autoVideos.forEach((video) => {
+      if (!video.paused && !video.ended) return;
+      video.muted = true;
+      video.playsInline = true;
+      const attempt = video.play();
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(() => {});
+      }
+    });
+  };
+  window.addEventListener("load", playAll);
+  window.addEventListener("pageshow", playAll);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) playAll();
+  });
+  ["touchend", "pointerup", "click"].forEach((type) => {
+    document.addEventListener(type, playAll, { passive: true, capture: true });
+  });
+  playAll();
+})();
+
 const intro = document.getElementById("intro");
 let introDismissed = false;
 const INTRO_KEY = "pocketIntroSeen";
