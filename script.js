@@ -1,3 +1,12 @@
+// Clickjacking guard: GitHub Pages can't send X-Frame-Options, so refuse to run framed
+if (window.self !== window.top) {
+  try {
+    window.top.location.replace(window.location.href);
+  } catch (error) {
+    document.documentElement.style.display = "none";
+  }
+}
+
 const intro = document.getElementById("intro");
 let introDismissed = false;
 const INTRO_KEY = "pocketIntroSeen";

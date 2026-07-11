@@ -39,15 +39,21 @@
       mx = e.clientX;
       my = e.clientY;
 
+      var draggable = e.target.closest("[data-draggable]");
       var labelled = e.target.closest("[data-cursor]");
       var hoverable = e.target.closest("a, button, [data-hover]");
-      if (labelled) {
+      if (draggable) {
+        cursorLabel.textContent = "Drag";
+        cursorRing.classList.add("is-label", "is-drag");
+        cursorRing.classList.remove("is-hover");
+      } else if (labelled) {
         cursorLabel.textContent = labelled.getAttribute("data-cursor") || "";
         cursorRing.classList.add("is-label");
+        cursorRing.classList.remove("is-drag");
         cursorRing.classList.remove("is-hover");
       } else {
         cursorLabel.textContent = "";
-        cursorRing.classList.remove("is-label");
+        cursorRing.classList.remove("is-label", "is-drag");
         cursorRing.classList.toggle("is-hover", !!hoverable);
       }
     }, { passive: true });
@@ -139,12 +145,21 @@
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
       if (n.nodeType === 3) {
         var frag = document.createDocumentFragment();
-        n.nodeValue.split("").forEach(function (chr) {
-          if (chr.trim() === "") { frag.appendChild(document.createTextNode("\u00a0")); return; }
-          var s = document.createElement("span");
-          s.className = "fx-ch";
-          s.textContent = chr;
-          frag.appendChild(s);
+        n.nodeValue.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(" "));
+            return;
+          }
+          var word = document.createElement("span");
+          word.className = "fx-w";
+          part.split("").forEach(function (chr) {
+            var s = document.createElement("span");
+            s.className = "fx-ch";
+            s.textContent = chr;
+            word.appendChild(s);
+          });
+          frag.appendChild(word);
         });
         node.replaceChild(frag, n);
       } else if (n.nodeType === 1) {
@@ -175,6 +190,14 @@
   function collectFlipWords(root) {
     var words = [];
     root.querySelectorAll(".fx-line-in").forEach(function (line) {
+      var wrappedWords = line.querySelectorAll(".fx-w");
+      if (wrappedWords.length) {
+        wrappedWords.forEach(function (word) {
+          var chars = Array.prototype.slice.call(word.querySelectorAll(".fx-ch"));
+          if (chars.length) words.push(chars);
+        });
+        return;
+      }
       var current = [];
       Array.prototype.slice.call(line.childNodes).forEach(function (node) {
         if (node.nodeType === 1 && node.classList.contains("fx-ch")) {
