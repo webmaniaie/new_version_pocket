@@ -57,6 +57,12 @@ RewriteRule ^([^\.]+)$ $1.php [NC,L]
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set Cross-Origin-Resource-Policy "same-origin"
+
+  # Only the contact page may post off-site. Every other public page keeps
+  # form-action 'none'; /admin has a separate, self-only policy below it.
+  <Files "contacts.html">
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action https://formsubmit.co; upgrade-insecure-requests"
+  </Files>
 </IfModule>
 
 <IfModule mod_expires.c>

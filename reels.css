@@ -2017,6 +2017,16 @@ body.learn-page {
   max-width: 640px;
 }
 
+/* FormSubmit's bot trap must exist in the DOM but never be reachable by a
+   visitor or keyboard user. Real people leave it empty; simple bots do not. */
+.contact-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 .contact-field {
   position: relative;
 }
@@ -2221,6 +2231,13 @@ body.learn-page {
 
 .contact-submit:active {
   transform: translateY(0);
+}
+
+.contact-submit:disabled {
+  cursor: wait;
+  opacity: 0.66;
+  transform: none;
+  box-shadow: none;
 }
 
 .contact-consent {

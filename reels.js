@@ -17,14 +17,16 @@
   }
 
   /* ---------------- 2. contact form ----------------
-     There is no backend, and the page CSP sets form-action 'none', so a
-     native submit is blocked by design. Instead we validate here and hand
-     the enquiry to the visitor's mail client with everything filled in. */
+     GitHub Pages cannot send mail itself. The form posts to FormSubmit,
+     which keeps mail credentials and user input away from this site. We do
+     client-side validation for good feedback; the provider still performs
+     the security checks, reCAPTCHA and honeypot handling server-side. */
   var contactForm = document.getElementById("contact-form");
   if (contactForm) {
     var note = document.getElementById("cf-note");
     var service = document.getElementById("cf-service");
     var serviceMenu = document.getElementById("cf-service-menu");
+    var serviceInput = document.getElementById("cf-service-value");
     var serviceValue = "";
 
     // Custom listbox: a native <select> let the OS draw its menu upward, over
@@ -53,6 +55,7 @@
           o.setAttribute("aria-selected", String(o === option));
         });
         serviceValue = option.textContent.trim();
+        if (serviceInput) serviceInput.value = serviceValue;
         service.textContent = serviceValue;
         service.classList.add("has-value");
         closeMenu();
@@ -125,6 +128,7 @@
             o.setAttribute("aria-selected", String(o === preset));
           });
           serviceValue = preset.textContent.trim();
+          if (serviceInput) serviceInput.value = serviceValue;
           service.textContent = serviceValue;
           service.classList.add("has-value");
         }
@@ -137,8 +141,16 @@
       note.classList.toggle("is-error", !!isError);
     };
 
+    // FormSubmit redirects back with this flag after the protected request.
+    // Remove it from the address bar so a refresh does not repeat the notice.
+    if (/[?&]sent=1(?:&|$)/.test(window.location.search)) {
+      say("Thanks — your enquiry is in. Check your inbox for confirmation.", false);
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
     contactForm.addEventListener("submit", function (event) {
-      event.preventDefault();
       var get = function (id) {
         var el = document.getElementById(id);
         return el ? el.value.trim() : "";
@@ -150,40 +162,42 @@
       var message = get("cf-message");
       var consent = document.getElementById("cf-consent");
 
-      if (!name) return say("Add your name so we know who we're talking to.", true);
+      if (!name) {
+        event.preventDefault();
+        return say("Add your name so we know who we're talking to.", true);
+      }
       if (!email || email.indexOf("@") < 1 || email.indexOf(".") < 0) {
+        event.preventDefault();
         return say("That email doesn't look right — check it and try again.", true);
       }
       if (consent && !consent.checked) {
+        event.preventDefault();
         return say("Tick the box so we're allowed to reply.", true);
       }
 
-      var lines = [
-        "Name: " + name,
-        "Email: " + email,
-        phone ? "Phone: +353 " + phone : "",
-        picked ? "Service: " + picked : "",
-        "",
-        message || "(no project details yet)",
-      ].filter(Boolean);
+      // Reject non-printing control characters. Newlines remain allowed in
+      // the message body, but no typed value is ever used as a mail header.
+      var unsafeControls = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+      if ([name, email, phone, message].some(function (value) {
+        return unsafeControls.test(value);
+      })) {
+        event.preventDefault();
+        return say("Remove unsupported characters and try again.", true);
+      }
 
-      var subject = "New enquiry" + (picked ? " — " + picked : "") + " (" + name + ")";
-      say("Opening your email app with the details filled in…", false);
-      window.location.href =
-        "mailto:platon.tsuz@gmail.com?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(lines.join("\n"));
+      if (!contactForm.checkValidity()) {
+        event.preventDefault();
+        contactForm.reportValidity();
+        return say("Check the highlighted fields and try again.", true);
+      }
 
-      // not everyone has a mail client wired up — leave them a way through
-      window.setTimeout(function () {
-        if (!note) return;
-        note.textContent = "Nothing opened? Write to us at ";
-        var link = document.createElement("a");
-        link.href = "mailto:platon.tsuz@gmail.com";
-        link.textContent = "platon.tsuz@gmail.com";
-        note.appendChild(link);
-      }, 2500);
+      if (serviceInput) serviceInput.value = picked;
+      var submit = contactForm.querySelector(".contact-submit");
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = "Sending…";
+      }
+      say("Sending securely…", false);
     });
   }
 
