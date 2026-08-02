@@ -1,6 +1,8 @@
 .DS_Store
 assets/.DS_Store
 .fuse_hidden*
+work/
+admin/.install-token
 codex 3.zip
 assets/about us/anastasia.mp4
 assets/about us/dasha.mp4

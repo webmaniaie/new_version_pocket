@@ -16,10 +16,34 @@ RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+# --- blog -----------------------------------------------------------
+# Post sources, the engine and the archived hand-built pages are never
+# served: they are read by PHP, not by the browser.
+RewriteRule ^(posts|lib|_archive)(/|$) - [F]
+
+# Old hand-built blog URLs keep working
+RewriteRule ^learn\.html$ /learn [R=301,L]
+RewriteRule ^learn-hooks\.html$ /learn/hooks [R=301,L]
+
+# /learn and /learn/<slug>
+RewriteRule ^learn/?$ learn.php [L]
+RewriteRule ^learn/([a-z0-9][a-z0-9-]*)/?$ post.php?slug=$1 [L,QSA]
+
+# Feeds are generated, not files
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^rss\.xml$ rss.php [L]
+RewriteRule ^robots\.txt$ robots.php [L]
+
+# --- clean URLs ------------------------------------------------------
 # Remove .html extension from URL
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Same for .php, so /learn never shows an extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 <IfModule mod_headers.c>
   # Same policy as the meta tags in the pages, plus frame-ancestors (meta can't carry it)

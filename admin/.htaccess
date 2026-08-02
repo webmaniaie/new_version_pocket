@@ -1,0 +1,15 @@
+# The admin is the one place on the site that posts a form, so it needs a
+# CSP of its own — the site-wide one sets form-action 'none'. Everything
+# else here is tightened rather than loosened: no CDN scripts, no frames,
+# and the pages are marked noindex in their markup as well.
+
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Header always set X-Robots-Tag "noindex, nofollow"
+  Header always set Cache-Control "no-store"
+</IfModule>
+
+# Never cache an admin screen
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>

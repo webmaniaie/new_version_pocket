@@ -37,7 +37,7 @@ if (window.self !== window.top) {
 
 const intro = document.getElementById("intro");
 let introDismissed = false;
-const INTRO_KEY = "pocketIntroSeen";
+const INTRO_KEY = "reelsIntroSeen";
 const isSameOriginReferrer = (() => {
   try {
     return (
@@ -589,12 +589,7 @@ contactLinks.forEach((link) => {
   });
 });
 
-const homeBannerCta = document.querySelector(".home-banner-cta");
-if (homeBannerCta) {
-  homeBannerCta.addEventListener("click", () => {
-    openServicesModal();
-  });
-}
+// the banner CTA is a plain link to contacts.html — no modal
 
 if (servicesOverlay) {
   servicesOverlay.addEventListener("click", closeServicesModal);
@@ -1157,16 +1152,16 @@ if (homeMobileVideoWrap) {
   }
 }
 
-const pocketToTop = document.querySelectorAll(".pocket-to-top");
-pocketToTop.forEach((button) => {
+const reelsToTop = document.querySelectorAll(".reels-to-top");
+reelsToTop.forEach((button) => {
   button.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
-const pocketYear = document.querySelector("[data-year]");
-if (pocketYear) {
-  pocketYear.textContent = new Date().getFullYear();
+const reelsYear = document.querySelector("[data-year]");
+if (reelsYear) {
+  reelsYear.textContent = new Date().getFullYear();
 }
 
 if (document.body.classList.contains("sb-page")) {
@@ -1174,17 +1169,18 @@ if (document.body.classList.contains("sb-page")) {
     ".sb-foxfront, .sb-mobile-foxfront"
   );
   if (foxImages.length) {
-    let lastScrollY = window.scrollY;
-    const shrinkFoxOnScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
-        document.body.classList.add("sb-fox-shrunk");
-        window.removeEventListener("scroll", shrinkFoxOnScroll);
-        return;
-      }
-      lastScrollY = currentScrollY;
+    let foxScrollFrame = null;
+    const syncFoxScrollState = () => {
+      document.body.classList.toggle("sb-fox-shrunk", window.scrollY > 24);
+      foxScrollFrame = null;
     };
-    window.addEventListener("scroll", shrinkFoxOnScroll, { passive: true });
+    const requestFoxScrollSync = () => {
+      if (foxScrollFrame !== null) return;
+      foxScrollFrame = window.requestAnimationFrame(syncFoxScrollState);
+    };
+    window.addEventListener("scroll", requestFoxScrollSync, { passive: true });
+    window.addEventListener("pageshow", syncFoxScrollState);
+    syncFoxScrollState();
   }
 }
 
@@ -1492,3 +1488,168 @@ if (document.readyState === "loading") {
 } else {
   initWorkCanvas();
 }
+
+/* ---------------------------------------------------- case cover nav fade
+   The nav pill is fixed over the top of the page, so on a case page it
+   overlaps the cover clip. While it does, body.at-cover drops it to 30%
+   opaque (see reels.css). Measured against the nav's own box rather than a
+   fixed offset so it stays right if the pill's size or top changes. */
+(() => {
+  const cover = document.querySelector(".case-cover");
+  const nav = document.querySelector(".site-nav");
+  if (!cover || !nav) return;
+
+  const update = () => {
+    const overlapping =
+      cover.getBoundingClientRect().bottom > nav.getBoundingClientRect().bottom;
+    document.body.classList.toggle("at-cover", overlapping);
+  };
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+})();
+
+/* ------------------------------------------------------- reel lightbox
+   Tap a reel in a case gallery and it plays centred over a dimmed page.
+   The grid videos are silent previews with no controls, so the whole card
+   is one tap target; the full player lives in the lightbox. */
+(() => {
+  const cards = document.querySelectorAll(".case-reel-card");
+  if (!cards.length) return;
+
+  const box = document.createElement("div");
+  box.className = "reel-lightbox";
+  box.setAttribute("aria-hidden", "true");
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.setAttribute("aria-label", "Reel player");
+
+  const backdrop = document.createElement("div");
+  backdrop.className = "reel-lightbox-backdrop";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "reel-lightbox-close";
+  closeBtn.type = "button";
+  closeBtn.setAttribute("aria-label", "Close");
+  closeBtn.innerHTML = "&times;";
+
+  const stage = document.createElement("div");
+  stage.className = "reel-lightbox-stage";
+
+  box.append(backdrop, closeBtn, stage);
+  document.body.appendChild(box);
+
+  let playing = null;
+  let lastFocus = null;
+
+  const close = () => {
+    if (!box.classList.contains("is-open")) return;
+    box.classList.remove("is-open");
+    box.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("has-lightbox");
+    if (playing) {
+      playing.pause();
+      playing.remove();
+      playing = null;
+    }
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  };
+
+  const open = (card) => {
+    const source = card.querySelector("video");
+    const src = source && source.getAttribute("src");
+    if (!src) return;
+
+    // opening while one is already up would orphan the previous video in the
+    // stage, where it keeps playing audio out of sight
+    if (playing) {
+      playing.pause();
+      playing.remove();
+      playing = null;
+    }
+
+    lastFocus = document.activeElement;
+    playing = document.createElement("video");
+    playing.className = "reel-lightbox-video";
+    playing.src = src;
+    playing.controls = true;
+    playing.loop = true;
+    playing.playsInline = true;
+    stage.appendChild(playing);
+
+    box.classList.add("is-open");
+    box.setAttribute("aria-hidden", "false");
+    document.body.classList.add("has-lightbox");
+    closeBtn.focus();
+
+    // opening is a user gesture, so sound is allowed; fall back to muted
+    // if the browser refuses anyway
+    const started = playing.play();
+    if (started && started.catch) {
+      started.catch(() => {
+        if (!playing) return;
+        playing.muted = true;
+        playing.play();
+      });
+    }
+  };
+
+  cards.forEach((card) => {
+    card.classList.add("is-tappable");
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    const label = card.querySelector("video");
+    // the grid is a silent preview — native controls would swallow the tap
+    // and hand the card back to the browser's own player. Stripped here as
+    // well as in the markup so a cached page still behaves.
+    if (label) {
+      label.removeAttribute("controls");
+      label.controls = false;
+    }
+    card.setAttribute(
+      "aria-label",
+      "Play " + ((label && label.getAttribute("aria-label")) || "this reel")
+    );
+    card.addEventListener("click", () => open(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open(card);
+      }
+    });
+  });
+
+  backdrop.addEventListener("click", close);
+  closeBtn.addEventListener("click", close);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") close();
+  });
+})();
+
+/* ------------------------------------------------- client counter motion
+   The number roll is gated on .client-counter.visible in reels.css. That
+   class used to come from the site-wide .reveal observer, which went away
+   with the fade-ins — so the counter sat frozen on its faded "0". This is
+   its own trigger, unrelated to any fade. */
+(() => {
+  const counter = document.querySelector(".client-counter");
+  if (!counter) return;
+
+  if (!("IntersectionObserver" in window)) {
+    counter.classList.add("visible");
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        counter.classList.add("visible");
+        io.disconnect();
+      });
+    },
+    { threshold: 0.25 }
+  );
+  io.observe(counter);
+})();
