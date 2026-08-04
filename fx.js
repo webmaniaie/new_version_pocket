@@ -74,7 +74,7 @@
   var prog = document.createElement("div");
   prog.className = "fx-progress";
   prog.setAttribute("aria-hidden", "true");
-  prog.innerHTML = "<span></span>";
+  prog.appendChild(document.createElement("span"));
   document.body.appendChild(prog);
   var progBar = prog.firstChild;
   function updateBar() {
@@ -299,7 +299,7 @@
       "aria-label",
       authoredLines.map(function (line) { return line.text; }).join(" ")
     );
-    banner.innerHTML = "";
+    banner.replaceChildren();
 
     function mkLine(txt, serif) {
       var line = document.createElement("span");
@@ -418,7 +418,7 @@
 
     function canvasFallback() {
       holder.classList.add("fx-webgl-fallback");
-      holder.innerHTML = "";
+      holder.replaceChildren();
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
       if (!ctx) return;

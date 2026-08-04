@@ -5,7 +5,8 @@
   var select = document.getElementById("cf-country-code");
   var countryInput = document.getElementById("cf-phone-country");
   var codeDisplay = document.getElementById("cf-country-code-value");
-  if (!select) return;
+  var picker = select ? select.parentNode : null;
+  if (!select || !picker || !codeDisplay) return;
 
   countries.sort(function (a, b) {
     return a[2].localeCompare(b[2], "en");
@@ -25,6 +26,91 @@
   while (select.firstChild) select.removeChild(select.firstChild);
   select.appendChild(fragment);
 
+  var menu = document.createElement("div");
+  menu.className = "contact-country-menu";
+  menu.id = "cf-country-code-menu";
+  menu.hidden = true;
+
+  var search = document.createElement("input");
+  search.className = "contact-country-search";
+  search.type = "search";
+  search.placeholder = "Search country or code";
+  search.setAttribute("aria-label", "Search countries");
+  search.autocomplete = "off";
+
+  var list = document.createElement("div");
+  list.className = "contact-country-list";
+  list.setAttribute("role", "listbox");
+  list.setAttribute("aria-label", "Country calling codes");
+
+  menu.appendChild(search);
+  menu.appendChild(list);
+  picker.appendChild(menu);
+  picker.classList.add("has-custom-picker");
+  codeDisplay.setAttribute("aria-controls", menu.id);
+
+  var closeMenu = function () {
+    menu.hidden = true;
+    picker.classList.remove("is-open");
+    codeDisplay.setAttribute("aria-expanded", "false");
+  };
+
+  var renderOptions = function (query) {
+    var wanted = (query || "").trim().toLowerCase();
+    var matches = [];
+    Array.prototype.forEach.call(select.options, function (option, index) {
+      var haystack = (option.textContent + " " + option.value).toLowerCase();
+      if (!wanted || haystack.indexOf(wanted) !== -1) {
+        matches.push({ option: option, index: index });
+      }
+    });
+
+    while (list.firstChild) list.removeChild(list.firstChild);
+
+    if (!matches.length) {
+      var empty = document.createElement("p");
+      empty.className = "contact-country-empty";
+      empty.textContent = "No countries found";
+      list.appendChild(empty);
+      return;
+    }
+
+    matches.forEach(function (match) {
+      var button = document.createElement("button");
+      button.className = "contact-country-option";
+      button.type = "button";
+      button.setAttribute("role", "option");
+      button.setAttribute("aria-selected", String(match.index === select.selectedIndex));
+
+      var name = document.createElement("span");
+      name.textContent = match.option.dataset.country || "";
+
+      var code = document.createElement("strong");
+      code.textContent = match.option.value;
+
+      button.appendChild(name);
+      button.appendChild(code);
+      button.addEventListener("click", function () {
+        select.selectedIndex = match.index;
+        syncCountry();
+        closeMenu();
+        codeDisplay.focus();
+      });
+      list.appendChild(button);
+    });
+  };
+
+  var openMenu = function () {
+    renderOptions("");
+    search.value = "";
+    menu.hidden = false;
+    picker.classList.add("is-open");
+    codeDisplay.setAttribute("aria-expanded", "true");
+    window.setTimeout(function () {
+      search.focus();
+    }, 0);
+  };
+
   var syncCountry = function () {
     var selected = select.options[select.selectedIndex];
     if (countryInput && selected) {
@@ -32,9 +118,49 @@
     }
     if (codeDisplay && selected) {
       codeDisplay.textContent = "(" + selected.value + ")";
+      codeDisplay.setAttribute(
+        "aria-label",
+        (selected.dataset.country || "Country") + " " + selected.value + ". Change country calling code"
+      );
     }
   };
 
   select.addEventListener("change", syncCountry);
+  codeDisplay.addEventListener("click", function () {
+    if (menu.hidden) openMenu();
+    else closeMenu();
+  });
+  codeDisplay.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openMenu();
+    }
+  });
+  search.addEventListener("input", function () {
+    renderOptions(search.value);
+  });
+  search.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeMenu();
+      codeDisplay.focus();
+    } else if (event.key === "ArrowDown") {
+      var first = list.querySelector("button");
+      if (first) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  menu.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeMenu();
+      codeDisplay.focus();
+    }
+  });
+  document.addEventListener("click", function (event) {
+    if (!menu.hidden && !picker.contains(event.target)) closeMenu();
+  });
   syncCountry();
 })();

@@ -26,18 +26,22 @@ $written = false;
 $manual  = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_check();
     $token    = trim((string) ($_POST['token'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');
     $confirm  = (string) ($_POST['confirm'] ?? '');
     $expected = is_file(TOKEN_FILE) ? trim((string) file_get_contents(TOKEN_FILE)) : '';
 
-    if ($expected === '') {
+    if (login_attempts() >= LOGIN_MAX_TRIES) {
+        $error = 'Too many attempts. Try again in 15 minutes.';
+    } elseif ($expected === '') {
         $error = 'admin/.install-token is missing. Re-upload it, then reload this page.';
     } elseif (!hash_equals($expected, $token)) {
+        login_record_failure();
         $error = 'That install token does not match.';
         sleep(1);
-    } elseif (strlen($password) < 12) {
-        $error = 'Use at least 12 characters.';
+    } elseif (strlen($password) < 15) {
+        $error = 'Use at least 15 characters.';
     } elseif ($password !== $confirm) {
         $error = 'The two passwords do not match.';
     } else {
@@ -49,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (@file_put_contents(PRIVATE_CONFIG, $php, LOCK_EX) !== false) {
             @chmod(PRIVATE_CONFIG, 0600);
             @unlink(TOKEN_FILE);   // the token has done its job
+            login_clear_failures();
             $written = true;
         } else {
             // Some hosts do not let PHP write above the web root. Fall
@@ -64,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; script-src-attr 'none'; style-src 'self'; style-src-attr 'none'; img-src 'self'; base-uri 'none'; form-action 'self'; object-src 'none'; frame-src 'none'" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Set up the blog admin</title>
     <link rel="stylesheet" href="<?= BASE ?>/admin/admin.css?v=<?= ASSET_V ?>" />
@@ -90,18 +95,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="hint">Open <code>admin/.install-token</code> in hPanel File Manager and paste
         what is inside it here. Then pick the password you will use to publish.</p>
       <form method="post" action="<?= BASE ?>/admin/setup.php">
+        <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>" />
         <label for="token">Install token</label>
         <input id="token" name="token" type="text" required autocomplete="off" autofocus />
 
         <label for="password">New password</label>
-        <input id="password" name="password" type="password" required autocomplete="new-password" minlength="12" />
+        <input id="password" name="password" type="password" required autocomplete="new-password" minlength="15" />
 
         <label for="confirm">Again</label>
-        <input id="confirm" name="confirm" type="password" required autocomplete="new-password" minlength="12" />
+        <input id="confirm" name="confirm" type="password" required autocomplete="new-password" minlength="15" />
 
         <button type="submit">Set password</button>
       </form>
-      <p class="hint">At least 12 characters. Use a password manager — there is no reset link,
+      <p class="hint">At least 15 characters. Use a password manager — there is no reset link,
         and recovering means deleting <code>reels-blog-config.php</code> and starting this page again.</p>
 <?php endif; ?>
 <?php endif; ?>

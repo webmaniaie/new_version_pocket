@@ -45,36 +45,55 @@ render_head([
         $accent = post_accent($post, $i);
         $reelCls = 'learn-reel'
                  . ($accent === 'plain' ? '' : ' learn-reel--' . $accent)
+                 . ($post['cover'] !== '' ? ' learn-reel--media' : '')
                  . ' reveal';
         $top = '/ ' . sprintf('%02d', $i + 1) . ' &middot; ' . e($post['tag']);
         $url = post_url($post);
+        $cover = safe_url($post['cover']);
+        $coverIsVideo = $cover !== '' && preg_match('/\.(mp4|m4v|webm)$/i', $cover);
 ?>
         <article class="learn-slide">
 <?php if ($post['teaser']): ?>
           <div class="<?= $reelCls ?>">
+<?php if ($cover !== ''): ?>
+            <div class="learn-reel-media" aria-hidden="true">
+<?php if ($coverIsVideo): ?>
+              <video src="<?= e($cover) ?>" autoplay muted loop playsinline preload="metadata"></video>
+<?php else: ?>
+              <img src="<?= e($cover) ?>" alt="" loading="lazy" decoding="async" />
+<?php endif; ?>
+            </div>
+<?php endif; ?>
             <div class="learn-reel-top">
               <span><?= $top ?></span>
               <span><?= e($post['read']) ?></span>
             </div>
-            <h3 class="learn-reel-title"><?= title_with_em($post) ?></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Dropping soon</span><span aria-hidden="true">&middot;&middot;&middot;</span></div>
           </div>
 <?php else: ?>
           <a class="<?= $reelCls ?>" href="<?= e($url) ?>" data-cursor="Read">
+<?php if ($cover !== ''): ?>
+            <div class="learn-reel-media" aria-hidden="true">
+<?php if ($coverIsVideo): ?>
+              <video src="<?= e($cover) ?>" autoplay muted loop playsinline preload="metadata"></video>
+<?php else: ?>
+              <img src="<?= e($cover) ?>" alt="" loading="lazy" decoding="async" />
+<?php endif; ?>
+            </div>
+<?php endif; ?>
             <div class="learn-reel-top">
               <span><?= $top ?></span>
               <span><?= e($post['read']) ?></span>
             </div>
-            <h3 class="learn-reel-title"><?= title_with_em($post) ?></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Read it</span><span aria-hidden="true">&#8599;&#65038;</span></div>
           </a>
@@ -90,7 +109,7 @@ render_head([
 <?php if ($post['teaser']): ?>
             <p class="reels-mt-sm"><span class="reels-soon">Dropping soon</span></p>
 <?php else: ?>
-            <p class="reels-mt-sm"><a class="reels-button" href="<?= e($url) ?>">Read the post &#8599;&#65038;</a></p>
+            <p class="learn-post-cta"><a class="reels-button" href="<?= e($url) ?>">Read the post &#8599;&#65038;</a></p>
 <?php endif; ?>
           </div>
         </article>

@@ -1532,7 +1532,7 @@ if (document.readyState === "loading") {
   closeBtn.className = "reel-lightbox-close";
   closeBtn.type = "button";
   closeBtn.setAttribute("aria-label", "Close");
-  closeBtn.innerHTML = "&times;";
+  closeBtn.textContent = "\u00d7";
 
   const stage = document.createElement("div");
   stage.className = "reel-lightbox-stage";

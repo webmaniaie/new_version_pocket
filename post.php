@@ -31,21 +31,21 @@ if ($post === null) {
     ?>
     <main class="site">
       <section class="case-hero">
-        <p class="reels-label reveal">404</p>
-        <h1 class="reels-display fx-hero-display">
+        <p class="reels-label">404</p>
+        <h1 class="reels-display">
           <span>Not</span>
           <span data-fx-serif>here.</span>
         </h1>
       </section>
       <section class="reels-section reels-section--white">
-        <p class="reels-body reveal">That post has moved or never existed.</p>
+        <p class="reels-body">That post has moved or never existed.</p>
         <div class="reels-mt">
           <a class="reels-button reels-button--outline" href="<?= BASE ?>/learn">&#8592;&#65038; All posts</a>
         </div>
       </section>
     </main>
 <?php
-    render_footer();
+    render_footer(false);
     exit;
 }
 
@@ -68,6 +68,8 @@ render_head([
     'canonical'   => site_url(post_url($post)),
     'type'        => 'article',
     'published'   => $post['date'],
+    'author'      => $post['author'],
+    'theme_color' => '#16215e',
     'image'       => $post['cover'] !== ''
         ? site_url(safe_url($post['cover']))
         : site_url(BASE . '/assets/logo-nav.svg'),
@@ -76,25 +78,20 @@ render_head([
 
     <main class="site">
       <section class="case-hero">
-        <p class="reels-label reveal"><?= e(implode(' · ', $metaBits)) ?></p>
-        <h1 class="reels-display fx-hero-display">
+        <p class="reels-label"><?= e(implode(' · ', $metaBits)) ?></p>
+        <h1 class="reels-display">
           <span><?= e($post['lead']) ?></span>
 <?php if ($post['serif'] !== '' && $post['lead'] !== $post['title']): ?>
-          <span data-fx-serif><?= e($post['serif']) ?></span>
+          <span class="post-title-serif"><?= e($post['serif']) ?></span>
 <?php endif; ?>
         </h1>
+        <p class="post-author">By <?= e($post['author']) ?></p>
 <?php if ($post['topics'] !== []): ?>
         <div class="case-hero-meta">
           <?php foreach ($post['topics'] as $t): ?><span><?= e((string) $t) ?></span><?php endforeach; ?>
         </div>
 <?php endif; ?>
       </section>
-
-<?php if ($post['cover'] !== ''): ?>
-      <section class="reels-section reels-section--white reels-section--tight-top">
-<?= render_figure($post['title'], $post['cover'], '') ?>
-      </section>
-<?php endif; ?>
 
 <?= $post['html'] ?>
 
@@ -108,4 +105,4 @@ render_head([
       </section>
     </main>
 
-<?php render_footer(); ?>
+<?php render_footer(false); ?>

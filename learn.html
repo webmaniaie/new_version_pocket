@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Learn: Hooks, Formats & Retention | reels agency</title>
     <meta name="description" content="Free short-form video strategy from the people making it: how to write hooks, build repeatable formats, film with one phone and read retention over likes." />
@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css?v=65" />
     <link rel="stylesheet" href="fx.css?v=65" />
-    <link rel="stylesheet" href="reels.css?v=68" />
+    <link rel="stylesheet" href="reels.css?v=79" />
   </head>
   <body class="learn-page">
     <header class="site-nav">
@@ -84,16 +84,18 @@
 
       <div class="learn-feed">
         <article class="learn-slide">
-          <a class="learn-reel reveal" href="learn-hooks.html" data-cursor="Read">
+          <a class="learn-reel learn-reel--media reveal" href="learn-hooks.html" data-cursor="Read">
+            <div class="learn-reel-media" aria-hidden="true">
+              <video src="assets/optimized/sb_video1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            </div>
             <div class="learn-reel-top">
               <span>/ 01 &middot; Hooks</span>
               <span>4 min</span>
             </div>
-            <h3 class="learn-reel-title">The first <em>two seconds</em></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Read it</span><span aria-hidden="true">&#8599;&#65038;</span></div>
           </a>
@@ -101,20 +103,22 @@
             <div class="learn-slide-meta"><span>Hooks</span><span>Retention</span><span>Scripting</span></div>
             <h2>The first <em>two seconds</em></h2>
             <p>Retention is decided before your viewer knows what they are watching. What a hook has to do, the four that keep working, and how to test one without reshooting the whole reel.</p>
-            <p class="reels-mt-sm"><a class="reels-button" href="learn-hooks.html">Read the post &#8599;&#65038;</a></p>
+            <p class="learn-post-cta"><a class="reels-button" href="learn-hooks.html">Read the post &#8599;&#65038;</a></p>
           </div>
         </article>
         <article class="learn-slide">
-          <div class="learn-reel learn-reel--pink reveal">
+          <div class="learn-reel learn-reel--pink learn-reel--media reveal">
+            <div class="learn-reel-media" aria-hidden="true">
+              <video src="assets/optimized/home_vid.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            </div>
             <div class="learn-reel-top">
               <span>/ 02 &middot; Virality</span>
               <span>5 min</span>
             </div>
-            <h3 class="learn-reel-title">Virality is a <em>format</em>, not luck</h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Dropping soon</span><span aria-hidden="true">&middot;&middot;&middot;</span></div>
           </div>
@@ -126,16 +130,18 @@
           </div>
         </article>
         <article class="learn-slide">
-          <div class="learn-reel learn-reel--navy reveal">
+          <div class="learn-reel learn-reel--navy learn-reel--media reveal">
+            <div class="learn-reel-media" aria-hidden="true">
+              <video src="assets/optimized/sb_backstage_01.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            </div>
             <div class="learn-reel-top">
               <span>/ 03 &middot; Filming</span>
               <span>6 min</span>
             </div>
-            <h3 class="learn-reel-title">One phone is <em>enough</em></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Dropping soon</span><span aria-hidden="true">&middot;&middot;&middot;</span></div>
           </div>
@@ -147,16 +153,18 @@
           </div>
         </article>
         <article class="learn-slide">
-          <div class="learn-reel reveal">
+          <div class="learn-reel learn-reel--media reveal">
+            <div class="learn-reel-media" aria-hidden="true">
+              <video src="assets/optimized/sb_video2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            </div>
             <div class="learn-reel-top">
               <span>/ 04 &middot; Numbers</span>
               <span>4 min</span>
             </div>
-            <h3 class="learn-reel-title">Read <em>retention</em>, not likes</h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;&#65038;</i>
-              <i>&#128172;&#65038;</i>
-              <i>&#8631;&#65038;</i>
+              <i class="learn-action-like"></i>
+              <i class="learn-action-comment"></i>
+              <i class="learn-action-share"></i>
             </div>
             <div class="learn-reel-foot"><span>Dropping soon</span><span aria-hidden="true">&middot;&middot;&middot;</span></div>
           </div>
@@ -214,11 +222,11 @@
       </div>
     </div>
 
-    <script src="script.js?v=65"></script>
+    <script src="script.js?v=73"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
-    <script defer src="fx.js?v=65"></script>
+    <script defer src="fx.js?v=73"></script>
     <script defer src="reels.js?v=68"></script>
   </body>
 </html>

@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>How to Write a Reel Hook: The First Two Seconds | reels agency</title>
     <meta name="description" content="Retention is decided before your viewer knows what they are watching. The three jobs a hook must do, four hook shapes that keep working, and how to test one." />
-    <meta name="theme-color" content="#ff7aac" />
+    <meta name="theme-color" content="#16215e" />
+    <meta name="author" content="Platon Tsuz" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="reels agency" />
     <meta property="og:locale" content="en_IE" />
@@ -24,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css?v=65" />
     <link rel="stylesheet" href="fx.css?v=65" />
-    <link rel="stylesheet" href="reels.css?v=68" />
+    <link rel="stylesheet" href="reels.css?v=79" />
   </head>
   <body class="learn-post-page">
     <header class="site-nav">
@@ -72,11 +73,12 @@
 
     <main class="site">
       <section class="case-hero">
-        <p class="reels-label reveal">Learn &middot; 01 &middot; Hooks &middot; 4 min</p>
-        <h1 class="reels-display fx-hero-display">
+        <p class="reels-label">Learn &middot; 01 &middot; Hooks &middot; 4 min</p>
+        <h1 class="reels-display">
           <span>The first</span>
-          <span data-fx-serif>two seconds.</span>
+          <span class="post-title-serif">two seconds.</span>
         </h1>
+        <p class="post-author">By Platon Tsuz</p>
         <div class="case-hero-meta">
           <span>Hooks</span><span>Retention</span><span>Scripting</span>
         </div>
@@ -98,58 +100,40 @@
             </p>
           </div>
           <div class="reel-portrait reveal">
-            <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/sb_video1.mp4"></video>
-          </div>
-        </div>
-      </section>
-
-      <section class="reels-section reels-section--pink">
-        <p class="reels-label reveal">What a hook has to do</p>
-        <h2 class="reels-heading reveal">Three jobs, <em>two seconds.</em></h2>
-        <div class="reels-stats reels-stats--three reels-mt">
-          <div class="reels-stat reveal">
-            <strong>01</strong>
-            <span>Make a promise worth waiting for</span>
-          </div>
-          <div class="reels-stat reveal">
-            <strong>02</strong>
-            <span>Show the payoff exists</span>
-          </div>
-          <div class="reels-stat reveal">
-            <strong>03</strong>
-            <span>Leave one thing unresolved</span>
+            <img src="assets/optimized/sb1.webp" alt="A strong visual opening prepared for a short-form video" loading="lazy" decoding="async" />
           </div>
         </div>
       </section>
 
       <section class="reels-section reels-section--white">
-        <p class="reels-label reveal">Four that keep working</p>
-        <div class="reels-services-index reels-mt">
-          <div class="reels-service-row reveal">
-            <span class="num">01</span>
-            <span class="name">The wrong way first</span>
-            <span class="hint">Show the mistake, then the fix</span>
-            <span class="arr">&#8599;&#65038;</span>
-          </div>
-          <div class="reels-service-row reveal">
-            <span class="num">02</span>
-            <span class="name">Mid-action open</span>
-            <span class="hint">Start at the interesting second, not the first</span>
-            <span class="arr">&#8599;&#65038;</span>
-          </div>
-          <div class="reels-service-row reveal">
-            <span class="num">03</span>
-            <span class="name">Named audience</span>
-            <span class="hint">Say exactly who this is for, out loud</span>
-            <span class="arr">&#8599;&#65038;</span>
-          </div>
-          <div class="reels-service-row reveal">
-            <span class="num">04</span>
-            <span class="name">Visible stake</span>
-            <span class="hint">Something on screen can still go wrong</span>
-            <span class="arr">&#8599;&#65038;</span>
-          </div>
-        </div>
+        <p class="reels-label">What a hook has to do</p>
+        <h2 class="reels-heading">What the opening must achieve</h2>
+
+        <h3 class="reels-subheading reels-mt">Make a promise worth waiting for</h3>
+        <p class="reels-body reels-mt-sm">Give the viewer a clear reason to stay. The first image or sentence should tell them what they will understand, see or receive if they keep watching.</p>
+
+        <h3 class="reels-subheading reels-mt">Show that the payoff exists</h3>
+        <p class="reels-body reels-mt-sm">Give a quick glimpse of the result without explaining all of it. The viewer should feel that the video is going somewhere specific.</p>
+
+        <h3 class="reels-subheading reels-mt">Leave one thing unresolved</h3>
+        <p class="reels-body reels-mt-sm">Hold back the final answer, transformation or outcome. That open question gives the viewer a reason to watch the next second.</p>
+      </section>
+
+      <section class="reels-section reels-section--white">
+        <p class="reels-label">Four that keep working</p>
+        <h2 class="reels-heading">Four useful hook structures</h2>
+
+        <h3 class="reels-subheading reels-mt">The wrong way first</h3>
+        <p class="reels-body reels-mt-sm">Show the mistake before the correction. The contrast makes the lesson immediately clear.</p>
+
+        <h3 class="reels-subheading reels-mt">Mid-action open</h3>
+        <p class="reels-body reels-mt-sm">Start at the interesting second instead of showing how the action began.</p>
+
+        <h3 class="reels-subheading reels-mt">Named audience</h3>
+        <p class="reels-body reels-mt-sm">Say exactly who the video is for so the right viewer recognises themselves immediately.</p>
+
+        <h3 class="reels-subheading reels-mt">Visible stake</h3>
+        <p class="reels-body reels-mt-sm">Show something on screen that can still succeed, fail or change before the reel ends.</p>
       </section>
 
       <section class="reels-section reels-section--white reels-section--tight-top">
@@ -205,11 +189,7 @@
       </div>
     </div>
 
-    <script src="script.js?v=65"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
-    <script defer src="fx.js?v=65"></script>
+    <script src="script.js?v=73"></script>
     <script defer src="reels.js?v=68"></script>
   </body>
 </html>

@@ -15,9 +15,11 @@ require_once __DIR__ . '/config.php';
 
 /** The exact CSP the static pages carry in their meta tag. */
 const PAGE_CSP = "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; "
-    . "style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; "
-    . "img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; "
-    . "frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests";
+    . "script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; "
+    . "style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; "
+    . "media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; "
+    . "object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; "
+    . "upgrade-insecure-requests; require-trusted-types-for 'script'";
 
 /** The site's primary nav, in order. */
 function nav_items(): array
@@ -37,16 +39,28 @@ function nav_items(): array
  *
  * @param array{title:string, description:string, body_class:string,
  *              canonical?:string, image?:string, type?:string,
- *              published?:string} $meta
+ *              published?:string, author?:string, theme_color?:string} $meta
  */
 function render_head(array $meta, string $activeUrl): void
 {
+    if (!headers_sent()) {
+        header('Content-Security-Policy: ' . PAGE_CSP . "; frame-ancestors 'none'");
+        header('X-Frame-Options: DENY');
+        header('X-Content-Type-Options: nosniff');
+        header('Referrer-Policy: strict-origin-when-cross-origin');
+        header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+        header('Cross-Origin-Opener-Policy: same-origin');
+        header('Cross-Origin-Resource-Policy: same-origin');
+        header('Origin-Agent-Cluster: ?1');
+        header('X-Permitted-Cross-Domain-Policies: none');
+    }
     $v         = ASSET_V;
     $title     = $meta['title'];
     $desc      = $meta['description'];
     $canonical = $meta['canonical'] ?? site_url($_SERVER['REQUEST_URI'] ?? '/');
     $image     = $meta['image'] ?? site_url(BASE . '/assets/logo-nav.svg');
     $type      = $meta['type'] ?? 'website';
+    $theme     = $meta['theme_color'] ?? '#ff7aac';
     ?>
 <!doctype html>
 <html lang="<?= SITE_LOCALE ?>">
@@ -57,7 +71,10 @@ function render_head(array $meta, string $activeUrl): void
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title><?= e($title) ?></title>
     <meta name="description" content="<?= e($desc) ?>" />
-    <meta name="theme-color" content="#ff7aac" />
+<?php if (!empty($meta['author'])): ?>
+    <meta name="author" content="<?= e($meta['author']) ?>" />
+<?php endif; ?>
+    <meta name="theme-color" content="<?= e($theme) ?>" />
     <link rel="canonical" href="<?= e($canonical) ?>" />
     <meta property="og:type" content="<?= e($type) ?>" />
     <meta property="og:site_name" content="<?= e(SITE_NAME) ?>" />
@@ -123,7 +140,7 @@ function render_head(array $meta, string $activeUrl): void
 }
 
 /** Close the document: footer + contact modal + scripts. */
-function render_footer(): void
+function render_footer(bool $withEffects = true): void
 {
     $v = ASSET_V;
     ?>
@@ -168,10 +185,12 @@ function render_footer(): void
     </div>
 
     <script src="<?= BASE ?>/script.js?v=<?= $v ?>"></script>
+<?php if ($withEffects): ?>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
     <script defer src="<?= BASE ?>/fx.js?v=<?= $v ?>"></script>
+<?php endif; ?>
     <script defer src="<?= BASE ?>/reels.js?v=<?= $v ?>"></script>
   </body>
 </html>

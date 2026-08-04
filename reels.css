@@ -1387,6 +1387,60 @@ body.learn-page {
   box-shadow: 0 24px 50px rgba(10, 10, 10, 0.2);
 }
 
+.learn-reel--media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0.48) 0%,
+    rgba(5, 5, 5, 0.06) 38%,
+    rgba(5, 5, 5, 0.16) 62%,
+    rgba(5, 5, 5, 0.7) 100%
+  );
+  pointer-events: none;
+}
+
+.learn-reel--media::before {
+  content: "";
+  position: absolute;
+  top: auto;
+  bottom: clamp(42px, 4vw, 52px);
+  left: clamp(18px, 2vw, 26px);
+  z-index: 2;
+  width: min(66%, 210px);
+  aspect-ratio: 192 / 70;
+  background: url("assets/blog-caption-lines.svg") center / contain no-repeat;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+}
+
+.learn-reel-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--black);
+}
+
+.learn-reel-media video,
+.learn-reel-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.learn-reel--media > :not(.learn-reel-media):not(.learn-reel-rail) {
+  position: relative;
+  z-index: 2;
+}
+
+.learn-reel--media,
+.learn-reel--media.learn-reel--pink {
+  color: var(--white);
+}
+
 .learn-reel--pink {
   background: var(--pink);
   color: var(--black);
@@ -1440,29 +1494,56 @@ body.learn-page {
 .learn-reel-rail {
   position: absolute;
   right: clamp(12px, 1.4vw, 18px);
-  bottom: clamp(64px, 8vw, 92px);
+  top: 38%;
+  bottom: auto;
   display: grid;
-  gap: 14px;
+  gap: 16px;
   justify-items: center;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  opacity: 0.85;
+  padding: 10px 8px;
+  background: rgba(182, 73, 125, 0.76);
+  color: rgba(255, 255, 255, 0.96);
+  filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.4));
 }
 
 .learn-reel-rail i {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  font-style: normal;
-  font-size: 15px;
+  display: block;
+  width: 25px;
+  height: 25px;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
 }
 
-.learn-reel--pink .learn-reel-rail i {
-  background: rgba(10, 10, 10, 0.12);
+.learn-reel-rail i::before,
+.learn-reel-rail i::after {
+  content: none;
+}
+
+.learn-reel-rail .learn-action-like {
+  -webkit-mask-image: url("assets/blog-heart.svg");
+  mask-image: url("assets/blog-heart.svg");
+}
+
+.learn-reel-rail .learn-action-comment {
+  -webkit-mask-image: url("assets/blog-comment.svg");
+  mask-image: url("assets/blog-comment.svg");
+}
+
+.learn-reel-rail .learn-action-share {
+  -webkit-mask-image: url("assets/blog-share.svg");
+  mask-image: url("assets/blog-share.svg");
+}
+
+.learn-reel--media > .learn-reel-rail {
+  position: absolute;
+  right: clamp(12px, 1.4vw, 18px);
+  top: 38%;
+  bottom: auto;
+  z-index: 2;
 }
 
 .learn-slide-copy h2 {
@@ -1487,6 +1568,10 @@ body.learn-page {
   color: var(--ink-soft);
   font-size: clamp(16px, 1.6vw, 20px);
   line-height: 1.6;
+}
+
+.learn-slide-copy p.learn-post-cta {
+  margin-top: 10px;
 }
 
 .learn-slide-meta {
@@ -2253,12 +2338,13 @@ body.learn-page {
    own full-screen picker on mobile, which is faster and more accessible than
    recreating a 200+ item floating menu. */
 .contact-field--phone {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0;
   border-radius: 10px;
   background: #f1f1f1;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .contact-country-code {
@@ -2268,6 +2354,10 @@ body.learn-page {
   max-width: 104px;
   align-self: stretch;
   border-right: 1px solid rgba(10, 10, 10, 0.12);
+}
+
+.contact-country-code.is-open {
+  z-index: 80;
 }
 
 .contact-country-code::after {
@@ -2305,20 +2395,38 @@ body.learn-page {
   -webkit-appearance: none;
 }
 
-/* The native list keeps full country names, while this visual layer keeps the
-   closed control compact. It ignores taps so the select underneath still opens. */
+/* The native select is the no-JS fallback. Once the searchable picker is ready,
+   keep it available for form submission but move it off the visual canvas. */
+.contact-country-code.has-custom-picker select {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .contact-country-code-value {
   position: absolute;
   z-index: 2;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   padding: 0 34px 0 18px;
+  border: 0;
+  border-radius: 10px 0 0 10px;
   background: #f1f1f1;
   color: rgba(10, 10, 10, 0.7);
+  font-family: inherit;
   font-size: 12px;
   font-weight: 600;
-  pointer-events: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contact-country-code.has-custom-picker .contact-country-code-value {
+  display: flex;
 }
 
 .contact-country-code:focus-within {
@@ -2327,6 +2435,101 @@ body.learn-page {
 
 .contact-country-code:focus-within .contact-country-code-value {
   box-shadow: inset 0 0 0 2px var(--pink);
+}
+
+.contact-country-menu {
+  position: absolute;
+  z-index: 90;
+  top: calc(100% + 8px);
+  left: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(330px, calc(100vw - 32px));
+  max-height: min(420px, 62vh);
+  padding: 8px;
+  border: 1.5px solid rgba(10, 10, 10, 0.2);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(10, 10, 10, 0.24);
+}
+
+.contact-country-menu[hidden] {
+  display: none;
+}
+
+.contact-country-search {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1.5px solid rgba(10, 10, 10, 0.18);
+  border-radius: 9px;
+  outline: 0;
+  background: #f4f4f4;
+  color: var(--black);
+  font: inherit;
+  font-size: 13px;
+}
+
+.contact-country-search:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 122, 172, 0.18);
+}
+
+.contact-country-list {
+  min-height: 0;
+  margin-top: 7px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.contact-country-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 43px;
+  padding: 8px 11px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--black);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contact-country-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-country-option strong {
+  color: rgba(10, 10, 10, 0.58);
+  font-size: 12px;
+}
+
+.contact-country-option:hover,
+.contact-country-option:focus-visible,
+.contact-country-option[aria-selected="true"] {
+  outline: 0;
+  background: var(--pink);
+}
+
+.contact-country-option:hover strong,
+.contact-country-option:focus-visible strong,
+.contact-country-option[aria-selected="true"] strong {
+  color: var(--black);
+}
+
+.contact-country-empty {
+  margin: 0;
+  padding: 18px 12px;
+  color: rgba(10, 10, 10, 0.55);
+  font-size: 12px;
 }
 
 .contact-field--phone input {
@@ -2356,6 +2559,21 @@ body.learn-page {
 
   .contact-country-code::after {
     right: 11px;
+  }
+
+  .contact-country-menu {
+    position: fixed;
+    top: 50%;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: min(560px, 72vh);
+    transform: translateY(-50%);
+  }
+
+  .contact-country-option {
+    min-height: 46px;
+    font-size: 14px;
   }
 }
 
@@ -3587,6 +3805,208 @@ body.work-page.work-nav-scrolled .site-nav {
    needed: sub-headings, bullet lists, pull quotes, inline figures, and
    the two buttons that close a post. Everything else a post uses
    (.reels-body, .reels-stat, .reels-service-row) already exists above. */
+
+body.learn-post-page,
+.learn-post-page .site {
+  background: var(--white);
+}
+
+.learn-post-page *,
+.learn-post-page *::before,
+.learn-post-page *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.learn-post-page .case-hero {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.learn-post-page .case-hero .reels-label,
+.learn-post-page .case-hero .reels-display,
+.learn-post-page .post-author {
+  color: var(--white);
+}
+
+.learn-post-page .case-hero .reels-label::before {
+  background: var(--white);
+}
+
+.learn-post-page .case-hero-meta > span {
+  border-color: rgba(255, 255, 255, 0.68);
+  color: var(--white);
+}
+
+.learn-post-page .case-hero .reels-display > span {
+  display: block;
+}
+
+.learn-post-page .post-title-serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+.post-author {
+  margin: clamp(18px, 2.4vw, 28px) 0 0;
+  font-size: clamp(14px, 1.3vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.learn-post-page .reels-section,
+.learn-post-page .reels-section--pink,
+.learn-post-page .reels-section--navy,
+.learn-post-page .reels-section--white {
+  background: var(--white) !important;
+  color: var(--black) !important;
+  padding-top: clamp(50px, 7vw, 84px);
+  padding-bottom: clamp(50px, 7vw, 84px);
+}
+
+.learn-post-page .reels-section + .reels-section {
+  border-top: 1px solid rgba(10, 10, 10, 0.1);
+}
+
+.learn-post-page .reels-section > * {
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.learn-post-page .reels-section > .reels-grid-2 {
+  max-width: 1080px;
+}
+
+.learn-post-page .reels-body,
+.learn-post-page .reels-list {
+  max-width: 760px;
+  color: rgba(10, 10, 10, 0.76) !important;
+}
+
+.learn-post-page .reels-heading,
+.learn-post-page .reels-subheading,
+.learn-post-page .reels-quote,
+.learn-post-page .reels-label {
+  color: var(--black) !important;
+}
+
+.learn-post-page .reels-heading {
+  max-width: 760px;
+  font-size: clamp(30px, 4.4vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+.learn-post-page .reels-subheading {
+  max-width: 760px;
+  font-size: clamp(21px, 2.2vw, 29px);
+  line-height: 1.2;
+}
+
+.learn-post-page .case-hero .reels-label {
+  color: var(--white) !important;
+}
+
+.learn-post-page .reels-service-row:hover .name,
+.learn-post-page .reels-service-row:hover .arr {
+  color: inherit;
+  transform: none;
+}
+
+.post-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(10, 10, 10, 0.14);
+  border-radius: 14px;
+}
+
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  color: var(--black);
+  font-size: clamp(14px, 1.3vw, 17px);
+  line-height: 1.45;
+}
+
+.post-table th,
+.post-table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-table th {
+  background: #f3f4f8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.post-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.post-bars {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+}
+
+.post-bar {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) minmax(180px, 2fr) 4ch;
+  gap: 14px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.post-bar > span,
+.post-bar > strong {
+  font-weight: 700;
+}
+
+.post-bar meter {
+  width: 100%;
+  height: 20px;
+  border: 0;
+  background: #e9ebf2;
+}
+
+.post-bar meter::-webkit-meter-bar {
+  border: 0;
+  border-radius: 3px;
+  background: #e9ebf2;
+  box-shadow: none;
+}
+
+.post-bar meter::-webkit-meter-optimum-value {
+  border-radius: 3px;
+  background: var(--navy);
+}
+
+.post-bar meter::-moz-meter-bar {
+  border-radius: 3px;
+  background: var(--navy);
+}
+
+@media (max-width: 620px) {
+  .post-bar {
+    grid-template-columns: 1fr 4ch;
+  }
+
+  .post-bar meter {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
 
 .reels-subheading {
   max-width: 620px;

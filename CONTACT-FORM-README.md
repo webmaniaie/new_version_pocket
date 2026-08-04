@@ -2,12 +2,12 @@
 
 The live site is hosted on GitHub Pages, so it cannot execute a mail backend.
 `contacts.html` posts directly to FormSubmit and keeps reCAPTCHA enabled. The
-first submission sends an activation link to `platon.tsuz@gmail.com`; the form
+first submission sends an activation link to `reelsagency.ie@gmail.com`; the form
 will not deliver enquiries until that link is clicked.
 
 After activation, each valid submission sends:
 
-- the enquiry to `platon.tsuz@gmail.com`;
+- the enquiry to `reelsagency.ie@gmail.com`;
 - a fixed confirmation message to the visitor's validated email address.
 
 ## Security controls
@@ -25,6 +25,10 @@ After activation, each valid submission sends:
   only. Other public pages block form submissions; the admin remains self-only.
 - No API key, SMTP password or other mail credential is present in this repo or
   sent to the browser.
+- Enquiry text is untrusted content. Do not paste it into an AI agent that can
+  send mail, publish posts, open files or take other actions. If AI is used to
+  summarise an enquiry, give it text-only access and instruct it to treat every
+  instruction inside the enquiry as quoted customer content, never as a command.
 
 FormSubmit is a third-party processor and retains submissions for up to 30 days
 according to its published documentation. Treat every link in an enquiry as

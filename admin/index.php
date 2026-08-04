@@ -22,11 +22,18 @@ $action = (string) ($_GET['action'] ?? $_POST['action'] ?? '');
 $notice = '';
 $error  = '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+    && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 30 * 1024 * 1024) {
+    http_response_code(413);
+    exit('Upload too large.');
+}
+
 /* ------------------------------------------------------------------ */
 /* Sign in / out                                                       */
 /* ------------------------------------------------------------------ */
 
-if ($action === 'logout') {
+if ($action === 'logout' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_check();
     admin_logout();
     header('Location: ' . BASE . '/admin/');
     exit;
@@ -118,7 +125,7 @@ render_list($notice, $error);
  */
 function save_post(array $form, array $files): string
 {
-    $title = trim((string) ($form['title'] ?? ''));
+    $title = form_text($form, 'title', 120, 'Headline');
     if ($title === '') {
         throw new RuntimeException('A post needs a title.');
     }
@@ -149,23 +156,33 @@ function save_post(array $form, array $files): string
         throw new RuntimeException('A post already uses that address on that date. Change the slug or the date.');
     }
 
-    $cover = trim((string) ($form['cover'] ?? ''));
+    $cover = form_text($form, 'cover', 500, 'Cover path');
     if (!empty($files['cover_file']['name'])) {
         $cover = store_upload($files['cover_file']);
     }
 
+    $topicsRaw = form_text($form, 'topics', 500, 'Topics');
     $topics = array_values(array_filter(array_map(
         'trim',
-        explode(',', (string) ($form['topics'] ?? ''))
+        explode(',', $topicsRaw)
     ), 'strlen'));
+    if (count($topics) > 12) {
+        throw new RuntimeException('Use no more than 12 topics.');
+    }
+    foreach ($topics as $topic) {
+        if (text_length($topic) > 40) {
+            throw new RuntimeException('Keep each topic under 40 characters.');
+        }
+    }
 
     $frontmatter = build_frontmatter([
         'title'   => $title,
-        'serif'   => trim((string) ($form['serif'] ?? '')),
-        'tag'     => trim((string) ($form['tag'] ?? '')) ?: 'Notes',
-        'read'    => trim((string) ($form['read'] ?? '')),
+        'serif'   => form_text($form, 'serif', 80, 'Serif tail'),
+        'tag'     => form_text($form, 'tag', 30, 'Category') ?: 'Notes',
+        'read'    => form_text($form, 'read', 12, 'Read time'),
         'topics'  => $topics,
-        'excerpt' => trim((string) ($form['excerpt'] ?? '')),
+        'excerpt' => form_text($form, 'excerpt', 320, 'Summary'),
+        'author'  => form_text($form, 'author', 80, 'Author') ?: SITE_AUTHOR,
         'cover'   => $cover,
         'accent'  => trim((string) ($form['accent'] ?? '')),
         'slug'    => $slug,
@@ -173,7 +190,8 @@ function save_post(array $form, array $files): string
         'draft'   => (($form['draft'] ?? '') === 'on'),
     ]);
 
-    $body = str_replace(["\r\n", "\r"], "\n", (string) ($form['body'] ?? ''));
+    $body = form_text($form, 'body', 120000, 'Post body', false);
+    $body = str_replace(["\r\n", "\r"], "\n", $body);
     if (file_put_contents($target, $frontmatter . trim($body) . "\n", LOCK_EX) === false) {
         throw new RuntimeException('Could not write the post file.');
     }
@@ -184,6 +202,26 @@ function save_post(array $form, array $files): string
         unlink($wasAt);
     }
     return $slug;
+}
+
+/** Browser maxlength attributes are convenience only; enforce them here too. */
+function form_text(
+    array $form,
+    string $key,
+    int $max,
+    string $label,
+    bool $trim = true
+): string {
+    $value = (string) ($form[$key] ?? '');
+    if (text_length($value) > $max) {
+        throw new RuntimeException($label . ' is too long.');
+    }
+    return $trim ? trim($value) : $value;
+}
+
+function text_length(string $value): int
+{
+    return function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);
 }
 
 /**
@@ -223,8 +261,15 @@ function store_upload(array $file): string
         throw new RuntimeException('Use a JPG, PNG, WEBP, GIF or MP4.');
     }
     // For images, confirm it really decodes as one.
-    if (str_starts_with($mime, 'image/') && @getimagesize($file['tmp_name']) === false) {
-        throw new RuntimeException('That image file looks damaged.');
+    if (str_starts_with($mime, 'image/')) {
+        $imageInfo = @getimagesize($file['tmp_name']);
+        if ($imageInfo === false) {
+            throw new RuntimeException('That image file looks damaged.');
+        }
+        $pixels = (int) $imageInfo[0] * (int) $imageInfo[1];
+        if ($pixels <= 0 || $pixels > 40000000) {
+            throw new RuntimeException('Keep images under 40 megapixels.');
+        }
     }
 
     if (!is_dir(UPLOAD_DIR) && !@mkdir(UPLOAD_DIR, 0755, true)) {
@@ -235,7 +280,7 @@ function store_upload(array $file): string
     }
 
     $base = slugify(pathinfo((string) $file['name'], PATHINFO_FILENAME)) ?: 'image';
-    $name = $base . '-' . substr(bin2hex(random_bytes(4)), 0, 6) . '.' . $allowed[$mime];
+    $name = $base . '-' . bin2hex(random_bytes(12)) . '.' . $allowed[$mime];
     if (!move_uploaded_file($file['tmp_name'], UPLOAD_DIR . '/' . $name)) {
         throw new RuntimeException('Could not save the upload.');
     }
@@ -249,9 +294,10 @@ function store_upload(array $file): string
 
 function admin_head(string $title): void
 {
-    $csp = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; "
-         . "media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; "
-         . "base-uri 'self'; form-action 'self'";
+    $csp = "default-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; "
+         . "style-src-attr 'none'; img-src 'self' data:; media-src 'self'; connect-src 'self'; "
+         . "object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'; "
+         . "require-trusted-types-for 'script'";
     ?>
 <!doctype html>
 <html lang="en">
@@ -308,7 +354,11 @@ function render_list(string $notice, string $error): void
       <div class="bar-actions">
         <a class="btn btn--primary" href="<?= BASE ?>/admin/?action=new">New post</a>
         <a class="btn" href="<?= BASE ?>/learn" target="_blank" rel="noopener">View blog</a>
-        <a class="btn btn--quiet" href="<?= BASE ?>/admin/?action=logout">Sign out</a>
+        <form method="post" action="<?= BASE ?>/admin/">
+          <input type="hidden" name="action" value="logout" />
+          <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>" />
+          <button class="btn btn--quiet" type="submit">Sign out</button>
+        </form>
       </div>
     </header>
     <main class="shell">
@@ -386,7 +436,11 @@ function render_editor(?array $post, string $notice, string $error): void
             : e(post_url($post)) ?>" target="_blank" rel="noopener"><?= $post['draft'] ? 'Preview' : 'View' ?></a>
 <?php endif; ?>
         <a class="btn" href="<?= BASE ?>/admin/">All posts</a>
-        <a class="btn btn--quiet" href="<?= BASE ?>/admin/?action=logout">Sign out</a>
+        <form method="post" action="<?= BASE ?>/admin/">
+          <input type="hidden" name="action" value="logout" />
+          <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>" />
+          <button class="btn btn--quiet" type="submit">Sign out</button>
+        </form>
       </div>
     </header>
     <main class="shell">
@@ -460,6 +514,12 @@ function render_editor(?array $post, string $notice, string $error): void
           <p class="hint">Shown on the blog index and used as the Google description. One or two sentences.</p>
         </div>
 
+        <div class="field">
+          <label for="author">Author</label>
+          <input id="author" name="author" type="text" maxlength="80"
+                 value="<?= e($f('author', $isNew ? SITE_AUTHOR : $post['author'])) ?>" />
+        </div>
+
         <div class="row">
           <div class="field">
             <label for="cover_file">Cover image</label>
@@ -495,6 +555,8 @@ function render_editor(?array $post, string $notice, string $error): void
             <tr><td><code>&gt; a line worth pulling out</code></td><td>Large italic pull quote.</td></tr>
             <tr><td><code>![what it shows](assets/posts/x.jpg)</code></td><td>An image. An <code>.mp4</code> becomes a looping video.</td></tr>
             <tr><td><code>![...](x.mp4 "portrait")</code></td><td>A 9:16 clip beside the text, two columns.</td></tr>
+            <tr><td><code>| Metric | Result |</code></td><td>Start a Markdown table. Put <code>| --- | --- |</code> on the next line, then add data rows.</td></tr>
+            <tr><td><code>bar: Opening A | 72</code></td><td>Add a labelled percentage bar. Put several together to make a comparison chart.</td></tr>
             <tr><td><code>## Heading {pink}</code></td><td>Force a section's colour: <code>white</code>, <code>pink</code> or <code>navy</code>.</td></tr>
           </table>
         </details>

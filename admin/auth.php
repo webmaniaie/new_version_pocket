@@ -16,6 +16,30 @@ const SESSION_NAME     = 'reels_admin';
 const SESSION_IDLE     = 7200;   // sign out after 2h of no activity
 const LOGIN_MAX_TRIES  = 6;      // per window, per IP
 const LOGIN_WINDOW     = 900;    // 15 minutes
+const SESSION_ROTATE   = 900;    // refresh the session id every 15 minutes
+
+/** Security headers also apply on hosts/local previews that ignore .htaccess. */
+function admin_security_headers(): void
+{
+    if (headers_sent()) {
+        return;
+    }
+    header("Content-Security-Policy: default-src 'none'; script-src 'self'; script-src-attr 'none'; "
+         . "style-src 'self'; style-src-attr 'none'; img-src 'self' data:; media-src 'self'; "
+         . "connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; "
+         . "base-uri 'none'; form-action 'self'; require-trusted-types-for 'script'");
+    header('X-Frame-Options: DENY');
+    header('X-Content-Type-Options: nosniff');
+    header('Referrer-Policy: no-referrer');
+    header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()');
+    header('Cross-Origin-Opener-Policy: same-origin');
+    header('Cross-Origin-Resource-Policy: same-origin');
+    header('Cache-Control: no-store, max-age=0');
+    header('Pragma: no-cache');
+    header('X-Robots-Tag: noindex, nofollow');
+}
+
+admin_security_headers();
 
 /**
  * Read the private config. Returns null when the site has not been set
@@ -44,6 +68,10 @@ function admin_session_start(): void
     $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
         || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
 
+    ini_set('session.use_only_cookies', '1');
+    ini_set('session.use_strict_mode', '1');
+    ini_set('session.use_trans_sid', '0');
+    session_cache_limiter('nocache');
     session_name(SESSION_NAME);
     session_set_cookie_params([
         'lifetime' => 0,
@@ -66,6 +94,15 @@ function admin_logged_in(): bool
         admin_logout();
         return false;
     }
+    $agent = hash('sha256', (string) ($_SERVER['HTTP_USER_AGENT'] ?? ''));
+    if (!hash_equals((string) ($_SESSION['agent'] ?? ''), $agent)) {
+        admin_logout();
+        return false;
+    }
+    if (time() - (int) ($_SESSION['rotated'] ?? 0) > SESSION_ROTATE) {
+        session_regenerate_id(true);
+        $_SESSION['rotated'] = time();
+    }
     $_SESSION['seen'] = time();
     return true;
 }
@@ -85,6 +122,8 @@ function admin_login(): void
     session_regenerate_id(true);      // no session fixation
     $_SESSION['admin'] = true;
     $_SESSION['seen']  = time();
+    $_SESSION['rotated'] = time();
+    $_SESSION['agent'] = hash('sha256', (string) ($_SERVER['HTTP_USER_AGENT'] ?? ''));
     $_SESSION['csrf']  = bin2hex(random_bytes(32));
 }
 
@@ -136,13 +175,21 @@ function csrf_check(): void
 
 function throttle_file(): string
 {
-    return sys_get_temp_dir() . '/reels-admin-throttle.json';
+    return sys_get_temp_dir() . '/reels-admin-throttle-'
+        . substr(hash('sha256', __DIR__), 0, 16) . '.json';
 }
 
 /** Failed attempts from this IP inside the current window. */
 function login_attempts(): int
 {
-    $data = @json_decode((string) @file_get_contents(throttle_file()), true);
+    $handle = @fopen(throttle_file(), 'c+');
+    if ($handle === false) {
+        return LOGIN_MAX_TRIES;
+    }
+    flock($handle, LOCK_SH);
+    $data = json_decode((string) stream_get_contents($handle), true);
+    flock($handle, LOCK_UN);
+    fclose($handle);
     if (!is_array($data)) {
         return 0;
     }
@@ -155,7 +202,13 @@ function login_attempts(): int
 
 function login_record_failure(): void
 {
-    $data = @json_decode((string) @file_get_contents(throttle_file()), true);
+    $handle = @fopen(throttle_file(), 'c+');
+    if ($handle === false) {
+        return;
+    }
+    flock($handle, LOCK_EX);
+    rewind($handle);
+    $data = json_decode((string) stream_get_contents($handle), true);
     if (!is_array($data)) {
         $data = [];
     }
@@ -168,16 +221,35 @@ function login_record_failure(): void
     $ip = login_ip();
     $n  = (int) ($data[$ip]['n'] ?? 0);
     $data[$ip] = ['n' => $n + 1, 'at' => time()];
-    @file_put_contents(throttle_file(), json_encode($data), LOCK_EX);
+    rewind($handle);
+    ftruncate($handle, 0);
+    fwrite($handle, (string) json_encode($data));
+    fflush($handle);
+    @chmod(throttle_file(), 0600);
+    flock($handle, LOCK_UN);
+    fclose($handle);
 }
 
 function login_clear_failures(): void
 {
-    $data = @json_decode((string) @file_get_contents(throttle_file()), true);
-    if (is_array($data)) {
-        unset($data[login_ip()]);
-        @file_put_contents(throttle_file(), json_encode($data), LOCK_EX);
+    $handle = @fopen(throttle_file(), 'c+');
+    if ($handle === false) {
+        return;
     }
+    flock($handle, LOCK_EX);
+    rewind($handle);
+    $data = json_decode((string) stream_get_contents($handle), true);
+    if (!is_array($data)) {
+        $data = [];
+    }
+    unset($data[login_ip()]);
+    rewind($handle);
+    ftruncate($handle, 0);
+    fwrite($handle, (string) json_encode($data));
+    fflush($handle);
+    @chmod(throttle_file(), 0600);
+    flock($handle, LOCK_UN);
+    fclose($handle);
 }
 
 /** Remote address only — proxy headers are attacker-controlled. */

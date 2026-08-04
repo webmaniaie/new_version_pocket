@@ -194,6 +194,7 @@ function load_post(string $file, bool $withBody = false): ?array
         'read'    => (string) ($fm['read'] ?? ''),
         'topics'  => array_values((array) ($fm['topics'] ?? [])),
         'excerpt' => (string) ($fm['excerpt'] ?? ''),
+        'author'  => trim((string) ($fm['author'] ?? SITE_AUTHOR)) ?: SITE_AUTHOR,
         'cover'   => trim((string) ($fm['cover'] ?? '')),
         'accent'  => (string) ($fm['accent'] ?? ''),
         'date'    => (string) ($fm['date'] ?? $fileDate ?? date('Y-m-d', (int) filemtime($file))),

@@ -48,7 +48,7 @@ Then in hPanel:
 1. In File Manager, open `public_html/admin/.install-token` and copy the line
    inside it.
 2. Go to **`yourdomain.com/admin/setup.php`**.
-3. Paste the token, choose a password (12 characters or more — use a password
+3. Paste the token, choose a password (15 characters or more — use a password
    manager), submit.
 
 The password is hashed and written to `reels-blog-config.php` **one level above
@@ -76,6 +76,7 @@ Go to `yourdomain.com/admin`, sign in, hit **New post**.
 | Read time | e.g. `4 min`. |
 | Topics | Comma separated. The small chips under the headline. |
 | Summary | Shown on the blog index and used as the Google description. |
+| Author | The byline shown under the article title. Defaults to Platon Tsuz. |
 | Cover image | Optional. Sits under the headline and becomes the link preview image. |
 | Card colour | Leave on Automatic — the cards rotate white / pink / navy by themselves. |
 
@@ -97,6 +98,8 @@ Untick it to publish. Either way it is live the moment you press Save.
 | `![what it shows](assets/posts/x.jpg)` | An image. An `.mp4` becomes a looping video. |
 | `![...](x.mp4 "portrait")` | A 9:16 clip beside the text, in two columns. |
 | `[text](https://…)` | A link. |
+| `\| Metric \| Result \|` | A statistics table. Follow it with `\| --- \| --- \|`, then the data rows. |
+| `bar: Opening A \| 72` | A labelled percentage bar. Put several together to create a bar chart. |
 | `## Heading {pink}` | Force a section's colour: `white`, `pink` or `navy`. |
 | `---` on its own line | A new section with no heading. |
 

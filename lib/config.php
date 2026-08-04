@@ -9,6 +9,10 @@
 
 declare(strict_types=1);
 
+if (!headers_sent()) {
+    header_remove('X-Powered-By');
+}
+
 /* The blog needs PHP 8 and the fileinfo extension (Hostinger has both by
    default). Say so plainly rather than dying with a parse error if the
    host is ever set to an old version in hPanel. */
@@ -23,7 +27,7 @@ if (!class_exists('finfo')) {
 
 /* Cache-bust for css/js. Bump this whenever styles.css / fx.css /
    reels.css / script.js change — same number the static pages use. */
-const ASSET_V = '71';
+const ASSET_V = '79';
 
 /* Site-wide facts, reused in the nav, footer, contact modal and feeds. */
 const SITE_NAME  = 'reels agency';
@@ -31,6 +35,18 @@ const SITE_EMAIL = 'reelsagency.ie@gmail.com';
 const SITE_TEL   = '+353894270669';
 const SITE_TEL_DISPLAY = '+353 89 427 0669';
 const SITE_LOCALE = 'en-IE';
+const SITE_AUTHOR = 'Platon Tsuz';
+
+/* Requests with an invented Host header must never change canonical URLs,
+   feeds or redirects. Add a real preview hostname here before using one. */
+const TRUSTED_HOSTS = [
+    'reelsagency.ie',
+    'www.reelsagency.ie',
+    'webmaniaie.github.io',
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+];
 
 /* Root-relative base. '' means the site is served from the domain root,
    which is how Hostinger serves public_html. Set to '/subfolder' only if
@@ -48,14 +64,22 @@ const UPLOAD_URL = BASE . '/assets/posts';
 define('PRIVATE_CONFIG', dirname(dirname(__DIR__)) . '/reels-blog-config.php');
 
 /* Absolute site URL, used for canonical links, OG tags and the RSS feed.
-   Derived from the request so it is correct on the live domain, on a
-   staging subdomain and on the local php -S server alike. */
+   Only explicitly trusted request hosts are accepted; everything else falls
+   back to the production origin so Host-header poisoning cannot alter SEO. */
 function site_url(string $path = ''): string
 {
     $https  = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
         || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
     $scheme = $https ? 'https' : 'http';
-    $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $host   = strtolower(trim((string) ($_SERVER['HTTP_HOST'] ?? '')));
+    $hostWithoutPort = preg_replace('/:\d{1,5}$/', '', $host) ?? '';
+    if (!in_array($hostWithoutPort, TRUSTED_HOSTS, true)) {
+        $host = 'reelsagency.ie';
+        $scheme = 'https';
+    }
+    if ($path !== '' && !str_starts_with($path, '/')) {
+        $path = '/' . $path;
+    }
     return $scheme . '://' . $host . BASE . $path;
 }
 

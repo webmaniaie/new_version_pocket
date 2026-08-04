@@ -169,7 +169,7 @@ function parse_heading(string $text): array
 /**
  * Group the lines of a section into typed blocks.
  *
- * @return array<int, array{type:string, lines:array<int,string>}>
+ * @return array<int, array{type:string, lines:array}>
  */
 function parse_blocks(string $body): array
 {
@@ -188,6 +188,22 @@ function parse_blocks(string $body): array
 
         if ($trim === '') {
             $flush();
+            continue;
+        }
+        if (preg_match('/^bar:\s*(.+?)\s*\|\s*(100|\d{1,2})%?\s*$/i', $trim, $m)) {
+            if ($current === null || $current['type'] !== 'bars') {
+                $flush();
+                $current = ['type' => 'bars', 'lines' => []];
+            }
+            $current['lines'][] = [$m[1], (int) $m[2]];
+            continue;
+        }
+        if (str_starts_with($trim, '|') && str_ends_with($trim, '|')) {
+            if ($current === null || $current['type'] !== 'table') {
+                $flush();
+                $current = ['type' => 'table', 'lines' => []];
+            }
+            $current['lines'][] = $trim;
             continue;
         }
         if (preg_match('/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/', $trim, $m)) {
@@ -276,9 +292,73 @@ function render_blocks(array $blocks): string
             case 'figure':
                 $out .= render_figure($block['lines'][0], $block['lines'][1], $block['lines'][2]);
                 break;
+
+            case 'table':
+                $out .= render_table($block['lines']);
+                break;
+
+            case 'bars':
+                $out .= render_bars($block['lines']);
+                break;
         }
     }
     return $out;
+}
+
+/** A compact, accessible Markdown table for statistics and comparisons. */
+function render_table(array $lines): string
+{
+    if (count($lines) < 2) {
+        return '';
+    }
+    $rows = array_map('table_cells', $lines);
+    $separator = $rows[1] ?? [];
+    if ($separator === [] || count(array_filter(
+        $separator,
+        static fn(string $cell): bool => (bool) preg_match('/^:?-{3,}:?$/', $cell)
+    )) !== count($separator)) {
+        return '';
+    }
+
+    $head = $rows[0];
+    $body = array_slice($rows, 2);
+    $out = "        <div class=\"post-table-wrap reels-mt\">\n"
+         . "          <table class=\"post-table\">\n            <thead><tr>";
+    foreach ($head as $cell) {
+        $out .= '<th scope="col">' . inline($cell) . '</th>';
+    }
+    $out .= "</tr></thead>\n            <tbody>\n";
+    foreach ($body as $row) {
+        $out .= '              <tr>';
+        for ($i = 0, $count = count($head); $i < $count; $i++) {
+            $out .= '<td>' . inline((string) ($row[$i] ?? '')) . '</td>';
+        }
+        $out .= "</tr>\n";
+    }
+    return $out . "            </tbody>\n          </table>\n        </div>\n";
+}
+
+function table_cells(string $line): array
+{
+    return array_map('trim', explode('|', trim($line, "| \t")));
+}
+
+/** Lines such as `bar: Opening A | 72` become a semantic bar chart. */
+function render_bars(array $bars): string
+{
+    if ($bars === []) {
+        return '';
+    }
+    $out = "        <div class=\"post-bars reels-mt\" role=\"group\" aria-label=\"Data comparison\">\n";
+    foreach ($bars as [$label, $value]) {
+        $value = max(0, min(100, (int) $value));
+        $out .= "          <div class=\"post-bar\">\n"
+             .  '            <span>' . inline((string) $label) . "</span>\n"
+             .  '            <meter min="0" max="100" value="' . $value . '">' . $value . "%</meter>\n"
+             .  '            <strong>' . $value . "%</strong>\n"
+             .  "          </div>\n";
+    }
+    return $out . "        </div>\n";
 }
 
 /**
@@ -339,7 +419,7 @@ function render_figure(string $alt, string $src, string $hint, bool $flush = fal
     $wrap     = ($portrait ? 'reel-portrait' : 'reels-figure') . ($flush ? '' : ' reels-mt');
 
     if (preg_match('/\.(mp4|m4v|webm)$/i', $url)) {
-        $media = '<video autoplay muted loop playsinline preload="metadata" src="'
+        $media = '<video controls playsinline preload="metadata" src="'
                . e($url) . '"></video>';
     } else {
         $media = '<img src="' . e($url) . '" alt="' . e($alt)
