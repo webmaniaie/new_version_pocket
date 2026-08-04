@@ -115,7 +115,7 @@ function render_head(array $meta, string $activeUrl): void
 <?php foreach (nav_items() as $url => $label): ?>
           <a<?= $url === $activeUrl ? ' class="active"' : '' ?> href="<?= e($url) ?>"><?= e($label) ?></a>
 <?php endforeach; ?>
-          <a href="#" data-contact>Let's Work</a>
+          <a href="#" data-contact>Ask question</a>
         </nav>
       </div>
     </div>

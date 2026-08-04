@@ -141,10 +141,55 @@
       note.classList.toggle("is-error", !!isError);
     };
 
+    var showSuccessPopup = function () {
+      var popup = document.createElement("aside");
+      popup.className = "enquiry-success-popup";
+      popup.setAttribute("role", "status");
+      popup.setAttribute("aria-live", "polite");
+
+      var icon = document.createElement("span");
+      icon.className = "enquiry-success-icon";
+      icon.setAttribute("aria-hidden", "true");
+
+      var copy = document.createElement("div");
+      copy.className = "enquiry-success-copy";
+
+      var title = document.createElement("strong");
+      title.textContent = "Enquiry sent";
+
+      var message = document.createElement("p");
+      message.textContent = "Thanks — your enquiry is in. Check your inbox for confirmation.";
+
+      var close = document.createElement("button");
+      close.className = "enquiry-success-close";
+      close.type = "button";
+      close.setAttribute("aria-label", "Close confirmation");
+
+      copy.appendChild(title);
+      copy.appendChild(message);
+      popup.appendChild(icon);
+      popup.appendChild(copy);
+      popup.appendChild(close);
+      document.body.appendChild(popup);
+
+      var dismiss = function () {
+        popup.classList.remove("is-visible");
+        window.setTimeout(function () {
+          if (popup.parentNode) popup.parentNode.removeChild(popup);
+        }, 350);
+      };
+
+      close.addEventListener("click", dismiss);
+      window.requestAnimationFrame(function () {
+        popup.classList.add("is-visible");
+      });
+      window.setTimeout(dismiss, 12000);
+    };
+
     // FormSubmit redirects back with this flag after the protected request.
     // Remove it from the address bar so a refresh does not repeat the notice.
     if (/[?&]sent=1(?:&|$)/.test(window.location.search)) {
-      say("Thanks — your enquiry is in. Check your inbox for confirmation.", false);
+      showSuccessPopup();
       if (window.history && window.history.replaceState) {
         window.history.replaceState({}, document.title, window.location.pathname);
       }

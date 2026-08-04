@@ -23,13 +23,13 @@ if (!class_exists('finfo')) {
 
 /* Cache-bust for css/js. Bump this whenever styles.css / fx.css /
    reels.css / script.js change — same number the static pages use. */
-const ASSET_V = '66';
+const ASSET_V = '69';
 
 /* Site-wide facts, reused in the nav, footer, contact modal and feeds. */
 const SITE_NAME  = 'reels agency';
-const SITE_EMAIL = 'platon.tsuz@gmail.com';
-const SITE_TEL   = '+353892277248';
-const SITE_TEL_DISPLAY = '+353 89 2277 248';
+const SITE_EMAIL = 'reelsagency.ie@gmail.com';
+const SITE_TEL   = '+353894270669';
+const SITE_TEL_DISPLAY = '+353 89 427 0669';
 const SITE_LOCALE = 'en-IE';
 
 /* Root-relative base. '' means the site is served from the domain root,

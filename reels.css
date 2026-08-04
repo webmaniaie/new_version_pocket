@@ -146,6 +146,85 @@
   .mobile-menu-links a:last-child::after {
     color: #ffffff;
   }
+
+  /* Draw navigation arrows as plain interface symbols. Raw Unicode arrows
+     can switch to colourful emoji glyphs on some mobile system fonts. */
+  .mobile-menu-links a::after {
+    content: "";
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+    border-top: 1.6px solid currentColor;
+    border-right: 1.6px solid currentColor;
+    color: inherit;
+  }
+
+  .reels-to-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .reels-to-top::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    margin-top: 4px;
+    border-top: 1.6px solid currentColor;
+    border-left: 1.6px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  /* Keep decorative content glyphs in their monochrome symbol form rather
+     than allowing a phone's emoji font to take over. */
+  .reel-card-go i,
+  .product-card-open i,
+  .learn-reel-foot span:last-child,
+  .reels-service-row .arr,
+  .reels-footer-socials span,
+  .reels-button {
+    font-variant-emoji: text;
+  }
+
+  .reel-card-go i,
+  .product-card-open i,
+  .reels-service-row .arr,
+  .reels-footer-socials span {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    font-size: 0;
+  }
+
+  /* The faux social controls on Learn used emoji-capable Unicode characters.
+     Mobile gets crisp single-colour SVG symbols while desktop stays intact. */
+  .learn-reel-actions i {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: transparent;
+    font-size: 0;
+  }
+
+  .learn-reel-actions i:nth-child(1) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z'/%3E%3C/svg%3E");
+  }
+
+  .learn-reel-actions i:nth-child(2) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z'/%3E%3C/svg%3E");
+  }
+
+  .learn-reel-actions i:nth-child(3) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 5l5 5-5 5'/%3E%3Cpath d='M20 10H9a5 5 0 0 0-5 5v4'/%3E%3C/svg%3E");
+  }
 }
 
 /* ------------------------------------------------- home hero: written mark */
@@ -2170,7 +2249,9 @@ body.learn-page {
   transform: rotate(135deg);
 }
 
-/* phone row with the flag */
+/* International phone row. The native select deliberately opens the phone's
+   own full-screen picker on mobile, which is faster and more accessible than
+   recreating a 200+ item floating menu. */
 .contact-field--phone {
   display: flex;
   align-items: center;
@@ -2180,32 +2261,73 @@ body.learn-page {
   overflow: hidden;
 }
 
-.contact-flag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 0 4px 0 24px;
-  flex: none;
-  font-size: 12px;
-  color: rgba(10, 10, 10, 0.55);
+.contact-country-code {
+  position: relative;
+  flex: 0 1 180px;
+  min-width: 126px;
+  max-width: 46%;
+  align-self: stretch;
+  border-right: 1px solid rgba(10, 10, 10, 0.12);
 }
 
-.contact-flag span {
-  width: 22px;
-  height: 15px;
-  border-radius: 2px;
-  background: linear-gradient(
-    90deg,
-    #169b62 0 33.3%,
-    #ffffff 33.3% 66.6%,
-    #ff883e 66.6% 100%
-  );
-  box-shadow: 0 0 0 1px rgba(10, 10, 10, 0.12);
+.contact-country-code::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid rgba(10, 10, 10, 0.65);
+  border-bottom: 1.5px solid rgba(10, 10, 10, 0.65);
+  pointer-events: none;
+  transform: translateY(-70%) rotate(45deg);
+}
+
+.contact-country-code select {
+  width: 100%;
+  height: 100%;
+  min-height: 58px;
+  padding: 0 34px 0 18px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: rgba(10, 10, 10, 0.7);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.contact-country-code:focus-within {
+  box-shadow: inset 0 0 0 2px var(--pink);
 }
 
 .contact-field--phone input {
+  min-width: 0;
   background: transparent;
-  padding-left: 8px;
+  padding-left: 16px;
+}
+
+@media (max-width: 480px) {
+  .contact-country-code {
+    flex-basis: 145px;
+    min-width: 116px;
+    max-width: 44%;
+  }
+
+  .contact-country-code select {
+    padding-left: 13px;
+    padding-right: 29px;
+    font-size: 11px;
+  }
+
+  .contact-country-code::after {
+    right: 11px;
+  }
 }
 
 .contact-submit {
@@ -2284,6 +2406,155 @@ body.learn-page {
 .contact-note.is-error {
   color: #c2185b;
   font-weight: 700;
+}
+
+/* FormSubmit redirects back with ?sent=1. reels.js turns that signal into a
+   high-contrast confirmation instead of leaving it as a quiet line in-form. */
+.enquiry-success-popup {
+  position: fixed;
+  z-index: 4000;
+  top: clamp(82px, 10vh, 116px);
+  left: 50%;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 16px;
+  width: min(560px, calc(100vw - 32px));
+  padding: 17px 18px;
+  border: 2px solid var(--black);
+  border-radius: 18px;
+  background: var(--black);
+  color: var(--white);
+  box-shadow: 0 22px 60px rgba(10, 10, 10, 0.34),
+    0 0 0 5px rgba(255, 122, 172, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -24px) scale(0.96);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.enquiry-success-popup.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.enquiry-success-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.enquiry-success-icon::before {
+  content: "";
+  width: 12px;
+  height: 22px;
+  margin-top: -5px;
+  border-right: 3px solid var(--black);
+  border-bottom: 3px solid var(--black);
+  transform: rotate(45deg);
+}
+
+.enquiry-success-copy strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.enquiry-success-copy p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.enquiry-success-close {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.enquiry-success-close::before,
+.enquiry-success-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.enquiry-success-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.enquiry-success-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.enquiry-success-close:hover,
+.enquiry-success-close:focus-visible {
+  border-color: var(--pink);
+  background: var(--pink);
+  color: var(--black);
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .enquiry-success-popup {
+    top: 78px;
+    grid-template-columns: 44px minmax(0, 1fr) 30px;
+    gap: 11px;
+    width: calc(100vw - 24px);
+    padding: 14px;
+    border-radius: 15px;
+  }
+
+  .enquiry-success-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .enquiry-success-icon::before {
+    width: 10px;
+    height: 18px;
+    border-width: 0 2.5px 2.5px 0;
+  }
+
+  .enquiry-success-copy strong {
+    font-size: 16px;
+  }
+
+  .enquiry-success-copy p {
+    font-size: 12px;
+  }
+
+  .enquiry-success-close {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enquiry-success-popup {
+    transition: none;
+  }
 }
 
 /* --- portrait --- */
