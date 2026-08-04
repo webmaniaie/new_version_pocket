@@ -56,8 +56,32 @@ function static_paths(string $html): string
     return str_replace(array_keys($routes), array_values($routes), $html);
 }
 
+/** A no-script compatibility redirect for Hostinger-style clean blog URLs. */
+function redirect_page(string $target, string $label): string
+{
+    $safeTarget = htmlspecialchars($target, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeLabel = htmlspecialchars($label, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return '<!doctype html>' . "\n"
+        . '<html lang="en-IE"><head><meta charset="utf-8" />' . "\n"
+        . '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n"
+        . '<meta name="robots" content="noindex" />' . "\n"
+        . '<meta http-equiv="refresh" content="0; url=' . $safeTarget . '" />' . "\n"
+        . '<title>' . $safeLabel . ' | reels agency</title></head>' . "\n"
+        . '<body><p><a href="' . $safeTarget . '">Open ' . $safeLabel . '</a></p></body></html>' . "\n";
+}
+
 $learn = static_paths(capture_route($root . '/learn.php', [], '/learn'));
 file_put_contents($output . '/learn.html', $learn, LOCK_EX);
+
+$cleanLearnDir = $output . '/learn';
+if (!is_dir($cleanLearnDir)) {
+    mkdir($cleanLearnDir, 0755, true);
+}
+file_put_contents(
+    $cleanLearnDir . '/index.html',
+    redirect_page('../learn.html', 'Learn'),
+    LOCK_EX
+);
 
 $published = all_posts();
 foreach ($published as $post) {
@@ -68,6 +92,16 @@ foreach ($published as $post) {
         '/learn/' . $slug
     ));
     file_put_contents($output . '/learn-' . $slug . '.html', $html, LOCK_EX);
+
+    $cleanPostDir = $cleanLearnDir . '/' . $slug;
+    if (!is_dir($cleanPostDir)) {
+        mkdir($cleanPostDir, 0755, true);
+    }
+    file_put_contents(
+        $cleanPostDir . '/index.html',
+        redirect_page('../../learn-' . $slug . '.html', (string) $post['title']),
+        LOCK_EX
+    );
 }
 
 fwrite(STDOUT, 'Static blog ready: ' . count($published) . " published posts.\n");
