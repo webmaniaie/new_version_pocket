@@ -2864,6 +2864,37 @@ body.learn-page {
   color: var(--pink);
 }
 
+.contact-portrait-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.contact-portrait-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-portrait-links a:hover,
+.contact-portrait-links a:focus-visible {
+  background: var(--white);
+  color: var(--black);
+}
+
 /* --- bottom bar --- */
 
 .contact-bar {

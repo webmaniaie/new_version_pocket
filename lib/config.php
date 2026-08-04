@@ -27,7 +27,7 @@ if (!class_exists('finfo')) {
 
 /* Cache-bust for css/js. Bump this whenever styles.css / fx.css /
    reels.css / script.js change — same number the static pages use. */
-const ASSET_V = '83';
+const ASSET_V = '84';
 
 /* Site-wide facts, reused in the nav, footer, contact modal and feeds. */
 const SITE_NAME  = 'reels agency';

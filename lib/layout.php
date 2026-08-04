@@ -154,7 +154,6 @@ function render_footer(bool $withEffects = true): void
         </div>
         <div class="reels-footer-socials" aria-label="Social media">
           <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;&#65038;</span></a>
-          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;&#65038;</span></a>
         </div>
       </div>
       <div class="reels-footer-grid">
