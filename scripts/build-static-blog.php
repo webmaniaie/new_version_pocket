@@ -40,6 +40,7 @@ function static_paths(string $html): string
         'href="/learn"' => 'href="learn.html"',
         'href="/team"' => 'href="team.html"',
         'href="/contacts"' => 'href="contacts.html"',
+        'href="/case-sweet-baking.html"' => 'href="case-sweet-baking.html"',
         'href="/rss.xml"' => 'href="rss.xml"',
         'href="/favicon.svg' => 'href="favicon.svg',
         'href="/apple-touch-icon.png' => 'href="apple-touch-icon.png',
