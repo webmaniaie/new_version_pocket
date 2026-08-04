@@ -2279,11 +2279,14 @@ body.learn-page {
   height: 7px;
   border-right: 1.5px solid rgba(10, 10, 10, 0.65);
   border-bottom: 1.5px solid rgba(10, 10, 10, 0.65);
+  z-index: 3;
   pointer-events: none;
   transform: translateY(-70%) rotate(45deg);
 }
 
 .contact-country-code select {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   min-height: 58px;
@@ -2302,7 +2305,27 @@ body.learn-page {
   -webkit-appearance: none;
 }
 
+/* The native list keeps full country names, while this visual layer keeps the
+   closed control compact. It ignores taps so the select underneath still opens. */
+.contact-country-code-value {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 34px 0 18px;
+  background: #f1f1f1;
+  color: rgba(10, 10, 10, 0.7);
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
 .contact-country-code:focus-within {
+  box-shadow: inset 0 0 0 2px var(--pink);
+}
+
+.contact-country-code:focus-within .contact-country-code-value {
   box-shadow: inset 0 0 0 2px var(--pink);
 }
 
@@ -2320,6 +2343,12 @@ body.learn-page {
   }
 
   .contact-country-code select {
+    padding-left: 13px;
+    padding-right: 29px;
+    font-size: 11px;
+  }
+
+  .contact-country-code-value {
     padding-left: 13px;
     padding-right: 29px;
     font-size: 11px;

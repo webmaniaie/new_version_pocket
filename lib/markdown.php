@@ -307,7 +307,7 @@ function render_ordered(array $items): string
                  .  '            <span class="num">' . sprintf('%02d', $i + 1) . "</span>\n"
                  .  '            <span class="name">' . inline($name) . "</span>\n"
                  .  '            <span class="hint">' . inline($hint) . "</span>\n"
-                 .  '            <span class="arr">&#8599;</span>' . "\n"
+                 .  '            <span class="arr">&#8599;&#65038;</span>' . "\n"
                  .  "          </div>\n";
         }
         return $out . "        </div>\n";

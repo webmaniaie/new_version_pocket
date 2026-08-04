@@ -58,9 +58,9 @@ render_head([
             </div>
             <h3 class="learn-reel-title"><?= title_with_em($post) ?></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;</i>
-              <i>&#128172;</i>
-              <i>&#8631;</i>
+              <i>&#9829;&#65038;</i>
+              <i>&#128172;&#65038;</i>
+              <i>&#8631;&#65038;</i>
             </div>
             <div class="learn-reel-foot"><span>Dropping soon</span><span aria-hidden="true">&middot;&middot;&middot;</span></div>
           </div>
@@ -72,11 +72,11 @@ render_head([
             </div>
             <h3 class="learn-reel-title"><?= title_with_em($post) ?></h3>
             <div class="learn-reel-rail" aria-hidden="true">
-              <i>&#9829;</i>
-              <i>&#128172;</i>
-              <i>&#8631;</i>
+              <i>&#9829;&#65038;</i>
+              <i>&#128172;&#65038;</i>
+              <i>&#8631;&#65038;</i>
             </div>
-            <div class="learn-reel-foot"><span>Read it</span><span aria-hidden="true">&#8599;</span></div>
+            <div class="learn-reel-foot"><span>Read it</span><span aria-hidden="true">&#8599;&#65038;</span></div>
           </a>
 <?php endif; ?>
           <div class="learn-slide-copy reveal">
@@ -90,7 +90,7 @@ render_head([
 <?php if ($post['teaser']): ?>
             <p class="reels-mt-sm"><span class="reels-soon">Dropping soon</span></p>
 <?php else: ?>
-            <p class="reels-mt-sm"><a class="reels-button" href="<?= e($url) ?>">Read the post &#8599;</a></p>
+            <p class="reels-mt-sm"><a class="reels-button" href="<?= e($url) ?>">Read the post &#8599;&#65038;</a></p>
 <?php endif; ?>
           </div>
         </article>
@@ -100,7 +100,7 @@ render_head([
 
       <section class="reels-section reels-section--pink reels-center">
         <p class="reels-note reveal">want this done for you instead?</p>
-        <a class="reels-button reveal" href="<?= BASE ?>/product">See the product &#8599;</a>
+        <a class="reels-button reveal" href="<?= BASE ?>/product">See the product &#8599;&#65038;</a>
       </section>
     </main>
 

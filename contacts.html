@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css?v=64" />
     <link rel="stylesheet" href="fx.css?v=65" />
-    <link rel="stylesheet" href="reels.css?v=70" />
+    <link rel="stylesheet" href="reels.css?v=71" />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -126,8 +126,9 @@
               <div class="contact-country-code">
                 <label class="sr-only" for="cf-country-code">Country calling code</label>
                 <select id="cf-country-code" name="phone_country_code" aria-label="Country calling code">
-                  <option value="+353" data-country="Ireland" selected>(+353)</option>
+                  <option value="+353" data-country="Ireland" selected>Ireland (+353)</option>
                 </select>
+                <span class="contact-country-code-value" id="cf-country-code-value" aria-hidden="true">(+353)</span>
               </div>
               <label class="sr-only" for="cf-phone">Phone</label>
               <input id="cf-phone" name="phone" type="tel" placeholder="Mobile number" autocomplete="tel" inputmode="tel" maxlength="30" pattern="[0-9 ()+\-]{6,30}" />
@@ -196,8 +197,8 @@
           <a href="tel:+353894270669">+353 89 427 0669</a>
         </div>
         <div class="reels-footer-socials" aria-label="Social media">
-          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;</span></a>
-          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;</span></a>
+          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;&#65038;</span></a>
+          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;&#65038;</span></a>
         </div>
       </div>
       <div class="reels-footer-grid">
@@ -211,7 +212,7 @@
         </nav>
         <span class="reels-footer-note">Ireland</span>
         <span class="reels-footer-note">&copy; <span data-year>2026</span> reels agency</span>
-        <button class="reels-to-top" type="button" aria-label="Back to top">↑</button>
+        <button class="reels-to-top" type="button" aria-label="Back to top">&#8593;&#65038;</button>
       </div>
       <div class="reels-footer-mark" aria-hidden="true">reels&copy;</div>
     </footer>
@@ -220,7 +221,7 @@
       <div class="contact-modal-overlay"></div>
       <div class="contact-modal-card" role="dialog" aria-modal="true" aria-label="Contact">
         <button class="contact-modal-close" type="button" aria-label="Close">&times;</button>
-        <h3>Let's make <em>reels:</em></h3>
+        <h3>Ask any <em>question</em></h3>
         <div class="contact-modal-links">
           <a href="mailto:reelsagency.ie@gmail.com">reelsagency.ie@gmail.com</a>
           <a href="tel:+353894270669">+353 89 427 0669</a>
@@ -235,7 +236,7 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
     <script defer src="fx.js?v=65"></script>
-    <script defer src="country-codes.js?v=70"></script>
+    <script defer src="country-codes.js?v=71"></script>
     <script defer src="reels.js?v=68"></script>
   </body>
 </html>

@@ -136,8 +136,8 @@ function render_footer(): void
           <a href="tel:<?= e(SITE_TEL) ?>"><?= e(SITE_TEL_DISPLAY) ?></a>
         </div>
         <div class="reels-footer-socials" aria-label="Social media">
-          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;</span></a>
-          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;</span></a>
+          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;&#65038;</span></a>
+          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;&#65038;</span></a>
         </div>
       </div>
       <div class="reels-footer-grid">
@@ -148,7 +148,7 @@ function render_footer(): void
         </nav>
         <span class="reels-footer-note">Ireland</span>
         <span class="reels-footer-note">&copy; <span data-year><?= date('Y') ?></span> <?= e(SITE_NAME) ?></span>
-        <button class="reels-to-top" type="button" aria-label="Back to top">↑</button>
+        <button class="reels-to-top" type="button" aria-label="Back to top">&#8593;&#65038;</button>
       </div>
       <div class="reels-footer-mark" aria-hidden="true">reels&copy;</div>
     </footer>
@@ -157,7 +157,7 @@ function render_footer(): void
       <div class="contact-modal-overlay"></div>
       <div class="contact-modal-card" role="dialog" aria-modal="true" aria-label="Contact">
         <button class="contact-modal-close" type="button" aria-label="Close">&times;</button>
-        <h3>Let's make <em>reels:</em></h3>
+        <h3>Ask any <em>question</em></h3>
         <div class="contact-modal-links">
           <a href="mailto:<?= e(SITE_EMAIL) ?>"><?= e(SITE_EMAIL) ?></a>
           <a href="tel:<?= e(SITE_TEL) ?>"><?= e(SITE_TEL_DISPLAY) ?></a>

@@ -40,7 +40,7 @@ if ($post === null) {
       <section class="reels-section reels-section--white">
         <p class="reels-body reveal">That post has moved or never existed.</p>
         <div class="reels-mt">
-          <a class="reels-button reels-button--outline" href="<?= BASE ?>/learn">&#8592; All posts</a>
+          <a class="reels-button reels-button--outline" href="<?= BASE ?>/learn">&#8592;&#65038; All posts</a>
         </div>
       </section>
     </main>
@@ -100,9 +100,9 @@ render_head([
 
       <section class="reels-section reels-section--white reels-section--tight-top">
         <div class="post-end">
-          <a class="reels-button reels-button--outline" href="<?= BASE ?>/learn">&#8592; All posts</a>
+          <a class="reels-button reels-button--outline" href="<?= BASE ?>/learn">&#8592;&#65038; All posts</a>
 <?php if ($next !== null): ?>
-          <a class="reels-button" href="<?= e(post_url($next)) ?>">Next: <?= e($next['title']) ?> &#8599;</a>
+          <a class="reels-button" href="<?= e(post_url($next)) ?>">Next: <?= e($next['title']) ?> &#8599;&#65038;</a>
 <?php endif; ?>
         </div>
       </section>
