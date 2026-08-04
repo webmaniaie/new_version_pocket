@@ -40,13 +40,13 @@ The research checked public creator profiles, official websites, established Iri
 
 These five names have the strongest combination of public visibility, proven authority and identifiable Carlow connection. They are not directly comparable -- their fields range from TikTok entertainment to weather and fine art -- but each demonstrates how a focused subject can build influence far beyond the county.
 
-| Rank | Creator | Main field | Main platform | Why they stand out |
-|---|---|---|---|---|
-| 1 | [Lauren Whelan](https://www.tiktok.com/@laurenwhelxn) | Beauty, lifestyle, comedy and daily vlogs | TikTok | The Carlow creator had 1.7 million TikTok followers in August 2025 and has built a full-time multi-platform career from short-form video. |
-| 2 | [Paddy Galloway](https://accelerator.paddygalloway.com/) | YouTube strategy and creator education | YouTube and LinkedIn | The Carlow-born strategist says he has worked directly on videos with more than 10 billion views and helped over 100 channels. |
-| 3 | [Carlow Weather / Alan O'Reilly](https://x.com/CarlowWeather) | Weather forecasting and public information | X, Facebook, Instagram and TikTok | A Carlow hobbyist turned national weather voice, followed by hundreds of thousands across several platforms. |
-| 4 | [Kathryn Thomas](https://www.instagram.com/kathrynthomasofficial/) | Broadcasting, wellness and lifestyle | Instagram, radio and television | The Carlow-born presenter combines long-standing mainstream recognition with wellness and lifestyle communication online. |
-| 5 | [Jess Kelly Art](https://www.instagram.com/jesskelly.art/) | Fine art, interiors and creative business | Instagram | The Carlow-based Irish-Mexican artist has built a recognisable metallic style and attracted celebrity and interior-design clients. |
+| Rank | Creator | Profile | Main field | Main platform | Why they stand out |
+|---|---|---|---|---|---|
+| 1 | Lauren Whelan | [TikTok profile](https://www.tiktok.com/@laurenwhelxn) | Beauty, lifestyle, comedy and daily vlogs | TikTok | The Carlow creator had 1.7 million TikTok followers in August 2025 and has built a full-time multi-platform career from short-form video. |
+| 2 | Paddy Galloway | [Official website](https://accelerator.paddygalloway.com/) | YouTube strategy and creator education | YouTube and LinkedIn | The Carlow-born strategist says he has worked directly on videos with more than 10 billion views and helped over 100 channels. |
+| 3 | Carlow Weather / Alan O'Reilly | [X profile](https://x.com/CarlowWeather) | Weather forecasting and public information | X, Facebook, Instagram and TikTok | A Carlow hobbyist turned national weather voice, followed by hundreds of thousands across several platforms. |
+| 4 | Kathryn Thomas | [Instagram profile](https://www.instagram.com/kathrynthomasofficial/) | Broadcasting, wellness and lifestyle | Instagram, radio and television | The Carlow-born presenter combines long-standing mainstream recognition with wellness and lifestyle communication online. |
+| 5 | Jess Kelly Art | [Instagram profile](https://www.instagram.com/jesskelly.art/) | Fine art, interiors and creative business | Instagram | The Carlow-based Irish-Mexican artist has built a recognisable metallic style and attracted celebrity and interior-design clients. |
 
 ### What brands can learn from the top five
 
@@ -58,17 +58,17 @@ The common lesson is simple: a creator becomes memorable when the audience can e
 
 The next group shows the depth of the Carlow creator scene. These are specialist voices with a clear field and a public body of work. Some are growing personal audiences; others make user-generated content for brands or use social platforms to develop a creative career.
 
-| Rank | Creator | Field | Public profile | Best fit for |
+| Rank | Creator | Profile | Field | Best fit for |
 |---|---|---|---|---|
-| 6 | [Farai Mahachi](https://www.instagram.com/faraimahachi8/) | UGC, product demonstrations, testimonials and skits | @faraimahachi8 | Product launches, service explainers and relatable paid-social creative |
-| 7 | [Mariana Monteiro](https://www.instagram.com/bymarimont/) | Beauty, skincare, fitness and healthy lifestyle | @bymarimont | Beauty tutorials, wellness products, reviews and Reels-style UGC |
-| 8 | [Alex Fitzachary](https://www.tiktok.com/@alex_fitzachary) | Beauty, fashion, outdoors and everyday lifestyle | @alex_fitzachary | Fashion, haircare, skincare, running and activity-led campaigns |
-| 9 | [Melissa Clarke](https://collabstr.com/melissaclarkemua) | Makeup and fashion | @melissaclarkemua | Makeup artistry, beauty services and fashion-led collaborations |
-| 10 | [Max the Pomsky](https://www.instagram.com/max_thepomsky/) | Pet lifestyle, events and pet-friendly places | @max_thepomsky | Pet products, local experiences and pet-friendly hospitality |
-| 11 | [MACRUA](https://www.macruaofficial.com/) | Original music, performance and songwriting | @macrua_official | Music, live events, youth culture and creative collaborations |
-| 12 | [Ben Klarren](https://www.instagram.com/benklarren/) | House and techno music | @benklarren | Nightlife, festivals, music releases and event promotion |
-| 13 | [Siobhán Jordan](https://www.siobhanjordan.com/) | Visual art, education and nature-based creativity | Artist website and social channels | Arts, education, family workshops and creative community projects |
-| 14 | [Hazel Scanlon](https://hazelscanlonart.ie/) | Contemporary and abstract art | Artist website and Instagram | Interiors, art collectors, exhibitions and creative process content |
+| 6 | Farai Mahachi | [Instagram profile](https://www.instagram.com/faraimahachi8/) | UGC, product demonstrations, testimonials and skits | Product launches, service explainers and relatable paid-social creative |
+| 7 | Mariana Monteiro | [Instagram profile](https://www.instagram.com/bymarimont/) | Beauty, skincare, fitness and healthy lifestyle | Beauty tutorials, wellness products, reviews and Reels-style UGC |
+| 8 | Alex Fitzachary | [TikTok profile](https://www.tiktok.com/@alex_fitzachary) | Beauty, fashion, outdoors and everyday lifestyle | Fashion, haircare, skincare, running and activity-led campaigns |
+| 9 | Melissa Clarke | [Creator profile](https://collabstr.com/melissaclarkemua) | Makeup and fashion | Makeup artistry, beauty services and fashion-led collaborations |
+| 10 | Max the Pomsky | [Instagram profile](https://www.instagram.com/max_thepomsky/) | Pet lifestyle, events and pet-friendly places | Pet products, local experiences and pet-friendly hospitality |
+| 11 | MACRUA | [Official website](https://www.macruaofficial.com/) | Original music, performance and songwriting | Music, live events, youth culture and creative collaborations |
+| 12 | Ben Klarren | [Instagram profile](https://www.instagram.com/benklarren/) | House and techno music | Nightlife, festivals, music releases and event promotion |
+| 13 | Siobhán Jordan | [Official website](https://www.siobhanjordan.com/) | Visual art, education and nature-based creativity | Arts, education, family workshops and creative community projects |
+| 14 | Hazel Scanlon | [Official website](https://hazelscanlonart.ie/) | Contemporary and abstract art | Interiors, art collectors, exhibitions and creative process content |
 
 ### Why niche influence matters
 
@@ -80,14 +80,14 @@ That makes a smaller but well-defined audience useful for product demonstrations
 
 The final six are businesses or community-facing accounts where content has become part of the attraction. Their strongest posts do more than announce opening hours or prices: they use a face, format or recurring point of view to earn attention.
 
-| Rank | Creator-led account | Field | Main platform | Why it belongs on the list |
-|---|---|---|---|---|
-| 15 | [Greg at Apache Carlow](https://www.tiktok.com/@apachecarlow) | Food comedy and local culture | TikTok | Manager Greg turned the Carlow shop into a recurring comedy character and generated documented viral attention. |
-| 16 | [Aisling Lacey / Dame Ladies Fashion](https://www.instagram.com/damedollscarlow/) | Fashion retail and small-business commentary | Instagram and TikTok | A recognisable owner-led voice mixing clothing content with direct discussion of the realities facing local retailers. |
-| 17 | [Ciara Stanley / Coppenagh House Farm](https://www.instagram.com/coppenagh_house_farm/) | Farm-to-fork food, farming and rural enterprise | Instagram | Content connects the working farm, farm shop, café and local-produce story near Tullow. |
-| 18 | [Magic Bubble Carlow](https://www.tiktok.com/@magicbubble.ie) | Bubble tea, desserts and food content | TikTok | A local food account built around visual products, trends and frequent short-form publishing. |
-| 19 | [Talbot Hotel Carlow](https://www.talbotcarlow.ie/) | Hospitality, staff comedy and destination content | TikTok and Instagram | Staff-led social content helped place the hotel among Irish businesses noted for letting younger teams shape the marketing voice. |
-| 20 | [Made in Carlow](https://www.instagram.com/madeincarlow/) | Local art, craft and maker discovery | Instagram and Facebook | The gallery gives more than 100 local and regional artists a shared discovery platform in Carlow town. |
+| Rank | Creator-led account | Profile | Field | Main platform | Why it belongs on the list |
+|---|---|---|---|---|---|
+| 15 | Greg at Apache Carlow | [TikTok profile](https://www.tiktok.com/@apachecarlow) | Food comedy and local culture | TikTok | Manager Greg turned the Carlow shop into a recurring comedy character and generated documented viral attention. |
+| 16 | Aisling Lacey / Dame Ladies Fashion | [Instagram profile](https://www.instagram.com/damedollscarlow/) | Fashion retail and small-business commentary | Instagram and TikTok | A recognisable owner-led voice mixing clothing content with direct discussion of the realities facing local retailers. |
+| 17 | Ciara Stanley / Coppenagh House Farm | [Instagram profile](https://www.instagram.com/coppenagh_house_farm/) | Farm-to-fork food, farming and rural enterprise | Instagram | Content connects the working farm, farm shop, café and local-produce story near Tullow. |
+| 18 | Magic Bubble Carlow | [TikTok profile](https://www.tiktok.com/@magicbubble.ie) | Bubble tea, desserts and food content | TikTok | A local food account built around visual products, trends and frequent short-form publishing. |
+| 19 | Talbot Hotel Carlow | [Official website](https://www.talbotcarlow.com/index.html) | Hospitality, staff comedy and destination content | TikTok and Instagram | Staff-led social content helped place the hotel among Irish businesses noted for letting younger teams shape the marketing voice. |
+| 20 | Made in Carlow | [Instagram profile](https://www.instagram.com/madeincarlow/) | Local art, craft and maker discovery | Instagram and Facebook | The gallery gives more than 100 local and regional artists a shared discovery platform in Carlow town. |
 
 ### The strongest local format is a recognisable human voice
 

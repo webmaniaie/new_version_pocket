@@ -3934,6 +3934,19 @@ body.learn-post-page,
   border-bottom: 0;
 }
 
+.post-table a {
+  color: var(--navy);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.post-table a:hover,
+.post-table a:focus-visible {
+  color: #005f42;
+}
+
 .post-bars {
   display: grid;
   gap: 16px;
