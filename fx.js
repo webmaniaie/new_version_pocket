@@ -1,5 +1,5 @@
 /* ============================================================
-   POCKET FX — interaction layer (runs after script.js).
+   REELS FX — interaction layer (runs after script.js).
    Requires (CDN, deferred): GSAP 3 + ScrollTrigger; Three.js is
    optional and only loaded on index/work.
    Additive only: no layout or placement changes.
@@ -74,7 +74,7 @@
   var prog = document.createElement("div");
   prog.className = "fx-progress";
   prog.setAttribute("aria-hidden", "true");
-  prog.innerHTML = "<span></span>";
+  prog.appendChild(document.createElement("span"));
   document.body.appendChild(prog);
   var progBar = prog.firstChild;
   function updateBar() {
@@ -267,6 +267,7 @@
     var isHeroDisplay = banner.classList.contains("fx-hero-display");
     var useAuthoredLines =
       banner.classList.contains("home-who-copy") ||
+      banner.classList.contains("viral-location-heading") ||
       isHeroDisplay;
     var authoredLines = useAuthoredLines
       ? Array.prototype.slice
@@ -298,7 +299,7 @@
       "aria-label",
       authoredLines.map(function (line) { return line.text; }).join(" ")
     );
-    banner.innerHTML = "";
+    banner.replaceChildren();
 
     function mkLine(txt, serif) {
       var line = document.createElement("span");
@@ -314,7 +315,14 @@
     var inners = authoredLines.map(function (line) {
       return mkLine(line.text, line.serif);
     });
-    if (hasGSAP) {
+    // Page titles and the who-we-are block render immediately. Their optional
+    // letter interaction stays, but there is no entrance/fade treatment.
+    var noEntrance =
+      isHeroDisplay ||
+      banner.classList.contains("home-who-copy") ||
+      banner.classList.contains("viral-location-heading");
+
+    if (hasGSAP && !noEntrance) {
       gsap.set(inners, { yPercent: 110 });
       if (isHeroDisplay) {
         var heroSafety = setTimeout(function () {
@@ -350,7 +358,9 @@
       });
     }
   }
-  document.querySelectorAll(".home-banner-text, .home-who-copy, .fx-hero-display").forEach(setupBannerCopy);
+  document
+    .querySelectorAll(".home-banner-text, .home-who-copy, .fx-hero-display, .viral-location-heading")
+    .forEach(setupBannerCopy);
 
   /* ---------- hero headline: word-by-word scrub reveal ---------- */
   var headline = document.querySelector(".hero-headline");
@@ -399,6 +409,8 @@
   /* ---------- Three.js particles behind hero openings ---------- */
   function particles(holderParent, opts) {
     if (!holderParent) return;
+    // ambient motion stays; the pointer just doesn't steer it
+    var noParallax = opts.noParallax === true;
     var holder = document.createElement("div");
     holder.className = "fx-webgl";
     holder.setAttribute("aria-hidden", "true");
@@ -406,7 +418,7 @@
 
     function canvasFallback() {
       holder.classList.add("fx-webgl-fallback");
-      holder.innerHTML = "";
+      holder.replaceChildren();
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
       if (!ctx) return;
@@ -442,10 +454,12 @@
         }
       }
 
-      document.addEventListener("mousemove", function (e) {
-        targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-        targetY = (e.clientY / window.innerHeight - 0.5) * 2;
-      }, { passive: true });
+      if (!noParallax) {
+        document.addEventListener("mousemove", function (e) {
+          targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+          targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
+      }
 
       function drawFallback() {
         currentX += (targetX - currentX) * 0.04;
@@ -520,6 +534,19 @@
     var points = new THREE.Points(geo, mat);
     scene.add(points);
 
+    // A wide, shallow slab (spreadX 64 vs depth 10) turns edge-on when it spins
+    // on Y and the whole field bunches into a band. Drift mode moves each point
+    // along X instead and wraps it around, so the spread stays even forever.
+    var drift = opts.drift === true;
+    var swing = opts.swing === true;
+    var SWING_PERIOD = 12; // seconds for the full right-back-left-back loop
+    var SWING_AMP = 1; // radians (~57deg) at each extreme
+    var speeds = null;
+    if (drift) {
+      speeds = new Float32Array(COUNT);
+      for (var s = 0; s < COUNT; s++) speeds[s] = 0.14 + Math.random() * 0.55;
+    }
+
     var wire = null;
     if (opts.wire) {
       wire = new THREE.Mesh(
@@ -537,25 +564,48 @@
     }
 
     var tx = 0, ty = 0, cx = 0, cy = 0;
-    document.addEventListener("mousemove", function (e) {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
+    if (!noParallax) {
+      document.addEventListener("mousemove", function (e) {
+        tx = (e.clientX / window.innerWidth - 0.5) * 2;
+        ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+    }
 
     var clock = new THREE.Clock();
     var running = true;
+    var lastT = 0;
     function animate() {
       if (!running) return;
       requestAnimationFrame(animate);
       var t = clock.getElapsedTime();
+      // clamp so a backgrounded tab doesn't teleport the field on return
+      var dt = Math.min(t - lastT, 0.05);
+      lastT = t;
       cx += (tx - cx) * 0.03;
       cy += (ty - cy) * 0.03;
-      points.rotation.y = t * 0.03 + cx * 0.15;
-      points.rotation.x = cy * 0.1;
+      if (drift) {
+        var arr = geo.attributes.position.array;
+        var halfX = spreadX / 2;
+        for (var d = 0; d < COUNT; d++) {
+          var xi = d * 3;
+          arr[xi] -= speeds[d] * dt;
+          if (arr[xi] < -halfX) arr[xi] += spreadX;
+        }
+        geo.attributes.position.needsUpdate = true;
+      } else {
+        points.rotation.y = t * 0.03 + cx * 0.15;
+        points.rotation.x = cy * 0.1;
+      }
       points.position.y = Math.sin(t * 0.4) * 0.25;
       if (wire) {
-        wire.rotation.x = t * 0.12;
-        wire.rotation.y = t * 0.16;
+        if (swing) {
+          // 12s cycle: 3s turning right, 3s back to centre, 3s left, 3s back
+          wire.rotation.x = 0.34;
+          wire.rotation.y = SWING_AMP * Math.sin((t * Math.PI * 2) / SWING_PERIOD);
+        } else {
+          wire.rotation.x = t * 0.12;
+          wire.rotation.y = t * 0.16;
+        }
       }
       renderer.render(scene, camera);
     }
@@ -582,8 +632,9 @@
   if (hasWideCanvas) {
     // spread matches the banner's wide aspect so the field fills the whole strip
     particles(document.querySelector(".home-page .home-video-banner"), {
-      color: 0x00b80d, opacity: 0.6, size: 0.07, wire: true, count: 2600,
-      spreadX: 64, spreadY: 12, wirePos: [9, 0.2, -2]
+      color: 0xff7aac, opacity: 0.6, size: 0.07, wire: true, count: 2600,
+      spreadX: 64, spreadY: 12, wirePos: [9, 0.2, -2],
+      noParallax: true, drift: true, swing: true
     });
   }
   particles(document.querySelector(".work-refresh-hero"), {

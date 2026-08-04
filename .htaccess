@@ -5,25 +5,59 @@ ServerSignature Off
 
 RewriteEngine On
 
+# Reject request methods the site never uses. This also disables legacy
+# TRACE/TRACK reflection attacks without affecting normal GET/POST traffic.
+RewriteCond %{REQUEST_METHOD} ^(?:TRACE|TRACK|CONNECT)$ [NC]
+RewriteRule ^ - [F,L]
+
 # Block hidden files and folders (.git, .env, .DS_Store, ...) except .well-known
 RewriteRule (^|/)\.(?!well-known(/|$)) - [F]
 
-# Drop www (redirects straight to https apex)
-RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+# Editor backups, logs and database dumps must never become downloads.
+<FilesMatch "(?i)(?:~|\.(?:bak|backup|conf|dist|ini|log|old|orig|save|sql|swp))$">
+  Require all denied
+</FilesMatch>
+
+# Reject invented Host headers and keep one canonical origin.
+RewriteCond %{HTTP_HOST} !^reelsagency\.ie$ [NC]
+RewriteRule ^ https://reelsagency.ie%{REQUEST_URI} [R=301,L]
 
 # Force HTTPS
 RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteRule ^ https://reelsagency.ie%{REQUEST_URI} [R=301,L]
 
+# --- blog -----------------------------------------------------------
+# Post sources, the engine and the archived hand-built pages are never
+# served: they are read by PHP, not by the browser.
+RewriteRule ^(posts|lib|_archive)(/|$) - [F]
+
+# Old hand-built blog URLs keep working
+RewriteRule ^learn\.html$ /learn [R=301,L]
+RewriteRule ^learn-hooks\.html$ /learn/hooks [R=301,L]
+
+# /learn and /learn/<slug>
+RewriteRule ^learn/?$ learn.php [L]
+RewriteRule ^learn/([a-z0-9][a-z0-9-]*)/?$ post.php?slug=$1 [L,QSA]
+
+# Feeds are generated, not files
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^rss\.xml$ rss.php [L]
+RewriteRule ^robots\.txt$ robots.php [L]
+
+# --- clean URLs ------------------------------------------------------
 # Remove .html extension from URL
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
 
+# Same for .php, so /learn never shows an extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
 <IfModule mod_headers.c>
   # Same policy as the meta tags in the pages, plus frame-ancestors (meta can't carry it)
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'"
   Header always set X-Frame-Options "DENY"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
@@ -33,6 +67,15 @@ RewriteRule ^([^\.]+)$ $1.html [NC,L]
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set Origin-Agent-Cluster "?1"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always unset X-Powered-By
+
+  # Only the contact page may post off-site. Every other public page keeps
+  # form-action 'none'; /admin has a separate, self-only policy below it.
+  <Files "contacts.html">
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action https://formsubmit.co; upgrade-insecure-requests; require-trusted-types-for 'script'"
+  </Files>
 </IfModule>
 
 <IfModule mod_expires.c>

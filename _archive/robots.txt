@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Add this line once the domain is live, pointing at the real host:
+# Sitemap: https://YOUR-DOMAIN/sitemap.xml

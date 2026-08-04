@@ -1,50 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IE">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Pocket Agency</title>
-    <meta name="description" content="Pocket Agency — Irish creative marketing agency. We boost social medias and build brands. Dublin & Carlow." />
-    <meta name="theme-color" content="#00b80d" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <title>Reels Agency Carlow &amp; Dublin | Viral Short-Form Video</title>
+    <meta name="description" content="Reels Agency is a short-form video agency based in Carlow and Dublin. We create viral Instagram Reels, TikToks and YouTube Shorts with clear, upfront pricing." />
+    <meta name="theme-color" content="#ff7aac" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="reels agency" />
+    <meta property="og:locale" content="en_IE" />
+    <meta property="og:title" content="Reels Agency Carlow &amp; Dublin | Viral Short-Form Video" />
+    <meta property="og:description" content="Reels Agency is a short-form video agency based in Carlow and Dublin. We create viral Instagram Reels, TikToks and YouTube Shorts with clear, upfront pricing." />
+    <meta property="og:image" content="assets/logo-nav.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Reels Agency Carlow &amp; Dublin | Viral Short-Form Video" />
+    <meta name="twitter:description" content="Reels Agency is a short-form video agency based in Carlow and Dublin. We create viral Instagram Reels, TikToks and YouTube Shorts with clear, upfront pricing." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=64" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png?v=64" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=9" />
-    <link rel="stylesheet" href="fx.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=65" />
+    <link rel="stylesheet" href="fx.css?v=65" />
+    <link rel="stylesheet" href="reels.css?v=68" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "#reels-agency",
+      "name": "reels agency",
+      "alternateName": "Reels Agency Ireland",
+      "description": "Short-form video agency based in Carlow and Dublin, creating viral Instagram Reels, TikToks and YouTube Shorts with clear, upfront pricing.",
+      "email": "reelsagency.ie@gmail.com",
+      "telephone": "+353894270669",
+      "address": { "@type": "PostalAddress", "addressCountry": "IE" },
+      "areaServed": [
+        { "@type": "City", "name": "Carlow" },
+        { "@type": "City", "name": "Dublin" },
+        { "@type": "Country", "name": "Ireland" }
+      ],
+      "knowsLanguage": ["en", "uk", "ru"],
+      "priceRange": "From EUR 300",
+      "makesOffer": [
+        { "@type": "Offer", "name": "Reels Sprint", "description": "One-time pack of reels.", "priceCurrency": "EUR", "price": "500", "eligibleQuantity": { "@type": "QuantitativeValue", "unitText": "pack" } },
+        { "@type": "Offer", "name": "Reels Marathon", "description": "Monthly subscription, an agreed number of reels per month.", "priceCurrency": "EUR", "price": "300" },
+        { "@type": "Offer", "name": "Symbiosis", "description": "Split production - we write and edit, you film, or the reverse." }
+      ]
+    }
+    </script>
   </head>
-  <body class="intro-locked home-page">
-    <div id="intro" class="intro">
-      <div class="intro-inner">
-        <div class="intro-logo">
-          <picture>
-            <source srcset="assets/optimized/animationlogo.webp" type="image/webp" />
-            <img src="assets/animationlogo.png" alt="Pocket Agency" width="960" height="540" decoding="async" />
-          </picture>
-        </div>
-        <div class="intro-line"></div>
-        <p class="intro-hint">PRESS OR TAP TO ENTER</p>
-      </div>
-    </div>
-
+  <body class="home-page">
     <header class="site-nav">
       <a class="logo" href="index.html">
-        <img src="assets/logo.png" alt="Pocket Agency" />
+        <img src="assets/logo-nav.svg" alt="reels agency" width="661" height="200" />
       </a>
       <nav class="nav-links">
         <a class="active" href="index.html">Home</a>
         <a href="work.html">Work</a>
-        <a href="services.html">Services</a>
-        <a href="us.html">Us</a>
+        <a href="product.html">Products</a>
+        <a href="learn.html">Learn</a>
+        <a href="team.html">Team</a>
+        <a href="contacts.html">Contacts</a>
       </nav>
       <button class="menu-toggle" type="button" aria-label="Open menu">
         <span></span>
         <span></span>
+        <span></span>
       </button>
-      <button class="btn nav-cta magnetic">Start a Project</button>
     </header>
 
     <div class="mobile-menu" aria-hidden="true">
@@ -52,7 +76,7 @@
       <div class="mobile-menu-panel">
         <div class="mobile-menu-header">
           <a class="logo" href="index.html">
-            <img src="assets/logo.png" alt="Pocket Agency" />
+            <img src="assets/logo-nav.svg" alt="reels agency" width="661" height="200" />
           </a>
           <button class="menu-close" type="button" aria-label="Close menu">
             <span></span>
@@ -62,222 +86,317 @@
         <nav class="mobile-menu-links">
           <a class="active" href="index.html">Home</a>
           <a href="work.html">Work</a>
-          <a href="services.html">Services</a>
-          <a href="us.html#roster">About Us</a>
-          <a href="#" data-contact>Let's Work</a>
+          <a href="product.html">Products</a>
+          <a href="learn.html">Learn</a>
+          <a href="team.html">Team</a>
+          <a href="contacts.html">Contacts</a>
+          <a href="#" data-contact>Ask question</a>
         </nav>
       </div>
     </div>
 
     <main class="site">
-      <section class="section home-video-hero">
-        <video
-          class="home-video-hero-media desktop-video"
-          src="assets/home_video.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-        ></video>
-        <div class="home-mobile-video-wrap">
-          <video
-            class="home-video-hero-media mobile-video"
-            src="assets/cover_mobile_final.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
+      <section class="reel-hero">
+        <div class="reel-hero-stage" aria-hidden="true">
+          <div class="reel-slot">
+            <video src="assets/hero-reel-1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+
+            <span class="reel-slot-ui" aria-hidden="true">
+              <span class="reel-slot-rail">
+                <i class="reel-ui-heart"></i>
+                <i class="reel-ui-chat"></i>
+                <i class="reel-ui-share"></i>
+              </span>
+              <span class="reel-slot-skeleton">
+                <span></span><span></span><span></span>
+              </span>
+            </span>
+          </div>
+          <div class="reel-slot">
+            <video src="assets/hero-reel-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+
+            <span class="reel-slot-ui" aria-hidden="true">
+              <span class="reel-slot-rail">
+                <i class="reel-ui-heart"></i>
+                <i class="reel-ui-chat"></i>
+                <i class="reel-ui-share"></i>
+              </span>
+              <span class="reel-slot-skeleton">
+                <span></span><span></span><span></span>
+              </span>
+            </span>
+          </div>
+          <div class="reel-slot">
+            <video src="assets/hero-reel-3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+
+            <span class="reel-slot-ui" aria-hidden="true">
+              <span class="reel-slot-rail">
+                <i class="reel-ui-heart"></i>
+                <i class="reel-ui-chat"></i>
+                <i class="reel-ui-share"></i>
+              </span>
+              <span class="reel-slot-skeleton">
+                <span></span><span></span><span></span>
+              </span>
+            </span>
+          </div>
         </div>
+
+        <h1 class="reel-hero-mark">
+          <span class="sr-only">reels agency &mdash; short-form video and Reels for brands in Ireland</span>
+          <svg viewBox="0 0 1001 305" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <path id="hw-glyph" d="M312.61 0.64L315.05 1.75L317.06 3.93L318.81 9.82L318.23 19.26L314.36 31.09L313.77 35.81L309.9 42.6L307.41 53.32L304.65 58.52L302.47 65.63L300.19 68.81L298.02 78.15L293.98 86.8L293.45 89.66L290.11 94.65L286.61 103.19L284.7 104.68L282.15 110.04L279.66 113.12L277.06 121.5L274.72 124.63L272.55 131.31L268.94 137.2L266.66 146.01L263.21 152.48L262.2 158.32L257.22 169.14L251.7 189.36L248.14 195.25L247.98 199.33L248.94 201.4L251.17 201.51L258.97 193.87L276.63 170.52L286.5 159.59L291.76 150.94L297.91 144.68L308.04 130.36L313.67 124.47L319.87 113.43L329.58 101.97L338.5 94.07L349.11 86.38L359.03 81.44L367.47 80.11L373.78 80.96L376.06 82.02L379.09 85.0L380.84 89.45L380.09 94.33L376.27 98.05L369.59 99.85L365.13 102.03L355.74 109.88L352.19 111.9L347.84 116.3L342.58 122.77L340.09 127.97L340.2 132.16L342.42 136.14L347.68 140.6L350.38 141.45L352.19 140.97L365.98 132.06L371.13 130.15L374.79 127.07L379.93 125.05L384.44 121.92L391.71 119.8L396.91 117.04L399.83 116.94L402.91 118.0L404.71 119.91L404.98 122.56L402.91 125.64L399.19 128.66L391.92 131.47L386.3 135.98L372.56 143.25L365.34 148.13L362.69 151.53L360.99 155.77L360.25 160.87L360.52 171.8L359.72 181.03L357.12 186.7L352.19 194.29L343.59 204.48L336.11 210.84L331.07 213.13L326.72 216.42L314.41 220.71L309.16 219.92L301.99 216.68L297.96 212.97L294.99 208.35L293.72 203.95L293.98 199.86L300.35 186.07L309.74 174.77L327.46 158.11L329.9 154.29L328.79 151.26L324.76 149.03L318.34 143.89L316.74 143.46L311.49 147.28L308.04 153.12L298.28 164.47L291.65 175.08L284.59 183.73L282.1 188.51L270.53 202.25L259.66 217.0L251.27 224.8L244.27 228.78L237.27 229.1L229.63 226.23L227.93 223.95L225.38 216.15L225.12 206.12L226.76 191.21L228.88 180.18L231.91 174.29L233.23 169.89L233.66 165.11L232.39 163.31L228.72 165.06L220.61 174.98L200.45 195.46L195.56 199.28L188.24 202.46L177.1 204.58L170.42 202.36L165.06 199.28L162.03 195.78L159.96 190.84L157.58 187.55L155.45 178.64L154.82 177.26L153.23 176.57L141.98 188.46L132.0 197.42L126.27 201.51L123.73 202.14L119.91 204.69L115.93 206.18L110.04 206.81L103.67 206.49L97.3 202.78L91.89 195.35L91.04 191.74L90.62 180.71L92.21 165.8L96.77 150.68L102.98 137.1L115.24 117.73L121.29 110.57L123.67 104.84L124.42 100.01L125.53 98.58L136.19 95.71L147.65 91.2L150.36 90.83L153.12 91.63L158.53 94.76L163.31 99.85L165.16 104.79L165.32 114.55L162.46 126.86L160.23 130.31L156.57 133.97L154.39 138.26L150.2 143.73L139.91 153.12L132.75 158.53L127.81 160.6L121.39 162.03L118.53 163.47L116.19 165.69L113.12 172.54L111.21 180.81L111.84 185.7L116.09 186.44L118.21 186.23L126.27 181.35L139.43 170.52L150.68 159.8L154.71 155.24L160.07 147.18L161.87 143.15L163.73 135.08L167.23 128.45L179.81 118.53L187.71 107.49L198.91 96.46L209.57 89.77L217.85 86.59L224.75 88.18L228.72 90.46L231.64 93.38L233.55 96.88L234.61 100.81L234.77 105.37L233.87 111.21L231.17 119.48L227.45 123.99L224.32 130.73L217.79 138.95L206.18 149.62L199.17 154.71L191.21 157.89L188.14 160.23L186.97 162.3L185.59 168.82L185.7 180.6L187.61 181.56L191.21 181.29L207.45 167.6L221.83 153.23L240.56 131.05L248.57 120.44L256.21 105.32L259.5 93.27L261.73 90.3L263.26 85.47L266.71 79.48L269.63 69.56L271.97 66.43L274.72 59.05L277.06 55.44L279.82 46.74L282.42 43.88L286.4 36.71L290.69 24.94L292.76 23.13L298.17 12.89L301.68 7.85L306.77 2.76L310.7 0.32L311.65 0.37ZM960.21 63.99L964.51 64.68L967.32 66.43L969.23 70.41L969.23 74.86L966.68 81.33L965.73 86.16L961.11 93.43L959.36 100.01L956.65 104.36L954.9 109.72L951.35 115.4L944.4 134.55L940.52 140.55L938.99 146.43L935.7 153.44L935.8 157.21L938.67 160.55L945.03 161.56L969.55 160.71L992.94 161.87L996.07 162.56L999.42 164.37L1000.85 166.6L1000.53 169.78L999.79 170.84L998.04 171.16L974.8 172.27L959.84 175.62L951.45 176.73L940.21 181.5L927.95 184.1L920.79 188.08L916.81 194.08L914.31 201.08L910.71 206.6L907.95 213.82L905.51 216.84L895.85 235.83L888.79 245.65L883.49 254.83L866.03 275.73L859.93 281.41L855.63 284.12L852.93 287.3L849.0 289.69L839.77 292.55L828.84 292.66L825.02 291.6L819.29 287.4L815.84 281.99L814.62 275.15L814.52 266.5L816.74 255.52L818.87 250.48L822.16 246.18L828.95 233.76L832.4 230.69L842.32 217.37L855.1 204.74L886.46 179.12L889.96 172.64L889.17 168.03L886.25 164.69L884.07 163.41L878.29 162.14L871.39 161.77L865.77 159.91L860.04 155.77L857.54 152.75L854.2 151.95L832.93 160.39L828.2 163.09L827.25 164.58L821.84 168.4L809.32 173.28L802.1 173.81L794.89 172.22L788.78 169.14L782.36 163.09L779.71 161.61L777.48 162.72L774.72 166.12L769.84 169.04L763.79 170.31L759.71 169.46L755.84 166.91L752.65 162.83L750.32 157.26L748.73 148.66L748.94 143.2L752.07 129.51L753.02 119.32L756.0 108.23L755.84 105.48L754.14 104.68L748.3 108.23L734.4 124.36L726.66 136.51L720.71 143.94L716.52 152.27L712.12 158.16L710.0 163.89L707.34 166.76L701.29 177.58L698.43 180.92L695.83 182.04L691.53 182.51L688.4 181.72L685.06 179.86L682.94 176.15L682.72 167.55L685.91 157.05L685.8 154.02L684.85 152.27L681.29 153.7L677.63 159.54L674.4 161.5L664.79 171.16L657.68 176.15L649.09 180.6L645.06 181.29L637.42 181.13L630.41 178.9L624.04 173.49L621.18 166.65L618.05 151.16L616.94 148.88L613.59 145.53L612.16 145.16L610.73 145.8L608.23 148.61L604.73 157.95L599.48 167.23L598.15 172.91L592.37 186.44L591.63 188.77L591.89 190.9L601.97 191.37L646.81 190.74L672.11 192.49L677.21 193.34L681.98 195.35L684.21 198.54L683.41 201.4L681.56 202.78L678.06 203.26L637.47 204.21L623.3 206.28L608.39 207.34L590.73 210.84L581.76 214.77L578.95 217.21L575.82 222.57L572.42 231.17L569.03 235.62L562.39 250.11L559.0 253.93L548.86 269.9L533.64 287.83L524.19 296.48L515.55 301.73L506.26 304.22L494.32 304.38L489.55 303.0L485.25 299.34L482.92 295.73L481.43 291.28L481.11 284.54L482.76 270.96L488.06 257.43L499.84 242.31L517.88 224.53L535.12 212.54L545.04 207.98L550.88 203.58L558.73 201.29L562.39 199.07L567.86 190.47L569.72 183.52L574.54 175.35L579.58 160.92L583.72 153.17L584.04 150.47L582.77 148.24L580.01 148.34L569.87 162.78L557.19 176.41L550.51 181.56L543.82 183.95L539.21 183.89L537.83 182.67L531.2 180.07L529.07 177.74L527.32 174.08L525.36 172.96L521.17 175.14L510.93 184.21L505.94 187.71L500.37 188.83L492.15 187.23L488.75 185.17L486.52 181.35L484.4 162.14L483.34 160.02L481.85 159.49L477.82 162.46L467.26 177.37L457.56 187.39L454.16 189.52L447.37 191.21L438.93 189.14L436.23 186.44L434.0 181.66L433.84 173.07L437.71 152.59L442.12 143.83L445.88 132.06L448.43 127.12L451.61 122.98L455.75 113.91L464.61 101.12L478.09 87.17L483.23 83.83L489.02 81.87L494.16 82.24L500.21 85.74L503.77 89.66L506.15 90.51L510.61 88.44L518.09 82.02L520.48 81.49L522.92 82.61L525.79 85.21L527.64 88.82L527.75 95.55L523.88 106.32L522.76 112.58L517.19 122.98L513.64 133.49L511.78 142.99L507.43 151.32L505.78 161.77L505.89 164.0L507.22 165.75L510.98 163.89L520.64 155.35L529.76 143.15L532.15 141.18L537.14 131.74L539.42 124.47L548.12 113.12L555.5 101.71L567.49 89.4L577.83 82.34L583.72 80.38L602.19 80.91L619.22 79.42L622.35 80.01L624.47 81.81L627.39 86.38L628.18 89.56L625.37 96.24L623.2 106.48L619.8 112.64L618.26 121.23L616.14 126.33L615.98 129.99L616.72 131.31L617.89 131.58L622.03 129.03L627.28 124.1L631.47 117.15L638.95 107.54L641.66 102.56L655.72 87.65L663.94 81.39L671.53 77.36L677.21 75.87L683.41 77.3L688.88 80.96L691.74 85.74L692.06 91.68L691.11 101.02L688.24 110.09L686.01 114.07L680.44 121.07L669.04 132.22L656.99 139.59L650.15 141.66L647.87 143.25L644.74 149.3L643.73 157.21L644.26 159.65L645.48 161.08L647.39 161.5L652.96 159.8L665.16 151.37L673.92 143.57L684.74 132.43L688.67 126.7L692.33 112.64L695.67 108.87L698.8 102.72L711.38 89.13L716.95 80.91L722.89 76.83L724.69 76.4L727.82 77.14L731.64 80.75L732.28 84.47L732.12 94.6L732.39 95.71L733.55 96.3L739.39 94.17L748.36 85.15L752.87 82.02L758.01 80.01L763.79 79.27L769.1 80.27L773.56 83.19L775.2 85.69L777.06 93.06L777.11 102.61L772.65 123.09L771.54 133.54L767.83 143.46L768.3 148.13L770.37 149.41L775.47 145.59L780.03 140.44L781.52 137.79L784.06 127.92L786.34 123.67L788.52 116.56L791.38 112.53L796.8 101.71L806.13 89.56L819.5 76.83L827.99 71.2L834.78 69.4L843.38 69.72L848.26 71.47L850.38 73.06L853.99 77.67L855.48 82.93L855.26 85.63L853.03 92.16L851.44 93.91L848.26 94.23L845.87 93.27L842.42 90.2L837.33 90.2L830.33 95.29L820.25 107.49L814.83 116.4L811.12 124.68L808.73 127.28L806.72 134.82L804.49 139.75L803.59 144.84L803.59 152.48L804.65 154.39L807.72 155.35L814.3 152.7L821.57 147.39L844.86 126.43L860.99 108.71L869.8 96.77L873.14 93.91L883.81 77.67L890.49 71.63L896.17 70.09L900.47 71.2L903.97 75.34L904.92 80.43L898.56 92.85L894.21 104.52L889.64 112.05L885.61 122.61L884.23 128.93L884.07 135.61L885.29 137.89L887.52 138.37L896.75 130.73L910.6 116.72L921.16 103.83L928.48 96.46L930.39 93.11L935.54 88.39L951.56 67.96L956.71 63.99L958.46 63.88ZM110.04 80.65L115.93 81.12L118.16 82.08L121.18 85.42L122.77 91.47L121.29 97.73L119.27 98.9L107.44 100.54L102.08 103.35L87.65 115.13L72.05 131.05L53.9 153.65L40.38 173.71L38.15 179.17L35.34 182.46L32.42 189.99L29.61 194.56L27.91 201.08L24.51 206.6L22.81 213.07L20.27 218.17L16.45 221.99L10.82 224.11L6.53 223.15L2.87 220.93L1.43 219.12L0.0 213.92L0.64 204.85L3.34 196.36L4.3 189.25L7.11 183.31L9.28 171.8L13.48 160.39L14.48 154.87L17.61 149.35L23.61 129.93L28.76 119.43L31.57 109.88L40.06 94.6L43.67 90.67L47.33 88.92L52.74 89.56L55.07 90.41L56.82 92.16L58.57 98.37L58.31 106.54L56.98 111.74L54.59 115.87L54.33 118.1L55.13 119.59L57.88 120.12L61.6 115.45L83.93 94.23L95.87 85.79L105.26 80.96L107.65 80.7ZM584.68 104.52L578.68 109.67L572.47 116.72L564.99 127.55L562.29 134.18L557.51 140.49L555.34 145.27L554.86 150.04L556.72 150.52L560.48 148.24L564.09 144.79L569.4 137.42L573.27 134.07L579.0 124.89L584.41 118.85L589.66 110.89L592.05 106.11L592.37 102.61L591.57 101.55L589.45 101.02L586.96 102.77ZM489.07 106.22L486.36 108.55L477.93 120.01L473.53 127.07L471.08 133.22L467.74 137.73L463.6 147.92L463.66 151.69L464.45 152.8L465.57 152.7L471.14 146.97L474.32 141.02L480.1 133.65L487.69 121.45L492.78 115.13L494.69 110.2L494.69 107.49L491.56 105.37L489.92 105.74ZM664.69 109.72L661.71 112.37L660.44 115.45L661.08 119.11L662.56 119.16L664.58 117.94L668.03 114.34L669.25 111.52L669.14 107.81L666.01 108.76ZM211.38 113.12L207.98 116.19L201.4 127.44L197.16 132.43L196.94 134.76L197.74 136.35L199.6 136.67L201.14 135.88L208.62 128.71L215.73 119.16L217.05 115.98L217.16 112.8L216.36 111.74L214.45 111.21L212.7 112.16ZM145.27 116.09L143.04 117.25L138.9 121.39L133.17 129.99L127.33 141.34L127.49 142.83L128.93 143.46L136.78 137.1L144.1 127.87L148.56 119.11L148.77 117.57L147.97 116.09L147.39 115.45L146.12 115.77ZM919.99 128.29L915.38 131.95L908.53 140.12L898.4 149.67L895.8 153.01L895.43 155.56L898.45 159.38L902.91 161.29L906.89 160.65L909.43 158.27L910.97 154.18L913.52 151.0L916.28 145.53L922.11 128.71L922.43 127.33L921.0 127.81ZM331.18 173.81L319.56 185.11L314.73 192.38L312.39 197.69L312.61 200.45L315.79 201.72L319.66 200.5L325.45 196.1L334.68 186.39L340.2 176.15L340.94 171.58L339.66 169.04L338.18 168.08L334.57 170.95ZM883.91 204.48L879.93 206.65L875.0 211.27L870.86 213.71L863.22 221.14L852.29 233.08L843.48 245.22L835.05 260.35L833.19 266.61L833.4 270.27L834.62 273.56L837.33 274.72L841.52 273.56L847.2 269.42L853.41 263.37L859.4 255.09L864.87 249.2L868.63 241.35L875.32 232.39L881.21 219.71L883.54 217.0L886.88 210.95L888.48 205.54L887.63 202.89L885.56 203.68ZM543.51 228.67L534.91 233.29L533.0 235.52L528.86 238.17L508.33 259.97L506.21 264.64L503.13 268.89L501.59 274.99L498.04 282.74L498.51 286.08L500.64 288.04L504.46 288.09L507.22 286.82L514.64 281.09L523.5 272.34L530.45 264.22L535.71 256.63L547.17 236.26L549.77 225.81L546.42 227.24Z" />
+              <mask id="hw-pen-mask" maskUnits="userSpaceOnUse" x="-90" y="-90" width="1181" height="485">
+                <path class="hw-pen" d="M12.9 200.3 L24.2 170.7 L39.8 137.7 L45.1 112.0 L47.2 113.4 L51.1 121.7 L57.9 124.6 L68.7 120.3 L87.2 103.1 L89.3 103.0 L93.4 108.5 L96.7 122.2 L101.7 183.2 L105.3 125.4 L106.5 128.7 L109.8 171.7 L110.6 172.4 L111.5 170.1 L117.6 143.5 L121.2 164.5 L126.0 129.7 L128.3 139.6 L130.8 171.8 L135.1 122.8 L135.9 121.4 L136.7 123.1 L137.5 127.8 L140.7 165.6 L142.0 161.7 L146.3 122.7 L147.0 121.2 L147.7 122.5 L150.7 153.2 L155.5 118.9 L162.5 154.4 L170.4 171.7 L172.6 179.1 L175.2 154.1 L181.3 166.7 L182.9 163.7 L185.4 138.4 L187.4 130.6 L189.3 136.7 L191.0 164.2 L192.6 171.7 L197.3 122.0 L199.5 132.5 L202.0 165.6 L206.0 131.5 L207.7 125.4 L211.5 156.7 L212.0 159.1 L212.7 158.5 L217.2 119.9 L219.4 113.0 L222.1 147.6 L225.0 124.6 L225.7 123.7 L227.8 130.5 L233.8 164.4 L237.7 203.4 L239.7 194.2 L242.9 162.3 L244.8 154.7 L246.5 183.6 L247.9 181.6 L253.3 147.4 L255.0 150.8 L257.6 178.0 L258.1 180.2 L258.7 179.3 L264.4 119.0 L265.9 122.5 L269.0 163.0 L272.5 115.1 L274.3 104.6 L275.7 109.5 L278.1 158.6 L278.5 161.8 L279.0 161.0 L282.6 95.8 L284.7 74.8 L286.7 86.7 L289.5 138.8 L293.9 62.2 L295.5 54.5 L297.4 75.5 L300.1 143.3 L302.0 161.4 L303.4 63.2 L305.3 42.1 L307.2 77.8 L306.8 190.0 L308.0 200.3 L309.6 198.2 L310.9 188.5 L313.5 114.1 L318.6 188.2 L320.1 184.4 L325.6 139.1 L327.2 132.0 L327.8 131.4 L328.2 132.6 L329.2 190.6 L331.2 182.4 L332.0 132.4 L333.9 120.8 L335.6 123.7 L336.9 133.0 L338.2 172.2 L339.9 184.3 L341.5 172.8 L343.0 129.1 L345.1 119.5 L347.1 131.6 L348.8 173.0 L351.1 142.4 L355.2 116.7 L356.3 116.4 L358.9 125.4 L360.7 127.4 L364.9 120.4 L366.4 120.5 L373.1 129.0 L377.1 131.9 L385.8 128.1 L393.4 127.6 L404.7 130.3 L419.2 136.7 L440.0 150.6 L447.4 158.5 L450.5 164.0 L454.4 143.4 L456.8 137.1 L461.7 143.3 L465.9 128.9 L467.8 127.2 L471.6 141.0 L476.5 119.2 L478.6 118.5 L482.1 123.3 L485.8 124.0 L488.1 137.1 L489.7 166.3 L489.9 279.4 L491.1 286.8 L493.2 284.2 L494.7 262.9 L494.9 142.3 L497.9 115.5 L498.6 114.4 L499.3 115.8 L499.8 119.7 L500.3 136.3 L500.6 259.3 L501.9 270.8 L503.4 260.7 L505.0 215.2 L505.5 115.9 L506.8 108.2 L508.9 121.5 L510.1 146.3 L511.6 253.3 L513.3 270.1 L515.0 244.9 L517.4 141.0 L519.3 163.9 L522.4 266.6 L523.8 260.7 L528.2 200.2 L529.0 199.6 L529.7 203.7 L532.4 252.1 L533.6 255.8 L538.5 180.4 L541.3 157.7 L542.9 239.3 L543.3 245.4 L544.0 248.0 L544.6 246.7 L545.8 222.2 L545.9 153.2 L547.3 137.5 L548.1 136.2 L549.7 140.8 L551.0 154.7 L551.9 233.3 L553.6 240.9 L556.5 233.3 L557.3 224.0 L556.7 148.2 L558.4 128.2 L559.9 132.5 L561.1 150.4 L561.5 212.7 L564.3 195.3 L568.5 119.0 L569.2 118.1 L569.9 120.3 L570.6 125.7 L573.3 189.5 L578.3 128.1 L579.9 123.5 L580.7 127.2 L582.2 154.1 L581.5 191.5 L582.3 193.9 L584.5 187.0 L585.8 176.0 L589.7 116.2 L590.5 115.2 L591.3 117.0 L592.9 132.2 L592.5 175.1 L594.5 167.1 L598.0 120.8 L600.5 105.7 L601.4 105.1 L602.5 107.9 L602.4 140.6 L603.8 161.0 L604.4 163.5 L605.0 162.4 L606.9 102.8 L613.5 156.0 L615.8 166.0 L617.1 167.8 L622.1 167.5 L624.5 169.1 L625.7 168.4 L630.7 151.0 L635.8 172.8 L639.1 148.6 L640.7 145.3 L645.0 175.3 L646.7 166.2 L648.9 118.8 L650.8 117.6 L651.9 121.1 L654.6 166.7 L655.9 172.5 L659.6 117.9 L661.1 112.7 L663.0 127.2 L665.0 175.3 L666.3 171.1 L670.1 117.1 L671.8 109.3 L673.2 112.0 L673.6 117.4 L675.0 169.3 L678.1 117.6 L679.3 112.9 L695.0 159.3 L699.8 142.9 L703.6 134.5 L721.3 102.8 L724.5 100.6 L737.4 102.0 L749.0 98.1 L753.5 99.1 L755.5 100.8 L758.8 107.0 L760.5 116.1 L760.6 128.4 L759.0 142.5 L760.1 148.9 L762.7 137.8 L765.2 107.6 L772.4 142.8 L776.4 150.5 L781.0 153.5 L787.2 152.0 L791.0 149.5 L793.9 136.4 L796.7 147.7 L798.1 148.1 L803.0 122.7 L803.8 121.8 L804.7 123.1 L808.1 133.3 L811.5 121.4 L813.4 118.9 L819.8 144.2 L821.0 155.4 L825.1 270.1 L826.7 163.0 L828.9 114.6 L830.8 141.6 L831.8 247.5 L832.8 258.9 L834.3 247.1 L838.2 136.1 L839.6 124.0 L840.9 139.4 L843.0 245.6 L844.2 255.9 L849.4 152.5 L853.9 253.8 L855.2 247.3 L858.6 186.3 L860.1 179.7 L863.3 248.3 L863.7 250.5 L864.5 247.3 L868.8 138.8 L870.7 125.2 L871.9 130.1 L873.3 228.9 L874.6 240.2 L876.5 219.4 L878.3 125.5 L880.4 111.9 L882.4 124.1 L883.3 217.4 L884.8 225.8 L887.6 187.8 L887.5 115.7 L888.4 102.0 L889.9 97.8 L892.2 122.4 L893.2 192.7 L895.0 211.6 L898.4 198.6 L898.9 162.4 L900.2 148.9 L900.9 148.2 L901.5 149.5 L902.1 153.0 L903.4 176.0 L907.2 151.1 L909.6 143.1 L910.9 142.1 L916.1 151.6 L920.1 142.7 L921.1 141.0 L922.1 141.3 L924.2 165.3 L931.4 122.1 L932.2 120.8 L932.5 122.0 L933.5 136.7 L935.1 143.6 L940.5 116.5 L941.5 115.7 L942.5 117.6 L945.7 131.9 L950.8 107.7 L952.8 111.3 L956.4 128.5 L959.6 130.5 L972.0 160.3 L977.1 165.8 L990.9 166.2" pathLength="1000" />
+              </mask>
+            </defs>
+            <use class="hw-glyph-draw" href="#hw-glyph" fill="#ffffff" mask="url(#hw-pen-mask)" />
+            <use class="hw-glyph-full" href="#hw-glyph" fill="#ffffff" />
+          </svg>
+        </h1>
       </section>
+
       <section class="section home-video-banner">
         <p class="home-banner-text">
-          MARKETING AGENCY
+          WE MAKE REELS
           <br />
-          <span>in your pocket</span>
+          <span>that actually go viral</span>
         </p>
-        <button class="home-banner-cta" type="button">LET'S WORK</button>
+        <a class="home-banner-cta" href="contacts.html">LET'S WORK</a>
       </section>
 
-      <div class="pocket-marquee" aria-hidden="true">
-        <div class="pocket-marquee-track">
-          <span>SMM <em>&middot;</em> Branding <em>&middot;</em> Content <em>&middot;</em> Design <em>&middot;</em> Campaigns <em>&middot;</em></span>
-          <span>SMM <em>&middot;</em> Branding <em>&middot;</em> Content <em>&middot;</em> Design <em>&middot;</em> Campaigns <em>&middot;</em></span>
-        </div>
-      </div>
-
-      <section class="pocket-section pocket-section--white">
-        <p class="pocket-label reveal">Who we are</p>
-        <p class="pocket-lede home-who-copy">
-          <span>We boost social medias</span>
-          <span>and build brands.</span>
-          <span>An Irish agency with a</span>
-          <span>bold team running</span>
-          <span>the show,</span>
-          <span data-fx-serif>building ideas that feel alive in the feed.</span>
-        </p>
-      </section>
-
-      <section class="pocket-section pocket-section--green pocket-section--compact">
-        <div class="pocket-stats">
-          <div class="pocket-stat reveal">
-            <strong>5</strong>
-            <span>Projects delivered</span>
-          </div>
-          <div class="pocket-stat reveal">
-            <strong>4</strong>
-            <span>Countries of clients</span>
-          </div>
-          <div class="pocket-stat reveal">
-            <strong>4</strong>
-            <span>Different industries</span>
-          </div>
-          <div class="pocket-stat reveal">
-            <strong>Full</strong>
-            <span>Stack of marketing</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="pocket-section pocket-section--white">
-        <p class="pocket-label reveal">Selected work</p>
-        <h2 class="pocket-heading reveal">Our work speaks <em>for itself.</em></h2>
-        <div class="pocket-cases pocket-mt">
-          <a class="pocket-case reveal" href="sb.html">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/sb_banner.mp4"></video>
+      <section class="reels-section reels-section--white">
+        <div class="home-who-shell">
+          <p class="reels-label">Who we are</p>
+          <div class="home-who-layout">
+            <div class="home-who-text">
+              <p class="reels-body home-who-intro">
+                <strong>Reels Agency</strong> is a short-form video agency based in Ireland, dedicated
+                to a single format &mdash; the vertical 9:16 reel. We make Instagram Reels, TikTok and
+                YouTube Shorts for brands: ideas, scenarios, filming, editing and posting, for Irish
+                businesses and clients worldwide.
+              </p>
+              <a class="home-team-preview" href="team.html" aria-label="Meet the Reels Agency team">
+                <span class="home-team-preview-grid" aria-hidden="true">
+                  <span class="home-team-preview-card">
+                    <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/anastasia.mp4"></video>
+                    <span>Anastasia</span>
+                  </span>
+                  <span class="home-team-preview-card">
+                    <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/dasha.mp4"></video>
+                    <span>Daria</span>
+                  </span>
+                  <span class="home-team-preview-card">
+                    <img src="assets/optimized/manager.webp" alt="" loading="lazy" decoding="async" />
+                    <span>Platon</span>
+                  </span>
+                  <span class="home-team-preview-card">
+                    <img src="assets/optimized/serega.webp" alt="" loading="lazy" decoding="async" />
+                    <span>Serhii</span>
+                  </span>
+                </span>
+                <span class="home-team-preview-cta">Meet the team <span aria-hidden="true">&rarr;&#65038;</span></span>
+              </a>
+              <p class="reels-lede home-who-copy">
+                <span>We make short-form</span>
+                <span>video for brands.</span>
+                <span>Ideas, scenarios,</span>
+                <span>filming, editing &mdash;</span>
+                <span data-fx-serif>for the way it actually goes viral.</span>
+              </p>
             </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 01</span>
-              <span class="pocket-case-title">Sweet Baking Mama</span>
-              <div class="pocket-case-tags"><span>SMM</span><span>Branding</span><span>Design</span></div>
+            <div class="reel-portrait home-who-reel">
+              <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/home_vid.mp4"></video>
             </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="reels-section reels-section--pink reels-section--compact">
+        <div class="client-counter">
+          <div class="client-confetti" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="client-counter-main">
+            <p class="client-counter-label">
+              Client counter &middot; live
+            </p>
+            <div class="client-counter-number" aria-hidden="true">
+              <span>0</span>
+              <strong>1</strong>
+            </div>
+            <p class="sr-only">We currently have 1 client.</p>
+          </div>
+          <div class="client-counter-side">
+            <span class="client-counter-clock" aria-hidden="true"><i></i></span>
+            <p>We have <strong>1 client already!</strong></p>
+            <a class="client-counter-cta" href="contacts.html">
+              Go viral next <span aria-hidden="true">&#8599;&#65038;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="reels-section reels-section--white reels-section--stars">
+        <p class="reels-label">Selected work</p>
+        <h2 class="reels-heading">Our <em>portfolio.</em></h2>
+        <div class="reel-grid reels-mt">
+          <a class="reel-card" href="case-sweet-baking.html" data-cursor="Watch">
+            <div class="reel-card-media">
+              <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/sb_video1.mp4"></video>
+              <span class="reel-card-num">/ 01 &middot; Carlow, Ireland</span>
+              <div class="reel-card-overlay">
+                <strong>Sweet Baking Mama</strong>
+                <div class="reel-card-tags"><span>Scenarios</span><span>Filming</span><span>Editing</span></div>
+                <span class="reel-card-go">Open the case <i aria-hidden="true">&#8599;&#65038;</i></span>
+              </div>
+            </div>
           </a>
-          <a class="pocket-case reveal" href="g4.html">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/g4.mp4"></video>
+          <a class="reel-card reel-card--invite" href="product.html" data-cursor="Explore">
+            <div class="reel-card-media">
+              <span class="reel-placeholder" aria-hidden="true"></span>
+              <span class="reel-card-num">/ 02 &middot; Open slot</span>
+              <div class="reel-card-overlay">
+                <strong>You can go viral too</strong>
+                <div class="reel-card-tags"><span>Scenarios</span><span>Filming</span><span>Editing</span></div>
+                <span class="reel-card-go">See the formats <i aria-hidden="true">&#8599;&#65038;</i></span>
+              </div>
             </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 02</span>
-              <span class="pocket-case-title">G4 Chess</span>
-              <div class="pocket-case-tags"><span>Branding</span><span>Content</span><span>Campaigns</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-          <a class="pocket-case reveal" href="robotics.html">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/robotics.mp4"></video>
-            </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 03</span>
-              <span class="pocket-case-title">Robotics Gen2</span>
-              <div class="pocket-case-tags"><span>Branding</span><span>Design</span><span>Templates</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
           </a>
         </div>
-        <div class="pocket-center pocket-mt">
-          <a class="pocket-button pocket-button--outline" href="work.html">All work &#8599;</a>
+        <div class="reels-center reels-mt">
+          <a class="reels-button reels-button--outline" href="work.html">All work &#8599;&#65038;</a>
         </div>
       </section>
 
-      <section class="pocket-section pocket-section--green">
-        <div class="pocket-grid-2">
+      <section class="reels-section reels-section--pink">
+        <div class="reels-grid-2">
           <div>
-            <p class="pocket-label reveal">The vibe</p>
-            <h2 class="pocket-heading reveal">Content that people <em>actually</em> watch.</h2>
-            <p class="pocket-body pocket-mt reveal">
-              Reels, photoshoots, AI-powered concepts, brand books and campaigns.
-              We make brands feel alive on social media.
+            <p class="reels-label">Reels Agency Ireland</p>
+            <h2 class="reels-heading viral-location-heading">
+              <span>Viral video production based in</span>
+              <span data-fx-serif>Carlow and Dublin.</span>
+            </h2>
+            <p class="reels-body reels-mt">
+              Reels Agency is a short-form video agency based in Carlow and Dublin. We create viral
+              Instagram Reels, TikToks and YouTube Shorts for brands, handling ideas, scenarios,
+              filming, editing and posting with clear, upfront pricing &mdash; every price is on the
+              products page, with no packages you have to ask about.
+            </p>
+            <p class="reels-body reels-mt">
+              And you can work with the reels agency in whichever format fits: a one-off reels sprint,
+              a monthly reels subscription, or a split where you film and our agency writes the
+              scenarios and edits.
             </p>
           </div>
-          <div class="pocket-media-card reveal">
-            <video autoplay muted loop playsinline src="assets/optimized/home_vid.mp4"></video>
+          <div class="reels-media-card">
+            <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/sb_video2.mp4"></video>
           </div>
         </div>
       </section>
 
-      <section class="pocket-section pocket-section--white">
-        <p class="pocket-label reveal">What we do</p>
-        <h2 class="pocket-heading reveal">Full stack of <em>marketing.</em></h2>
-        <div class="pocket-services-index pocket-mt">
-          <a class="pocket-service-row reveal" href="services.html">
+      <section class="reels-section reels-section--white">
+        <p class="reels-label">What you can buy</p>
+        <h2 class="reels-heading">Three ways <em>in.</em></h2>
+        <div class="reels-services-index reels-mt">
+          <a class="reels-service-row" href="product.html">
             <span class="num">01</span>
-            <span class="name">Social Media</span>
-            <span class="hint">Strategy &middot; Reels &middot; Growth</span>
-            <span class="arr">&#8599;</span>
+            <span class="name">Reels Sprint</span>
+            <span class="hint">One-time pack &middot; from &euro;500</span>
+            <span class="arr">&#8599;&#65038;</span>
           </a>
-          <a class="pocket-service-row reveal" href="services.html">
+          <a class="reels-service-row" href="product.html">
             <span class="num">02</span>
-            <span class="name">Branding</span>
-            <span class="hint">Identity &middot; Naming &middot; Brand book</span>
-            <span class="arr">&#8599;</span>
+            <span class="name">Reels Marathon</span>
+            <span class="hint">Subscription &middot; from &euro;300 / month</span>
+            <span class="arr">&#8599;&#65038;</span>
           </a>
-          <a class="pocket-service-row reveal" href="services.html">
+          <a class="reels-service-row" href="product.html">
             <span class="num">03</span>
-            <span class="name">Content Creation</span>
-            <span class="hint">Photo &middot; Video &middot; AI reels</span>
-            <span class="arr">&#8599;</span>
+            <span class="name">Symbiosis</span>
+            <span class="hint">We split the work &middot; price to discuss</span>
+            <span class="arr">&#8599;&#65038;</span>
           </a>
-          <a class="pocket-service-row reveal" href="services.html">
+          <a class="reels-service-row" href="learn.html">
             <span class="num">04</span>
-            <span class="name">Design</span>
-            <span class="hint">Visuals &middot; Templates &middot; Merch</span>
-            <span class="arr">&#8599;</span>
-          </a>
-          <a class="pocket-service-row reveal" href="services.html">
-            <span class="num">05</span>
-            <span class="name">Campaigns</span>
-            <span class="hint">Launches &middot; Strategy &middot; Measurement</span>
-            <span class="arr">&#8599;</span>
+            <span class="name">Learn</span>
+            <span class="hint">Hooks &middot; formats &middot; retention</span>
+            <span class="arr">&#8599;&#65038;</span>
           </a>
         </div>
       </section>
 
+      <section class="reels-section reels-section--navy reels-section--compact">
+        <div class="reels-grid-2">
+          <div>
+            <p class="reels-label">In production</p>
+            <h2 class="reels-heading">Video <em>courses.</em></h2>
+          </div>
+          <div class="reels-body">
+            <p>
+              We create tailored video courses for your business's internal marketing team, helping
+              them plan, film and edit better Reels. We hate poor production and want every piece of
+              content to get better.
+            </p>
+            <p class="reels-mt-sm">
+              <a class="reels-button reels-button--outline" href="product.html">See what's coming &#8599;&#65038;</a>
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="pocket-footer">
-      <div class="pocket-footer-cta">
-        <p class="pocket-label">Got a project?</p>
-        <h2 class="pocket-footer-title">Let's create <em>together.</em></h2>
-        <div class="pocket-footer-contacts">
-          <a href="mailto:platon.tsuz@gmail.com">platon.tsuz@gmail.com</a>
-          <a href="tel:+353892277248">+353 89 2277 248</a>
+    <footer class="reels-footer">
+      <div class="reels-footer-cta">
+        <p class="reels-label">Got a brand to put in the feed?</p>
+        <h2 class="reels-footer-title">Go viral <em>next.</em></h2>
+        <div class="reels-footer-contacts">
+          <a href="mailto:reelsagency.ie@gmail.com">reelsagency.ie@gmail.com</a>
+          <a href="tel:+353894270669">+353 89 427 0669</a>
+        </div>
+        <div class="reels-footer-socials" aria-label="Social media">
+          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;&#65038;</span></a>
+          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;&#65038;</span></a>
         </div>
       </div>
-      <div class="pocket-footer-grid">
+      <div class="reels-footer-grid">
         <nav aria-label="Footer">
           <a href="index.html">Home</a>
           <a href="work.html">Work</a>
-          <a href="services.html">Services</a>
-          <a href="us.html">Us</a>
+          <a href="product.html">Products</a>
+          <a href="learn.html">Learn</a>
+          <a href="team.html">Team</a>
+          <a href="contacts.html">Contacts</a>
         </nav>
-        <span class="pocket-footer-note">Ireland</span>
-        <span class="pocket-footer-note">&copy; <span data-year>2026</span> Pocket Agency</span>
-        <button class="pocket-to-top" type="button" aria-label="Back to top">↑</button>
+        <span class="reels-footer-note">Ireland</span>
+        <span class="reels-footer-note">&copy; <span data-year>2026</span> reels agency</span>
+        <button class="reels-to-top" type="button" aria-label="Back to top">&#8593;&#65038;</button>
       </div>
-      <div class="pocket-footer-mark" aria-hidden="true">pocket&copy;</div>
+      <div class="reels-footer-mark" aria-hidden="true">reels&copy;</div>
     </footer>
 
     <div class="contact-modal" aria-hidden="true">
       <div class="contact-modal-overlay"></div>
       <div class="contact-modal-card" role="dialog" aria-modal="true" aria-label="Contact">
         <button class="contact-modal-close" type="button" aria-label="Close">&times;</button>
-        <h3>Let's create <em>together:</em></h3>
+        <h3>Ask any <em>question</em></h3>
         <div class="contact-modal-links">
-          <a href="mailto:platon.tsuz@gmail.com">platon.tsuz@gmail.com</a>
-          <a href="tel:+353892277248">+353 89 2277 248</a>
-          <a class="contact-wa" href="https://wa.me/353892277248" target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.79 14.16c-.24.68-1.42 1.31-1.96 1.35-.5.04-.5.4-3.16-.66-2.66-1.05-4.3-3.79-4.43-3.97-.13-.18-1.05-1.4-1.05-2.67 0-1.27.66-1.9.9-2.16.24-.26.52-.32.7-.32l.5.01c.16 0 .38-.06.59.45.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.93-1.14.19-.29.39-.24.65-.15.26.1 1.67.79 1.96.93.29.15.48.22.55.34.07.12.07.69-.17 1.36z"/></svg><span>WhatsApp us</span></a>
+          <a href="mailto:reelsagency.ie@gmail.com">reelsagency.ie@gmail.com</a>
+          <a href="tel:+353894270669">+353 89 427 0669</a>
+          <a class="contact-wa" href="https://wa.me/353894270669" target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.79 14.16c-.24.68-1.42 1.31-1.96 1.35-.5.04-.5.4-3.16-.66-2.66-1.05-4.3-3.79-4.43-3.97-.13-.18-1.05-1.4-1.05-2.67 0-1.27.66-1.9.9-2.16.24-.26.52-.32.7-.32l.5.01c.16 0 .38-.06.59.45.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.93-1.14.19-.29.39-.24.65-.15.26.1 1.67.79 1.96.93.29.15.48.22.55.34.07.12.07.69-.17 1.36z"/></svg><span>WhatsApp us</span></a>
         </div>
         <p class="contact-modal-note">We usually reply within a day.</p>
       </div>
     </div>
 
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=73"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
-    <script defer src="fx.js?v=12"></script>
+    <script defer src="fx.js?v=73"></script>
+    <script defer src="reels.js?v=68"></script>
   </body>
 </html>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">
+  <!-- Tiling star field. Star outline matches the .reels-star logo mark in reels.css. -->
+  <defs>
+    <path id="reels-star-mark" d="M12 0 14.64 8.4 23.52 8.4 16.32 13.68 18.96 21.84 12 16.8 5.04 21.84 7.68 13.68 0.48 8.4 9.36 8.4Z" />
+  </defs>
+  <g fill="#FF7AAC">
+    <use href="#reels-star-mark" transform="translate(40 60) scale(1.5) rotate(12 12 11)" opacity=".55" />
+    <use href="#reels-star-mark" transform="translate(150 25) scale(0.8) rotate(-18 12 11)" opacity=".38" />
+    <use href="#reels-star-mark" transform="translate(250 95) scale(1.15) rotate(30 12 11)" opacity=".5" />
+    <use href="#reels-star-mark" transform="translate(370 40) scale(0.9) rotate(-8 12 11)" opacity=".42" />
+    <use href="#reels-star-mark" transform="translate(430 150) scale(1.3) rotate(22 12 11)" opacity=".5" />
+    <use href="#reels-star-mark" transform="translate(95 180) scale(1) rotate(-25 12 11)" opacity=".45" />
+    <use href="#reels-star-mark" transform="translate(200 230) scale(0.7) rotate(14 12 11)" opacity=".35" />
+    <use href="#reels-star-mark" transform="translate(310 195) scale(1.45) rotate(-12 12 11)" opacity=".55" />
+    <use href="#reels-star-mark" transform="translate(30 300) scale(1.1) rotate(28 12 11)" opacity=".46" />
+    <use href="#reels-star-mark" transform="translate(140 360) scale(1.35) rotate(-20 12 11)" opacity=".52" />
+    <use href="#reels-star-mark" transform="translate(250 320) scale(0.75) rotate(8 12 11)" opacity=".36" />
+    <use href="#reels-star-mark" transform="translate(355 300) scale(0.95) rotate(-30 12 11)" opacity=".43" />
+    <use href="#reels-star-mark" transform="translate(430 400) scale(1.2) rotate(16 12 11)" opacity=".48" />
+    <use href="#reels-star-mark" transform="translate(60 430) scale(0.85) rotate(-14 12 11)" opacity=".4" />
+    <use href="#reels-star-mark" transform="translate(240 440) scale(1.05) rotate(24 12 11)" opacity=".45" />
+    <use href="#reels-star-mark" transform="translate(350 420) scale(0.65) rotate(-6 12 11)" opacity=".33" />
+  </g>
+</svg>

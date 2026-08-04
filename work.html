@@ -1,37 +1,49 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IE">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'none'; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; connect-src 'self'; worker-src 'none'; child-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests; require-trusted-types-for 'script'" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Pocket Agency | Work</title>
-    <meta name="description" content="Selected work by Pocket Agency: Sweet Baking Mama, G4 Chess, Robotics Gen2, Draxler, Fastiv Basketball." />
-    <meta name="theme-color" content="#00b80d" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <title>Case Studies & Reels Portfolio | reels agency</title>
+    <meta name="description" content="See our short-form video work, including a Carlow café reel that passed 750,000 views, then discover how your brand can go viral too." />
+    <meta name="theme-color" content="#ff7aac" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="reels agency" />
+    <meta property="og:locale" content="en_IE" />
+    <meta property="og:title" content="Case Studies & Reels Portfolio | reels agency" />
+    <meta property="og:description" content="See our short-form video work, including a Carlow café reel that passed 750,000 views, then discover how your brand can go viral too." />
+    <meta property="og:image" content="assets/logo-nav.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Case Studies & Reels Portfolio | reels agency" />
+    <meta name="twitter:description" content="See our short-form video work, including a Carlow café reel that passed 750,000 views, then discover how your brand can go viral too." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=64" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png?v=64" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=9" />
-    <link rel="stylesheet" href="fx.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=64" />
+    <link rel="stylesheet" href="fx.css?v=65" />
+    <link rel="stylesheet" href="reels.css?v=68" />
   </head>
   <body class="work-page">
     <header class="site-nav">
       <a class="logo" href="index.html">
-        <img src="assets/logo.png" alt="Pocket Agency" />
+        <img src="assets/logo-nav.svg" alt="reels agency" width="661" height="200" />
       </a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a class="active" href="work.html">Work</a>
-        <a href="services.html">Services</a>
-        <a href="us.html">Us</a>
+        <a href="product.html">Products</a>
+        <a href="learn.html">Learn</a>
+        <a href="team.html">Team</a>
+        <a href="contacts.html">Contacts</a>
       </nav>
       <button class="menu-toggle" type="button" aria-label="Open menu">
         <span></span>
         <span></span>
+        <span></span>
       </button>
-      <button class="btn nav-cta magnetic">Start a Project</button>
     </header>
 
     <div class="mobile-menu" aria-hidden="true">
@@ -39,7 +51,7 @@
       <div class="mobile-menu-panel">
         <div class="mobile-menu-header">
           <a class="logo" href="index.html">
-            <img src="assets/logo.png" alt="Pocket Agency" />
+            <img src="assets/logo-nav.svg" alt="reels agency" width="661" height="200" />
           </a>
           <button class="menu-close" type="button" aria-label="Close menu">
             <span></span>
@@ -49,110 +61,104 @@
         <nav class="mobile-menu-links">
           <a href="index.html">Home</a>
           <a class="active" href="work.html">Work</a>
-          <a href="services.html">Services</a>
-          <a href="us.html">About Us</a>
-          <a href="#" data-contact>Let's Work</a>
+          <a href="product.html">Products</a>
+          <a href="learn.html">Learn</a>
+          <a href="team.html">Team</a>
+          <a href="contacts.html">Contacts</a>
+          <a href="#" data-contact>Ask question</a>
         </nav>
       </div>
     </div>
 
-    <main class="site work-refresh">
-      <section class="section pocket-hero work-refresh-hero">
-        <div class="pocket-hero-content">
-          <p class="pocket-label reveal">Selected cases - 2024 to ongoing</p>
-          <h1 class="pocket-display fx-hero-display">
-            <span>Work that</span>
-            <span data-fx-serif>works.</span>
+    <main class="site">
+      <section class="section reels-hero reels-hero--slim">
+        <div class="reels-hero-content">
+          <p class="reels-label">Work</p>
+          <h1 class="reels-display reels-display--inline fx-hero-display">
+            <span>Our</span>
+            <span data-fx-serif>portfolio.</span>
           </h1>
-          <p class="pocket-hero-note reveal">
-            Five brands, four countries, one pocket.
-          </p>
+          <p class="reels-hero-note">The reels we've made. Tap one to open the case.</p>
         </div>
       </section>
 
-      <section class="pocket-section pocket-section--white work-cases-section">
-        <div class="pocket-cases">
-          <a class="pocket-case reveal" href="sb.html" data-cursor="View">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/sb_banner.mp4"></video>
+      <section class="reels-section reels-section--white reels-section--stars">
+        <div class="reel-grid">
+          <a class="reel-card" href="case-sweet-baking.html" data-cursor="Watch">
+            <div class="reel-card-media">
+              <video autoplay muted loop playsinline preload="metadata" src="assets/optimized/sb_video1.mp4"></video>
+              <span class="reel-card-num">/ 01 &middot; Carlow, Ireland</span>
+              <div class="reel-card-overlay">
+                <strong>Sweet Baking Mama</strong>
+                <div class="reel-card-tags"><span>Scenarios</span><span>Filming</span><span>Editing</span><span>Posting</span></div>
+                <span class="reel-card-go">Open the case <i aria-hidden="true">&#8599;&#65038;</i></span>
+              </div>
             </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 01 - Carlow, Ireland</span>
-              <span class="pocket-case-title">Sweet Baking Mama</span>
-              <div class="pocket-case-tags"><span>SMM</span><span>Branding</span><span>Visuals</span><span>Content</span><span>Design</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
           </a>
-          <a class="pocket-case reveal" href="g4.html" data-cursor="View">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/g4.mp4"></video>
+          <a class="reel-card reel-card--invite" href="product.html" data-cursor="Explore">
+            <div class="reel-card-media">
+              <span class="reel-placeholder" aria-hidden="true"></span>
+              <span class="reel-card-num">/ 02 &middot; Open slot</span>
+              <div class="reel-card-overlay">
+                <strong>You can go viral too</strong>
+                <div class="reel-card-tags"><span>Scenarios</span><span>Filming</span><span>Editing</span></div>
+                <span class="reel-card-go">See the formats <i aria-hidden="true">&#8599;&#65038;</i></span>
+              </div>
             </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 02</span>
-              <span class="pocket-case-title">G4 Chess</span>
-              <div class="pocket-case-tags"><span>Branding</span><span>Content Creation</span><span>Campaigns</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-          <a class="pocket-case reveal" href="robotics.html" data-cursor="View">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/robotics.mp4"></video>
-            </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 03</span>
-              <span class="pocket-case-title">Robotics Gen2</span>
-              <div class="pocket-case-tags"><span>Branding</span><span>Design</span><span>Content Templates</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-          <a class="pocket-case reveal" href="draxler.html" data-cursor="View">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/draxler.mp4"></video>
-            </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 04</span>
-              <span class="pocket-case-title">Draxler</span>
-              <div class="pocket-case-tags"><span>Logotype</span><span>Naming</span><span>Packaging</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
-          </a>
-          <a class="pocket-case reveal" href="fastiv.html" data-cursor="View">
-            <div class="pocket-case-media">
-              <video autoplay muted loop playsinline src="assets/optimized/fastiv.mp4"></video>
-            </div>
-            <div class="pocket-case-info">
-              <span class="pocket-case-num">/ 05</span>
-              <span class="pocket-case-title">Fastiv Basketball</span>
-              <div class="pocket-case-tags"><span>Branding</span><span>Merchandise</span><span>Content Creation</span></div>
-            </div>
-            <span class="pocket-case-arrow" aria-hidden="true">&#8599;</span>
           </a>
         </div>
       </section>
 
-      <section class="pocket-section pocket-section--green pocket-center">
-        <p class="pocket-note reveal">your project could be case / 06 ...</p>
-        <button class="pocket-button reveal" type="button" data-contact>Start a Project</button>
-      </section>
     </main>
+
+    <footer class="reels-footer">
+      <div class="reels-footer-cta">
+        <p class="reels-label">Got a brand to put in the feed?</p>
+        <h2 class="reels-footer-title">Go viral <em>next.</em></h2>
+        <div class="reels-footer-contacts">
+          <a href="mailto:reelsagency.ie@gmail.com">reelsagency.ie@gmail.com</a>
+          <a href="tel:+353894270669">+353 89 427 0669</a>
+        </div>
+        <div class="reels-footer-socials" aria-label="Social media">
+          <a href="#" aria-label="reels agency on Instagram">Instagram <span aria-hidden="true">&#8599;&#65038;</span></a>
+          <a href="#" aria-label="reels agency on LinkedIn">LinkedIn <span aria-hidden="true">&#8599;&#65038;</span></a>
+        </div>
+      </div>
+      <div class="reels-footer-grid">
+        <nav aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="work.html">Work</a>
+          <a href="product.html">Products</a>
+          <a href="learn.html">Learn</a>
+          <a href="team.html">Team</a>
+          <a href="contacts.html">Contacts</a>
+        </nav>
+        <span class="reels-footer-note">Ireland</span>
+        <span class="reels-footer-note">&copy; <span data-year>2026</span> reels agency</span>
+        <button class="reels-to-top" type="button" aria-label="Back to top">&#8593;&#65038;</button>
+      </div>
+      <div class="reels-footer-mark" aria-hidden="true">reels&copy;</div>
+    </footer>
 
     <div class="contact-modal" aria-hidden="true">
       <div class="contact-modal-overlay"></div>
       <div class="contact-modal-card" role="dialog" aria-modal="true" aria-label="Contact">
         <button class="contact-modal-close" type="button" aria-label="Close">&times;</button>
-        <h3>Let's create <em>together:</em></h3>
+        <h3>Ask any <em>question</em></h3>
         <div class="contact-modal-links">
-          <a href="mailto:platon.tsuz@gmail.com">platon.tsuz@gmail.com</a>
-          <a href="tel:+353892277248">+353 89 2277 248</a>
-          <a class="contact-wa" href="https://wa.me/353892277248" target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.79 14.16c-.24.68-1.42 1.31-1.96 1.35-.5.04-.5.4-3.16-.66-2.66-1.05-4.3-3.79-4.43-3.97-.13-.18-1.05-1.4-1.05-2.67 0-1.27.66-1.9.9-2.16.24-.26.52-.32.7-.32l.5.01c.16 0 .38-.06.59.45.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.93-1.14.19-.29.39-.24.65-.15.26.1 1.67.79 1.96.93.29.15.48.22.55.34.07.12.07.69-.17 1.36z"/></svg><span>WhatsApp us</span></a>
+          <a href="mailto:reelsagency.ie@gmail.com">reelsagency.ie@gmail.com</a>
+          <a href="tel:+353894270669">+353 89 427 0669</a>
+          <a class="contact-wa" href="https://wa.me/353894270669" target="_blank" rel="noopener noreferrer" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.79 14.16c-.24.68-1.42 1.31-1.96 1.35-.5.04-.5.4-3.16-.66-2.66-1.05-4.3-3.79-4.43-3.97-.13-.18-1.05-1.4-1.05-2.67 0-1.27.66-1.9.9-2.16.24-.26.52-.32.7-.32l.5.01c.16 0 .38-.06.59.45.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.12.63-.07.17-.19.73-.85.93-1.14.19-.29.39-.24.65-.15.26.1 1.67.79 1.96.93.29.15.48.22.55.34.07.12.07.69-.17 1.36z"/></svg><span>WhatsApp us</span></a>
         </div>
         <p class="contact-modal-note">We usually reply within a day.</p>
       </div>
     </div>
-    <script src="script.js?v=14"></script>
+
+    <script src="script.js?v=73"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
-    <script defer src="fx.js?v=12"></script>
+    <script defer src="fx.js?v=73"></script>
+    <script defer src="reels.js?v=68"></script>
   </body>
 </html>

@@ -1,6 +1,8 @@
 .DS_Store
 assets/.DS_Store
 .fuse_hidden*
+work/
+admin/.install-token
 codex 3.zip
 assets/about us/anastasia.mp4
 assets/about us/dasha.mp4
@@ -12,6 +14,7 @@ assets/home_sb.mp4
 assets/mobile_home_latest.mp4
 assets/phoneg4cover.mp4
 assets/robotics.gif
+dist/
 assets/sweetbaking/desktop_2.mp4
 assets/sweetbaking/desktop_cover_2_1.mp4
 assets/sweetbaking/line_banner.mp4
