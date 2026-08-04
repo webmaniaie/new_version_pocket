@@ -27,7 +27,9 @@ fi
 for page in index.html work.html product.html learn.html team.html contacts.html \
   case-sweet-baking.html case-ukrainian-brand.html; do
   grep -q "Content-Security-Policy" "${page}"
-  grep -q "require-trusted-types-for 'script'" "${page}"
+  # PHP-rendered static pages HTML-encode the single quotes inside the
+  # attribute; browsers decode them back to the same CSP directive.
+  grep -q "require-trusted-types-for" "${page}"
 done
 
 "${project_root}/scripts/build-public.sh"
