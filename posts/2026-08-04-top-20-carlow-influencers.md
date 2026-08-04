@@ -6,7 +6,7 @@ read: 12 min
 topics: [Carlow, Influencers, Social media]
 excerpt: A researched guide to 20 leading Carlow influencers, creators and creator-led local accounts across TikTok, Instagram, YouTube, art, food, fashion, weather and music.
 author: Platon Tsuz
-cover: assets/optimized/home_hero_mobile.mp4
+cover: assets/optimized/carlow_influencers_cover.mp4
 date: 2026-08-04
 draft: false
 ---
