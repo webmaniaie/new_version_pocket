@@ -6,7 +6,7 @@ read: 11 min
 topics: [Agencies, Short-form video, Ireland]
 excerpt: A researched comparison of 10 Irish short-form video and social-first agencies for Reels, TikTok and YouTube Shorts, including services, strengths and best-fit clients.
 author: Platon Tsuz
-cover: assets/optimized/sb_backstage_01.mp4
+cover: assets/optimized/best_agencies_cover.mp4
 date: 2026-08-04T22:30:00+01:00
 draft: false
 ---
