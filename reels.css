@@ -2263,9 +2263,9 @@ body.learn-page {
 
 .contact-country-code {
   position: relative;
-  flex: 0 1 180px;
-  min-width: 126px;
-  max-width: 46%;
+  flex: 0 0 104px;
+  min-width: 104px;
+  max-width: 104px;
   align-self: stretch;
   border-right: 1px solid rgba(10, 10, 10, 0.12);
 }
@@ -2314,9 +2314,9 @@ body.learn-page {
 
 @media (max-width: 480px) {
   .contact-country-code {
-    flex-basis: 145px;
-    min-width: 116px;
-    max-width: 44%;
+    flex-basis: 96px;
+    min-width: 96px;
+    max-width: 96px;
   }
 
   .contact-country-code select {

@@ -15,7 +15,8 @@
     var option = document.createElement("option");
     option.value = "+" + country[1];
     option.dataset.country = country[2];
-    option.textContent = country[2] + " (+" + country[1] + ")";
+    option.textContent = "(+" + country[1] + ")";
+    option.setAttribute("aria-label", country[2] + " (plus " + country[1] + ")");
     option.selected = country[0] === "IE";
     fragment.appendChild(option);
   });
