@@ -60,6 +60,10 @@ foreach ($published as $i => $p) {
 }
 
 $metaBits = array_filter(['Learn', $post['tag'], $post['read'], pretty_date($post['date'])], 'strlen');
+$metaCover = safe_url($post['cover']);
+$metaImage = $metaCover !== '' && !preg_match('/\.(mp4|m4v|webm)$/i', $metaCover)
+    ? site_url($metaCover)
+    : site_url(BASE . '/assets/logo-nav.svg');
 
 render_head([
     'title'       => $post['title'] . ' | ' . SITE_NAME,
@@ -70,9 +74,7 @@ render_head([
     'published'   => $post['date'],
     'author'      => $post['author'],
     'theme_color' => '#16215e',
-    'image'       => $post['cover'] !== ''
-        ? site_url(safe_url($post['cover']))
-        : site_url(BASE . '/assets/logo-nav.svg'),
+    'image'       => $metaImage,
 ], BASE . '/learn');
 ?>
 
