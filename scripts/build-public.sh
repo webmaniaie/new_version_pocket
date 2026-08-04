@@ -34,9 +34,11 @@ for file in "${public_files[@]}"; do
 done
 
 cp -R "${project_root}/assets" "${output_dir}/assets"
-rm -rf -- "${output_dir}/assets/posts"
 find "${output_dir}/assets" -type f -name '.DS_Store' -delete
+find "${output_dir}/assets/posts" -type f -name '.*' -delete
 cp "${project_root}/.well-known/security.txt" "${output_dir}/.well-known/security.txt"
+
+php "${project_root}/scripts/build-static-blog.php" "${output_dir}"
 
 # GitHub Pages must never publish server source, drafts, credentials or docs.
 if find "${output_dir}" -type f \( \
